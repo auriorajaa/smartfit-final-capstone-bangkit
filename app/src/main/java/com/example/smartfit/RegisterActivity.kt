@@ -1,7 +1,8 @@
 package com.example.smartfit
 
+import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.smartfit.databinding.ActivityRegisterBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -29,10 +30,9 @@ class RegisterActivity : AppCompatActivity() {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    Toast.makeText(baseContext, "Registration successful, please check your email for verification.", Toast.LENGTH_SHORT).show()
                     sendEmailVerification()
                 } else {
-                    Toast.makeText(baseContext, "Registration failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                    showAlertDialog("Registration failed", task.exception?.message ?: "Unknown error occurred.")
                 }
             }
     }
@@ -42,10 +42,26 @@ class RegisterActivity : AppCompatActivity() {
         user?.sendEmailVerification()
             ?.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    Toast.makeText(baseContext, "Verification email sent to ${user.email}", Toast.LENGTH_SHORT).show()
+                    showAlertDialog("Registration successful", "Please check your email for verification.", onSuccess = {
+                        val intent = Intent(this, LoginActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    })
                 } else {
-                    Toast.makeText(baseContext, "Failed to send verification email.", Toast.LENGTH_SHORT).show()
+                    showAlertDialog("Failed to send verification email", task.exception?.message ?: "Unknown error occurred.")
                 }
             }
+    }
+
+    private fun showAlertDialog(title: String, message: String, onSuccess: (() -> Unit)? = null) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(title)
+        builder.setMessage(message)
+        builder.setPositiveButton("OK") { dialog, _ ->
+            dialog.dismiss()
+            onSuccess?.invoke()
+        }
+        val dialog = builder.create()
+        dialog.show()
     }
 }
