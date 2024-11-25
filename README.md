@@ -14,7 +14,7 @@ Below is a diagram showing how we deploy the ML model and handle the backend ser
 ## Steps We Took 📝
 - **Deploying the ML Model**: The trained model is deployed using **Google Cloud Storage**.
 - **Backend Services**: All requests for clothing recommendations are processed through **Cloud Run**.
-- **User Data**: User data is securely stored using **Firestore** and **Firestore Authentication** 🔒.
+- **User Data**: User data is securely stored using **Firebase** and **Firebase Authentication** 🔒.
 
 ## Technologies Used 🛠️
 - **Google Cloud Platform**: Vertex AI, Cloud Run, Firestore, Container Registry
