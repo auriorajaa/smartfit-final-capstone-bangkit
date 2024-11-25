@@ -30,7 +30,7 @@ firebase.initializeApp(firebaseConfig);
 
 const init = async () => {
   const server = Hapi.server({
-    port: process.env.PORT || 3000,
+    port: process.env.PORT || 8080,
     host: process.env.HOST || 'localhost',
     routes: {
       cors: {
