@@ -4,19 +4,21 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.smartfit.databinding.ActivityRegisterBinding
-import com.google.firebase.auth.FirebaseAuth
+import com.example.smartfit.network.AuthResponse
+import com.example.smartfit.network.RegisterRequest
+import com.example.smartfit.network.RetrofitInstance
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegisterBinding
-    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        auth = FirebaseAuth.getInstance()
 
         binding.registerButton.setOnClickListener {
             val email = binding.emailEditText.text.toString()
@@ -26,26 +28,20 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun registerUser(email: String, password: String) {
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
+        val registerRequest = RegisterRequest(email, password)
+        RetrofitInstance.api.register(registerRequest).enqueue(object : Callback<AuthResponse> {
+            override fun onResponse(call: Call<AuthResponse>, response: Response<AuthResponse>) {
+                if (response.isSuccessful) {
                     Toast.makeText(baseContext, "Registration successful, please check your email for verification.", Toast.LENGTH_SHORT).show()
-                    sendEmailVerification()
+                    // Optionally, navigate to the login screen or main activity
                 } else {
-                    Toast.makeText(baseContext, "Registration failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(baseContext, "Registration failed", Toast.LENGTH_SHORT).show()
                 }
             }
-    }
 
-    private fun sendEmailVerification() {
-        val user = auth.currentUser
-        user?.sendEmailVerification()
-            ?.addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Toast.makeText(baseContext, "Verification email sent to ${user.email}", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(baseContext, "Failed to send verification email.", Toast.LENGTH_SHORT).show()
-                }
+            override fun onFailure(call: Call<AuthResponse>, t: Throwable) {
+                Toast.makeText(baseContext, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
             }
+        })
     }
 }

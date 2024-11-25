@@ -50,6 +50,8 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     //Dependency Tambahan
+    implementation(libs.retrofit2.retrofit)
+    implementation(libs.converter.gson)
 
     //Dependency Firebase
     implementation(libs.firebase.auth)
