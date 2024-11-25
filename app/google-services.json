@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1000780461055",
+    "project_id": "smartfit-capstone",
+    "storage_bucket": "smartfit-capstone.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1000780461055:android:8a575eb238024f2adf6dca",
+        "android_client_info": {
+          "package_name": "com.example.smartfit"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSiQU_QKaGR5vgy47NFaDiHTedyt0vIQ8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
