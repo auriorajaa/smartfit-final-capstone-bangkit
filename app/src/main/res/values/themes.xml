@@ -1,0 +1,16 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.SmartFit" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    </style>
+
+    <style name="Theme.SmartFit" parent="Base.Theme.SmartFit" />
+
+    <style name="MyCard" parent="Widget.MaterialComponents.CardView">
+        <item name="strokeColor">@color/greystroke</item>
+        <item name="strokeWidth">2dp</item>
+<!--        <item name="rippleColor">@color/cream</item>-->
+<!--        <item name="cardBackgroundColor">@color/semitransparentgrey</item>-->
+    </style>
+</resources>
