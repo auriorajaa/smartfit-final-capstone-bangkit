@@ -49,9 +49,9 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    //Dependency Tambahan
+    // Dependency Tambahan
 
-    //Dependency Firebase
+    // Dependency Firebase
     implementation(libs.firebase.auth)
     implementation(libs.play.services.auth)
     implementation(platform(libs.firebase.bom))
