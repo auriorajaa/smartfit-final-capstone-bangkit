@@ -11,9 +11,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.GoogleAuthProvider
 
 class LoginActivity : AppCompatActivity() {
 
@@ -42,9 +42,13 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.loginButton.setOnClickListener {
-            val email = binding.emailEditText.text.toString()
-            val password = binding.passwordEditText.text.toString()
-            loginUser(email, password)
+            val email = binding.emailEditText.text.toString().trim()
+            val password = binding.passwordEditText.text.toString().trim()
+            if (email.isEmpty() || password.isEmpty()) {
+                showAlertDialog("Input Error", "Email and password are required.", false)
+            } else {
+                loginUser(email, password)
+            }
         }
 
         binding.registerButton.setOnClickListener {
@@ -77,7 +81,7 @@ class LoginActivity : AppCompatActivity() {
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    showAlertDialog("Login Successful", "Welcome back!", true)
+                    showAlertDialog("Login Successful", "Welcome!", true)
                 } else {
                     showAlertDialog("Authentication failed", task.exception?.message ?: "Unknown error occurred.", false)
                 }
@@ -88,7 +92,7 @@ class LoginActivity : AppCompatActivity() {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    showAlertDialog("Login Successful", "Welcome back!", true)
+                    showAlertDialog("Login Successful", "Welcome!", true)
                 } else {
                     val message = when (task.exception) {
                         is FirebaseAuthInvalidUserException, is FirebaseAuthInvalidCredentialsException -> "Email or password is incorrect, please check and try again."
