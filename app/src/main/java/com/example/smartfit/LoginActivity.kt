@@ -14,11 +14,13 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.database.FirebaseDatabase
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
     private lateinit var auth: FirebaseAuth
+    private lateinit var database: FirebaseDatabase
     private lateinit var googleSignInClient: GoogleSignInClient
     private val RC_SIGN_IN = 9001
 
@@ -28,6 +30,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         auth = FirebaseAuth.getInstance()
+        database = FirebaseDatabase.getInstance()
 
         // Konfigurasi Google Sign-In
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -81,12 +84,39 @@ class LoginActivity : AppCompatActivity() {
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    showAlertDialog("Login Successful", "Welcome!", true)
+                    // Login atau registrasi berhasil
+                    val user = auth.currentUser
+                    user?.let {
+                        val uid = it.uid
+                        val email = it.email
+                        val currentTime = System.currentTimeMillis()
+                        val userRef = database.reference.child("users").child(uid)
+
+                        val userData = mapOf(
+                            "email" to email,
+                            "createdAt" to currentTime,
+                            "displayName" to (account.displayName ?: ""),
+                            "isNewUser" to false,
+                            "lastLogin" to currentTime,
+                            "photoURL" to (account.photoUrl?.toString() ?: ""),
+                            "provider" to "google",
+                            "updatedAt" to currentTime
+                        )
+
+                        userRef.setValue(userData).addOnCompleteListener { dbTask ->
+                            if (dbTask.isSuccessful) {
+                                showAlertDialog("Login Successful", "Welcome!", true)
+                            } else {
+                                showAlertDialog("Database Error", dbTask.exception?.message ?: "Unknown error occurred.", false)
+                            }
+                        }
+                    }
                 } else {
                     showAlertDialog("Authentication failed", task.exception?.message ?: "Unknown error occurred.", false)
                 }
             }
     }
+
 
     private fun loginUser(email: String, password: String) {
         auth.signInWithEmailAndPassword(email, password)
