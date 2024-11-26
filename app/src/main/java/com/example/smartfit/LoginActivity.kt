@@ -12,6 +12,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 
 class LoginActivity : AppCompatActivity() {
 
@@ -65,7 +67,7 @@ class LoginActivity : AppCompatActivity() {
                 val account = task.getResult(ApiException::class.java)!!
                 firebaseAuthWithGoogle(account)
             } catch (e: ApiException) {
-                showAlertDialog("Google sign in failed", e.message ?: "Unknown error occurred.")
+                showAlertDialog("Google sign in failed", e.message ?: "Unknown error occurred.", false)
             }
         }
     }
@@ -75,36 +77,45 @@ class LoginActivity : AppCompatActivity() {
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
-                    finish()
+                    showAlertDialog("Login Successful", "Welcome back!", true)
                 } else {
-                    showAlertDialog("Authentication failed", task.exception?.message ?: "Unknown error occurred.")
+                    showAlertDialog("Authentication failed", task.exception?.message ?: "Unknown error occurred.", false)
                 }
             }
-    }
-
-    private fun showAlertDialog(title: String, message: String) {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle(title)
-        builder.setMessage(message)
-        builder.setPositiveButton("OK") { dialog, _ ->
-            dialog.dismiss()
-        }
-        val dialog = builder.create()
-        dialog.show()
     }
 
     private fun loginUser(email: String, password: String) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
-                    finish()
+                    showAlertDialog("Login Successful", "Welcome back!", true)
                 } else {
-                    showAlertDialog("Login failed", task.exception?.message ?: "Unknown error occurred.")
+                    val message = when (task.exception) {
+                        is FirebaseAuthInvalidUserException, is FirebaseAuthInvalidCredentialsException -> "Email or password is incorrect, please check and try again."
+                        else -> task.exception?.message ?: "Unknown error occurred."
+                    }
+                    showAlertDialog("Login failed", message, false)
                 }
             }
+    }
+
+    private fun showAlertDialog(title: String, message: String, isSuccess: Boolean) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(title)
+        builder.setMessage(message)
+        builder.setPositiveButton("OK") { dialog, _ ->
+            dialog.dismiss()
+            if (isSuccess) {
+                navigateToMain()
+            }
+        }
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+    private fun navigateToMain() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }

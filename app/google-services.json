@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1000780461055-dih42olcv2hljplb4mvud0nd1gb5cjam.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.smartfit",
+            "certificate_hash": "79e8f526f9434260a77de3d9401c6bacaa977fd1"
+          }
+        },
+        {
           "client_id": "1000780461055-lnrelo9pff38v6sd8oufu1g2ncffc5i2.apps.googleusercontent.com",
           "client_type": 3
         }
