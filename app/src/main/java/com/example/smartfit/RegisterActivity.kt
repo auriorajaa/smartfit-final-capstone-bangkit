@@ -25,8 +25,47 @@ class RegisterActivity : AppCompatActivity() {
         binding.registerButton.setOnClickListener {
             val email = binding.emailEditText.text.toString()
             val password = binding.passwordEditText.text.toString()
-            registerUser(email, password)
+            checkIfEmailExists(email, password)
         }
+    }
+
+    private fun checkIfEmailExists(email: String, password: String) {
+        auth.fetchSignInMethodsForEmail(email)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val signInMethods = task.result?.signInMethods
+                    if (!signInMethods.isNullOrEmpty()) {
+                        // Email sudah terdaftar di Firebase Authentication
+                        showEmailExistsDialog(email)
+                    } else {
+                        // Email belum terdaftar di Firebase Authentication
+                        checkEmailInDatabase(email, password)
+                    }
+                } else {
+                    // Gagal melakukan pengecekan email di Firebase Authentication
+                    showAlertDialog("Error", task.exception?.message ?: "Unknown error occurred while checking email.", false)
+                }
+            }
+    }
+
+    private fun checkEmailInDatabase(email: String, password: String) {
+        // Cek apakah email sudah terdaftar di Firebase Realtime Database
+        database.reference.child("users").orderByChild("email").equalTo(email).get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val dataSnapshot = task.result
+                    if (dataSnapshot.exists()) {
+                        // Email sudah terdaftar di Firebase Realtime Database
+                        showEmailExistsDialog(email)
+                    } else {
+                        // Email belum terdaftar, lanjutkan dengan proses registrasi
+                        registerUser(email, password)
+                    }
+                } else {
+                    // Gagal melakukan pengecekan email di Firebase Realtime Database
+                    showAlertDialog("Error", task.exception?.message ?: "Unknown error occurred while checking email.", false)
+                }
+            }
     }
 
     private fun registerUser(email: String, password: String) {
@@ -91,6 +130,20 @@ class RegisterActivity : AppCompatActivity() {
             }
     }
 
+    private fun showEmailExistsDialog(email: String) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Email Already Registered")
+        builder.setMessage("The email address $email is already registered. Please login or use a different email address.")
+        builder.setPositiveButton("Login") { dialog, _ ->
+            dialog.dismiss()
+            navigateToLogin()
+        }
+        builder.setNegativeButton("Try Again") { dialog, _ ->
+            dialog.dismiss()
+        }
+        val dialog = builder.create()
+        dialog.show()
+    }
 
     private fun showAlertDialog(title: String, message: String, isSuccess: Boolean) {
         val builder = AlertDialog.Builder(this)
