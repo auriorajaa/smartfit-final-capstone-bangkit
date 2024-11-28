@@ -58,6 +58,11 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
+
+        binding.forgotPasswordButton.setOnClickListener {
+            val intent = Intent(this, ForgotPasswordActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun signInWithGoogle() {
@@ -122,13 +127,19 @@ class LoginActivity : AppCompatActivity() {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    showAlertDialog("Login Successful", "Welcome!", true)
+                    val user = auth.currentUser
+                    if (user != null && user.isEmailVerified) {
+                        showAlertDialog("Login Successful", "Welcome!", true)
+                    } else {
+                        showAlertDialog("Email Not Verified", "Please verify your email address before logging in. Check your email for the verification link.", false)
+                        auth.signOut() // Sign out user to prevent access
+                    }
                 } else {
                     val message = when (task.exception) {
                         is FirebaseAuthInvalidUserException, is FirebaseAuthInvalidCredentialsException -> "Email or password is incorrect, please check and try again."
                         else -> task.exception?.message ?: "Unknown error occurred."
                     }
-                    showAlertDialog("Login failed", message, false)
+                    showAlertDialog("Login Failed", message, false)
                 }
             }
     }

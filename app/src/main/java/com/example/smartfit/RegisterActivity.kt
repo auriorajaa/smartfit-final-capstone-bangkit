@@ -54,17 +54,43 @@ class RegisterActivity : AppCompatActivity() {
                         userRef.setValue(userData)
                             .addOnCompleteListener { dbTask ->
                                 if (dbTask.isSuccessful) {
-                                    showAlertDialog("Registration Successful", "Your account has been created successfully.", true)
+                                    // Kirim email verifikasi
+                                    user.sendEmailVerification()
+                                        .addOnCompleteListener { verifyTask ->
+                                            if (verifyTask.isSuccessful) {
+                                                showAlertDialog(
+                                                    "Registration Successful",
+                                                    "A verification email has been sent to your email address. Please verify your email before logging in.",
+                                                    true
+                                                )
+                                            } else {
+                                                showAlertDialog(
+                                                    "Verification Email Failed",
+                                                    verifyTask.exception?.message
+                                                        ?: "Unknown error occurred.",
+                                                    false
+                                                )
+                                            }
+                                        }
                                 } else {
-                                    showAlertDialog("Database Error", dbTask.exception?.message ?: "Unknown error occurred.", false)
+                                    showAlertDialog(
+                                        "Database Error",
+                                        dbTask.exception?.message ?: "Unknown error occurred.",
+                                        false
+                                    )
                                 }
                             }
                     }
                 } else {
-                    showAlertDialog("Registration Failed", task.exception?.message ?: "Unknown error occurred.", false)
+                    showAlertDialog(
+                        "Registration Failed",
+                        task.exception?.message ?: "Unknown error occurred.",
+                        false
+                    )
                 }
             }
     }
+
 
     private fun showAlertDialog(title: String, message: String, isSuccess: Boolean) {
         val builder = AlertDialog.Builder(this)
