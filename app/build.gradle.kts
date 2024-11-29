@@ -33,6 +33,10 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures {
+        viewBinding = true
+        buildConfig = true
+    }
 }
 
 dependencies {
@@ -45,4 +49,17 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.converter.gson)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation(libs.logging.interceptor)
+    implementation(libs.androidx.activity.ktx)
+    implementation(libs.androidx.fragment.ktx)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.glide)
+    implementation(libs.retrofit)
+    implementation(libs.androidx.datastore.preferences)
+
 }

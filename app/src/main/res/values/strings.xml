@@ -5,4 +5,8 @@
     <string name="home">Home</string>
     <string name="news">News</string>
     <string name="bookmark">Bookmark</string>
+
+    <string name="email_validation">Invalid email format</string>
+    <string name="invalid_email">Invalid email address</string>
+
 </resources>

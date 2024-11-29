@@ -13,4 +13,6 @@
     <color name="semitransparentgrey">#65FAFAFA</color>
     <color name="lightgrey">#F5F5F5</color>
     <color name="darkgrey">#A6A6A6</color>
+    <color name="white2">#F6F6F6</color>
+    <color name="white3">#F3F3F3</color>
 </resources>
