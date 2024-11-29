@@ -3,8 +3,11 @@ import os
 import numpy as np
 import tensorflow as tf
 import requests  # Add this import
-from tensorflow.keras.models import load_model
-from tensorflow.keras.preprocessing.image import img_to_array
+from tensorflow import keras
+import firebase_admin 
+from firebase_admin import credentials, firestore
+from keras.models import load_model
+from keras.preprocessing.image import img_to_array
 from flask import Flask, request, jsonify
 from PIL import Image, UnidentifiedImageError
 import io
@@ -13,12 +16,19 @@ import traceback
 import colorsys
 import time
 
+# Inisialisasi Firebase Admin SDK dengan kredensial
+cred = credentials.Certificate('./smartfit-capstone-firebase-adminsdk-79b0c-0b89e29fd5.json')
+firebase_admin.initialize_app(cred)
+
+# Mendapatkan referensi ke database Firestore 
+db = firestore.client()
+
 # Konfigurasi Logging yang Lebih Komprehensif
 logging.basicConfig(
     level=logging.INFO,  # Level log ditetapkan pada INFO untuk menangkap semua log penting
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',  # Format log
     handlers=[
-        logging.FileHandler('color_analysis_comprehensive.log', encoding='utf-8'),  # Menyimpan log ke file
+        logging.FileHandler('color_analysis_comprehensive.log', encoding='utf-8'),  # Menyimpan log ke file``
         logging.StreamHandler()  # Menampilkan log di terminal
     ]
 )
@@ -640,6 +650,48 @@ class ColorAnalysisApp:
                     "error": "Style recommendation failed",
                     "details": str(e)
                 }), 500
+        
+        # get dokument berdasarkan ID
+        @self.app.route('/get_data/<document_id>', methods=['GET'])
+        def get_data(document_id):
+                try:
+                    
+                    doc = db.collection('users').document(document_id).get()
+                    if doc.exists:
+                        return jsonify(doc.to_dict()), 200
+                    else:
+                        return jsonify({"error": "Document not found"}), 404
+
+                except Exception as e:
+                    return jsonify({"error": str(e)}), 500
+
+        #add data to firestore  
+        @self.app.route('/add_data', methods=['POST'])
+        def add_data():
+                try:
+                    data = request.json
+                    if not data:
+                        return jsonify({"error": "No data provided"}), 400
+
+                    # Tambahkan data ke koleksi
+                    doc_ref = db.collection('users').add(data)
+                    return jsonify({"success": True, "document_id": doc_ref[1].id}), 200
+    
+                except Exception as e:
+                    return jsonify({"error": str(e)}), 500
+                
+        #delete data berdasarkan id        
+        @self.app.route('/delete_data/<document_id>', methods=['DELETE'])
+        def delete_data(document_id):
+                try:
+                    # Hapus dokumen berdasarkan ID
+                    db.collection('users').document(document_id).delete()
+                    return jsonify({"success": True, "message": "Document deleted"}), 200
+    
+                except Exception as e:
+                    return jsonify({"error": str(e)}), 500
+
+
 
     def run(self, debug=True, host='0.0.0.0', port=5000):
         """
