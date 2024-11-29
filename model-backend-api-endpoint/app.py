@@ -16,8 +16,13 @@ import traceback
 import colorsys
 import time
 
+# Konfigurasi Firebase 
+# firebase_config = { 
+#     'projectId': 'smartfit-capstone', 
+#     'databaseURL': 'https://db-smartfit.firebaseio.com' 
+# }
 # Inisialisasi Firebase Admin SDK dengan kredensial
-cred = credentials.Certificate('./smartfit-capstone-firebase-adminsdk-79b0c-0b89e29fd5.json')
+cred = credentials.Certificate('./db-smartfit-firebase-adminsdk.json')
 firebase_admin.initialize_app(cred)
 
 # Mendapatkan referensi ke database Firestore 
@@ -28,7 +33,7 @@ logging.basicConfig(
     level=logging.INFO,  # Level log ditetapkan pada INFO untuk menangkap semua log penting
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',  # Format log
     handlers=[
-        logging.FileHandler('color_analysis_comprehensive.log', encoding='utf-8'),  # Menyimpan log ke file``
+        logging.FileHandler('color_analysis_comprehensive.log', encoding='utf-8'),  # Menyimpan log ke file
         logging.StreamHandler()  # Menampilkan log di terminal
     ]
 )
@@ -650,6 +655,16 @@ class ColorAnalysisApp:
                     "error": "Style recommendation failed",
                     "details": str(e)
                 }), 500
+        
+        # get semua dokumen 
+        @self.app.route('/get_all_data', methods=['GET']) 
+        def get_all_data(): 
+            try: 
+                # Ambil semua dokumen dari koleksi 'users' 
+                docs = db.collection('users').stream() 
+                all_data = [doc.to_dict() for doc in docs] 
+                return jsonify(all_data), 200 
+            except Exception as e: return jsonify({"error": str(e)}), 500
         
         # get dokument berdasarkan ID
         @self.app.route('/get_data/<document_id>', methods=['GET'])
