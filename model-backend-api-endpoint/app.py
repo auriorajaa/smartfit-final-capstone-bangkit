@@ -18,15 +18,6 @@ from datetime import datetime
 import firebase_admin
 from firebase_admin import credentials, db
 
-# Konfigurasi Logging yang Lebih Komprehensif
-logging.basicConfig(
-    level=logging.INFO,  # Level log ditetapkan pada INFO untuk menangkap semua log penting
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',  # Format log
-    handlers=[
-        logging.FileHandler('color_analysis_comprehensive.log', encoding='utf-8'),  # Menyimpan log ke file
-        logging.StreamHandler()  # Menampilkan log di terminal
-    ]
-)
 logger = logging.getLogger(__name__)  # Membuat logger untuk aplikasi, digunakan di seluruh kode
 
 # Mendefinisikan exception khusus untuk kesalahan pemuatan model dan pemrosesan gambar
@@ -1806,11 +1797,11 @@ class ColorAnalysisApp:
             logger.error(f"Gagal menyimpan prediksi ke Firebase: {e}")
             return None
 
-    def run(self):
+    def run(self, debug=True, host='0.0.0.0', port=5000):
         """
-        Menjalankan aplikasi Flask di App Engine.
+        Menjalankan aplikasi Flask di server lokal.
         """
-        return self.app
+        self.app.run(debug=debug, host=host, port=port)
 
 # Menjalankan aplikasi ketika file dijalankan langsung
 if __name__ == '__main__':
