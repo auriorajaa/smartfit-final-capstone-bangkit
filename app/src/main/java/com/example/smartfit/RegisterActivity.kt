@@ -69,6 +69,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun registerUser(email: String, password: String) {
+        val name = binding.nameEditText.text.toString()
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
@@ -82,7 +83,7 @@ class RegisterActivity : AppCompatActivity() {
                         val userData = mapOf(
                             "email" to userEmail,
                             "createdAt" to currentTime,
-                            "displayName" to "",
+                            "displayName" to name,
                             "isNewUser" to false,
                             "lastLogin" to currentTime,
                             "photoURL" to "",
