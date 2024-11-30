@@ -1681,7 +1681,7 @@ class ColorAnalysisApp:
         def get_prediction_history_list():
             try:
                 # Ambil data dari query parameter uid
-                uid = request.form.get('uid')
+                uid = request.args.get('uid')
 
                 # Validasi input
                 if not uid:
@@ -1720,8 +1720,8 @@ class ColorAnalysisApp:
         def get_prediction_history_detail():
             try:
                 # Ambil data dari query parameters
-                uid = request.form.get('uid')
-                prediction_key = request.form.get('prediction_key')
+                uid = request.args.get('uid')
+                prediction_key = request.args.get('prediction_key')
 
                 # Validasi input
                 if not uid or not prediction_key:
@@ -1803,11 +1803,12 @@ class ColorAnalysisApp:
         """
         self.app.run(debug=debug, host=host, port=port)
 
-# Menjalankan aplikasi ketika file dijalankan langsung
+# Buat instance aplikasi
+color_app = ColorAnalysisApp()
+
+# Buat variabel app untuk digunakan oleh server WSGI
+app = color_app.app
+
+# Jika script dijalankan secara langsung
 if __name__ == '__main__':
-    try:
-        color_analysis_app = ColorAnalysisApp()
-        color_analysis_app.run()
-    except Exception as startup_error:
-        logger.critical(f"Gagal menjalankan aplikasi: {startup_error}")
-        print(f"Startup Error: {startup_error}")
+    color_app.run()
