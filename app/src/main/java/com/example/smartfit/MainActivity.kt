@@ -50,6 +50,16 @@ class MainActivity : AppCompatActivity() {
         }
 
         checkUserSession()
+
+        binding.profileButton.setOnClickListener {
+            val intent = Intent(this, ProfileActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.fab.setOnClickListener {
+            val intent = Intent(this, ChooseActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun checkUserSession() {
