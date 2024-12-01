@@ -7,12 +7,11 @@ import retrofit2.http.POST
 import retrofit2.http.Part
 
 interface ApiService {
-
     @Multipart
     @POST("style_recommendation")
     fun getStyleRecommendation(
         @Part image: MultipartBody.Part,
-        @Part("uid") uid: String,
-        @Part("clothing_type") clothingType: String
+        @Part uid: MultipartBody.Part,
+        @Part clothing_type: MultipartBody.Part
     ): Call<StyleRecommendationResponse>
 }

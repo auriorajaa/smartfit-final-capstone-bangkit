@@ -5,8 +5,12 @@ import com.google.gson.JsonElement
 data class StyleRecommendationResponse(
     val seasonal_color_label: String,
     val skin_tone_label: String,
-    val color_palette: JsonElement, // Menggunakan JsonElement untuk menangani variasi
+    val color_palette: JsonElement,
     val seasonal_description: String,
+    val seasonal_probability: Double,
+    val skin_tone_hex: String,
+    val skin_tone_probability: Double,
+    val timestamp: String,
     val outfit_recommendations: List<OutfitRecommendation>,
     val amazon_products: List<AmazonProduct>,
     val clothing_type: String,
@@ -20,8 +24,13 @@ data class OutfitRecommendation(
 )
 
 data class AmazonProduct(
-    val title: String,
-    val price: String,
-    val url: String,
-    val description: String
+    val asin: String,
+    val delivery: String,
+    val description: String,
+    val detail_url: String,
+    val is_prime: Boolean,
+    val pic: String,
+    val price: String?,
+    val sales_volume: String,
+    val title: String
 )

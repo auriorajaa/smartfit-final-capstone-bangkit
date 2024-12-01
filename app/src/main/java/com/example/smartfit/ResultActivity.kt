@@ -10,11 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.smartfit.databinding.ActivityResultBinding
 import com.example.smartfit.network.RetrofitClient
 import com.example.smartfit.network.StyleRecommendationResponse
-import com.google.gson.JsonElement
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -35,9 +33,10 @@ class ResultActivity : AppCompatActivity() {
         val imagePath = intent.getStringExtra("IMAGE_PATH")
         val uid = intent.getStringExtra("UID") ?: "unknown_user"
         val clothingType = intent.getStringExtra("CLOTHING_TYPE") ?: "streetwear"
+        Log.d("ResultActivity", "Received clothingType: $clothingType")
 
         binding.outfitRecommendations.layoutManager = LinearLayoutManager(this)
-        binding.outfitRecommendations.adapter = OutfitRecommendationAdapter(emptyList())
+        binding.amazonProducts.layoutManager = LinearLayoutManager(this)
 
         imagePath?.let {
             val imageFile = File(it)
@@ -50,8 +49,13 @@ class ResultActivity : AppCompatActivity() {
     }
 
     private fun sendRequest(image: MultipartBody.Part, uid: String, clothingType: String) {
+        Log.d("ResultActivity", "Sending request with UID: $uid, ClothingType: $clothingType, Image: ${image.body.contentLength()} bytes")
+
+        val uidPart = MultipartBody.Part.createFormData("uid", uid)
+        val clothingTypePart = MultipartBody.Part.createFormData("clothing_type", clothingType)
+
         CoroutineScope(Dispatchers.IO).launch {
-            val call = RetrofitClient.instance.getStyleRecommendation(image, uid, clothingType)
+            val call = RetrofitClient.instance.getStyleRecommendation(image, uidPart, clothingTypePart)
             Log.d("ResultActivity", "Sending request with UID: $uid, ClothingType: $clothingType, Image: ${image.body.contentLength()} bytes")
             call.enqueue(object : Callback<StyleRecommendationResponse> {
                 override fun onResponse(call: Call<StyleRecommendationResponse>, response: Response<StyleRecommendationResponse>) {
@@ -94,8 +98,16 @@ class ResultActivity : AppCompatActivity() {
             }
         }
 
-        val adapter = OutfitRecommendationAdapter(result.outfit_recommendations)
-        binding.outfitRecommendations.adapter = adapter
+        val outfitAdapter = OutfitRecommendationAdapter(result.outfit_recommendations)
+        binding.outfitRecommendations.adapter = outfitAdapter
+
+        val amazonProductAdapter = AmazonProductAdapter(this, result.amazon_products)
+        binding.amazonProducts.adapter = amazonProductAdapter
+
+        binding.seasonalProbabilityLabel.text = "Seasonal Probability: ${result.seasonal_probability}%"
+        binding.skinToneHexLabel.text = "Skin Tone Hex: ${result.skin_tone_hex}"
+        binding.skinToneProbabilityLabel.text = "Skin Tone Probability: ${result.skin_tone_probability}%"
+        binding.timestampLabel.text = "Timestamp: ${result.timestamp}"
     }
 
     private fun displayColorBoxes(layout: LinearLayout, colors: List<String>) {
