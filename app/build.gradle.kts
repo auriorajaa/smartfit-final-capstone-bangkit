@@ -16,6 +16,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField ("String", "API_BASE_URL", "\"https://ancient-wave-440505-q8.et.r.appspot.com/\"")
     }
 
     buildTypes {
@@ -36,6 +37,7 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 }
 
@@ -50,6 +52,10 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     // Dependency Tambahan
+    implementation (libs.ucrop)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.okhttp)
 
     // Dependency Firebase
     implementation(libs.firebase.auth)
