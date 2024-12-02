@@ -1,0 +1,10 @@
+runtime: python39  # Menentukan bahwa kita menggunakan custom Docker runtime
+
+entrypoint: gunicorn -b :8080 app:app  # Menentukan entrypoint untuk aplikasi (menggunakan gunicorn)
+
+# Opsional: menyesuaikan jumlah instance, scaling, dan lain-lain
+instance_class: F2  # Bisa disesuaikan dengan kebutuhan (F1, F2, F4, dsb)
+
+automatic_scaling:
+  max_instances: 6
+  min_instances: 1
