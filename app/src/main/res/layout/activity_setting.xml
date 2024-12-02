@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:fontFamily="@font/roboto_regular"
-                    android:text="Logout"
+                    android:text="@string/label_logout_setting"
                     android:textColor="@color/white"
                     android:textSize="15sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -57,7 +57,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_arrow_right" />
+                    app:srcCompat="@drawable/ic_arrow_right"
+                    tools:ignore="ContentDescription" />
 
                 <ImageView
                     android:id="@+id/iv_logout"
@@ -67,7 +68,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_logout" />
+                    app:srcCompat="@drawable/ic_logout"
+                    tools:ignore="ContentDescription" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.card.MaterialCardView>
@@ -97,7 +99,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:fontFamily="@font/roboto_regular"
-                    android:text="Account"
+                    android:text="@string/label_account_setting"
                     android:textColor="@color/white"
                     android:textSize="15sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -112,7 +114,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_arrow_right" />
+                    app:srcCompat="@drawable/ic_arrow_right"
+                    tools:ignore="ContentDescription" />
 
                 <ImageView
                     android:id="@+id/iv_account"
@@ -122,7 +125,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_account" />
+                    app:srcCompat="@drawable/ic_account"
+                    tools:ignore="ContentDescription" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -152,7 +156,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_arrow_right" />
+                    app:srcCompat="@drawable/ic_arrow_right"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:id="@+id/tv_language"
@@ -160,7 +165,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:fontFamily="@font/roboto_regular"
-                    android:text="Language"
+                    android:text="@string/label_language_setting"
                     android:textColor="@color/white"
                     android:textSize="15sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -175,7 +180,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_language" />
+                    app:srcCompat="@drawable/ic_language"
+                    tools:ignore="ContentDescription" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.card.MaterialCardView>
@@ -196,9 +202,9 @@
             android:layout_marginStart="30dp"
             android:layout_marginBottom="3dp"
             android:fontFamily="@font/roboto_black"
-            android:text="Setting"
+            android:text="@string/title_setting_page"
             android:textColor="@color/white2"
-            android:textSize="26dp"
+            android:textSize="26sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/btn_back_setting"
             app:layout_constraintTop_toTopOf="parent" />
@@ -227,7 +233,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:srcCompat="@drawable/ic_arrow_left" />
+                    tools:srcCompat="@drawable/ic_arrow_left"
+                    tools:ignore="ContentDescription" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
     </androidx.constraintlayout.widget.ConstraintLayout>

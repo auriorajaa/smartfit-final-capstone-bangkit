@@ -32,7 +32,7 @@
                 android:layout_height="match_parent">
 
                 <ImageView
-                    android:id="@+id/imageView8"
+                    android:id="@+id/iv_arrow_back"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_marginEnd="3dp"
@@ -40,7 +40,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_arrow_left" />
+                    app:srcCompat="@drawable/ic_arrow_left"
+                    tools:ignore="ContentDescription" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.card.MaterialCardView>
@@ -70,7 +71,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_delete" />
+                app:srcCompat="@drawable/ic_delete"
+                tools:ignore="ContentDescription" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
@@ -80,7 +82,7 @@
         android:layout_height="wrap_content"
         android:elevation="1dp"
         android:fontFamily="@font/roboto_regular"
-        android:text="ujang@gmail.com"
+        android:text="@string/example_email_format"
         android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/tv_name_account"
@@ -93,7 +95,7 @@
         android:layout_height="wrap_content"
         android:elevation="1dp"
         android:fontFamily="@font/roboto_black"
-        android:text="Ujang"
+        android:text="@string/example_nameAccount"
         android:textColor="@color/white"
         android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="@+id/cv_account_profile"
@@ -116,7 +118,8 @@
             android:id="@+id/iv_photo_account"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:srcCompat="@tools:sample/avatars" />
+            tools:srcCompat="@tools:sample/avatars"
+            tools:ignore="ContentDescription" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView

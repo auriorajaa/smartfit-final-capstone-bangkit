@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">SmartFit</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="home">Home</string>
     <string name="news">News</string>
@@ -8,5 +7,30 @@
 
     <string name="email_validation">Invalid email format</string>
     <string name="invalid_email">Invalid email address</string>
+    <string name="example_email_format">example@gmail.com</string>
+    <string name="example_nameAccount">Ujang</string>
+    <string name="open_camera">Camera</string>
+    <string name="open_galery">Galery</string>
+    <string name="title_capture_camera">Capture or Select a Photo to Start</string>
+    <string name="btn_next_to_result">Next</string>
+    <string name="btn_sign_up">Sign Up</string>
+    <string name="enter_name_signup">type your name</string>
+    <string name="label_name_signup">Name</string>
+    <string name="enter_password_signup">type your password</string>
+    <string name="label_password_signup">Password</string>
+    <string name="enter_email_signup">type your email</string>
+    <string name="label_email_signup">Email</string>
+    <string name="title_signup_page">Sign Up</string>
+    <string name="label_logout_setting">Logout</string>
+    <string name="label_account_setting">Account</string>
+    <string name="label_language_setting">Language</string>
+    <string name="title_setting_page">Setting</string>
+    <string name="explanation_saved_colors">Save and revisit the perfect colors for your outfit combinations. Keep track of the outfit shades designed just for you.</string>
+    <string name="title_saved_page">Your Saved Colors</string>
+    <string name="explanation_home_page">Find Your Perfect Outfit Based on Your Skin Tone</string>
+    <string name="example_email_home_page">Ujang@gmail.com</string>
+    <string name="title_welcome_home_page">Welcome, to SmartFit</string>
+    <string name="explanation_news_page">Discover outfit inspirations tailored to your style and skin tone. Keep up with the latest trends to inspire your style and Stay confident with the latest trends and outfit ideas.</string>
+    <string name="title_news_page">Latest Fashion Trends</string>
 
 </resources>

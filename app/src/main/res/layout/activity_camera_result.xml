@@ -14,7 +14,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:fontFamily="@font/roboto_black"
-        android:text="Button"
+        android:backgroundTint="@null"
+        app:backgroundTint="@null"
+        style="@style/CustomButtonDark"
+        android:text="@string/btn_next_to_result"
         android:textAllCaps="false"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/cv_image_placeholder"
@@ -45,7 +48,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_image" />
+                app:srcCompat="@drawable/ic_image"
+                tools:ignore="ContentDescription" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
@@ -81,7 +85,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_arrow_left" />
+                    app:srcCompat="@drawable/ic_arrow_left"
+                    tools:ignore="ContentDescription" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
     </androidx.constraintlayout.widget.ConstraintLayout>

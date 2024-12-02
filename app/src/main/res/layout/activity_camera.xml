@@ -10,26 +10,32 @@
 
     <Button
         android:id="@+id/btn_open_galery"
+        style="@style/CustomButtonDark"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginTop="20dp"
+        android:backgroundTint="@null"
         android:fontFamily="@font/roboto_black"
-        android:text="Galery"
+        android:text="@string/open_galery"
         android:textAllCaps="false"
         android:textSize="16sp"
+        app:backgroundTint="@null"
         app:layout_constraintEnd_toEndOf="@+id/btn_open_camera"
         app:layout_constraintStart_toStartOf="@+id/btn_open_camera"
         app:layout_constraintTop_toBottomOf="@+id/btn_open_camera" />
 
     <Button
         android:id="@+id/btn_open_camera"
+        style="@style/CustomButtonDark"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginTop="50dp"
+        android:backgroundTint="@null"
         android:fontFamily="@font/roboto_black"
-        android:text="Camera"
+        android:text="@string/open_camera"
         android:textAllCaps="false"
         android:textSize="16sp"
+        app:backgroundTint="@null"
         app:layout_constraintEnd_toEndOf="@+id/cv_camera"
         app:layout_constraintStart_toStartOf="@+id/cv_camera"
         app:layout_constraintTop_toBottomOf="@+id/cv_camera" />
@@ -58,7 +64,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@drawable/ic_image" />
+                tools:srcCompat="@drawable/ic_image"
+                tools:ignore="ContentDescription" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
@@ -67,8 +74,8 @@
         android:layout_width="330dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:fontFamily="@font/roboto_bold"
-        android:text="Capture or Select a Photo to Start"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="@string/title_capture_camera"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="25sp"
@@ -108,7 +115,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_arrow_left" />
+                    app:srcCompat="@drawable/ic_arrow_left"
+                    tools:ignore="ContentDescription" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
     </androidx.constraintlayout.widget.ConstraintLayout>

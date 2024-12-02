@@ -17,5 +17,6 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
-      tools:srcCompat="@drawable/logo_smartfit" />
+      tools:srcCompat="@drawable/logo_smartfit"
+      tools:ignore="ContentDescription" />
 </androidx.constraintlayout.widget.ConstraintLayout>

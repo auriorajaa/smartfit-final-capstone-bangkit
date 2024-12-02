@@ -16,7 +16,7 @@
         android:background="@drawable/custom_button_dark"
         android:backgroundTint="@null"
         android:fontFamily="@font/roboto_black"
-        android:text="Sign Up"
+        android:text="@string/btn_sign_up"
         android:textAllCaps="false"
         android:textSize="16sp"
         app:backgroundTint="@null"
@@ -55,14 +55,15 @@
                 android:drawablePadding="12dp"
                 android:ems="10"
                 android:fontFamily="@font/roboto_light"
-                android:hint="type your name"
+                android:hint="@string/enter_name_signup"
                 android:inputType="textEmailAddress"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView10" />
+                app:layout_constraintTop_toBottomOf="@+id/textView10"
+                tools:ignore="Autofill" />
 
 
             <TextView
@@ -72,7 +73,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="25dp"
                 android:fontFamily="@font/roboto_bold"
-                android:text="Name"
+                android:text="@string/label_name_signup"
                 android:textColor="@color/white2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -89,14 +90,15 @@
                 android:drawablePadding="12dp"
                 android:ems="10"
                 android:fontFamily="@font/roboto_light"
-                android:hint="type your password"
+                android:hint="@string/enter_password_signup"
                 android:inputType="textPassword"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView6" />
+                app:layout_constraintTop_toBottomOf="@+id/textView6"
+                tools:ignore="Autofill" />
 
             <TextView
                 android:id="@+id/textView6"
@@ -104,7 +106,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/roboto_bold"
-                android:text="Password"
+                android:text="@string/label_password_signup"
                 android:textColor="@color/white2"
                 app:layout_constraintStart_toStartOf="@+id/et_email_register"
                 app:layout_constraintTop_toBottomOf="@+id/et_email_register" />
@@ -121,14 +123,15 @@
                 android:drawablePadding="12dp"
                 android:ems="10"
                 android:fontFamily="@font/roboto_light"
-                android:hint="type your email"
+                android:hint="@string/enter_email_signup"
                 android:inputType="textEmailAddress"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView5" />
+                app:layout_constraintTop_toBottomOf="@+id/textView5"
+                tools:ignore="Autofill" />
 
             <TextView
                 android:id="@+id/textView5"
@@ -137,7 +140,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/roboto_bold"
-                android:text="Email"
+                android:text="@string/label_email_signup"
                 android:textColor="@color/white2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/et_name_register" />
@@ -149,7 +152,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_black"
-        android:text="Sign Up"
+        android:text="@string/title_signup_page"
         android:textColor="@color/white2"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="@+id/imageView7"
@@ -164,5 +167,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo_polos" />
+        app:srcCompat="@drawable/logo_polos"
+        tools:ignore="ContentDescription" />
 </androidx.constraintlayout.widget.ConstraintLayout>
