@@ -25,11 +25,15 @@ class CategoryActivity : AppCompatActivity() {
         binding.menButton.setOnClickListener {
             selectedGender = "men"
             binding.clothingTypeContainer.visibility = View.VISIBLE
+            binding.menButton.visibility = View.GONE
+            binding.womenButton.visibility = View.GONE
         }
 
         binding.womenButton.setOnClickListener {
             selectedGender = "women"
             binding.clothingTypeContainer.visibility = View.VISIBLE
+            binding.menButton.visibility = View.GONE
+            binding.womenButton.visibility = View.GONE
         }
 
         binding.formalButton.setOnClickListener {
