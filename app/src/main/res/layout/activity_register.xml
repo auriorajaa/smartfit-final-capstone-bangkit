@@ -11,13 +11,15 @@
     <Button
         android:id="@+id/btn_signUp"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginTop="50dp"
         android:background="@drawable/custom_button_dark"
+        android:backgroundTint="@null"
         android:fontFamily="@font/roboto_black"
         android:text="Sign Up"
         android:textAllCaps="false"
         android:textSize="16sp"
+        app:backgroundTint="@null"
         app:layout_constraintEnd_toEndOf="@+id/materialCardView"
         app:layout_constraintStart_toStartOf="@+id/materialCardView"
         app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
