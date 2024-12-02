@@ -7,10 +7,12 @@
 
     <style name="Theme.SmartFit" parent="Base.Theme.SmartFit" />
 
-    <style name="MyCard" parent="Widget.MaterialComponents.CardView">
-        <item name="strokeColor">@color/greystroke</item>
-        <item name="strokeWidth">2dp</item>
+    <style name="CustomCardView" parent="Widget.MaterialComponents.CardView">
+        <item name="cardCornerRadius">11dp</item>
+        <item name="cardBackgroundColor">@color/lightcoral</item>
+        <item name="strokeColor">@color/palecream</item>
+        <item name="strokeWidth">2.5dp</item>
 <!--        <item name="rippleColor">@color/cream</item>-->
-<!--        <item name="cardBackgroundColor">@color/semitransparentgrey</item>-->
+
     </style>
 </resources>
