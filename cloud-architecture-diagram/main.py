@@ -1,6 +1,6 @@
 from diagrams import Cluster, Diagram
-from diagrams.gcp.compute import Run
-from diagrams.gcp.database import Firestore
+from diagrams.gcp.compute import AppEngine
+from diagrams.gcp.database import Firebase
 from diagrams.gcp.devtools import ContainerRegistry
 from diagrams.gcp.ml import AIPlatform
 from diagrams.gcp.storage import GCS
@@ -17,14 +17,14 @@ with Diagram("ML Model Deployment Architecture", show=False, direction="LR"):
 
     # Backend Service
     with Cluster("Backend Service"):
-        cloud_run = Run("Cloud Run", fontweight="normal")
+        app_engine = AppEngine("App Engine", fontweight="normal")
 
     # Database
     with Cluster("Database"):
-        firestore = Firestore("Firestore\n(User History)", fontweight="normal")
+        firebase = Firebase("Firebase\n(User History)", fontweight="normal")
 
     # Flow
     ml_model >> storage
-    storage >> cloud_run
-    registry >> cloud_run
-    cloud_run >> firestore
+    storage >> app_engine
+    registry >> app_engine
+    app_engine >> firebase
