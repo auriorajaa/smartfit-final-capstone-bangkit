@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="15dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="10dp"
         android:elevation="0dp"
@@ -22,7 +23,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" >
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -53,8 +54,10 @@
                         android:id="@+id/iv_image_home"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="50dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
                         android:src="@drawable/image_home"
+                        app:layout_constraintBottom_toTopOf="@+id/tv_container2"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -65,7 +68,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="15dp"
+                        android:layout_marginTop="5dp"
                         android:layout_marginEnd="15dp"
+                        android:layout_marginBottom="5dp"
                         android:backgroundTint="@null"
                         android:fontFamily="@font/roboto_bold"
                         android:text="Let's Start"
@@ -85,10 +90,12 @@
                         android:layout_marginStart="15dp"
                         android:layout_marginTop="30dp"
                         android:layout_marginEnd="15dp"
+                        android:layout_marginBottom="10dp"
                         android:fontFamily="@font/roboto_regular"
                         android:text="Discover the ideal outfits tailored specifically to your skin tone, so you can always look and feel your best."
                         android:textAlignment="center"
                         android:textColor="@color/salmonpink"
+                        app:layout_constraintBottom_toTopOf="@+id/btn_lets_start"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/iv_image_home" />
@@ -150,7 +157,7 @@
             android:id="@+id/tv_explanation_home"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="12dp"
             android:layout_marginEnd="15dp"
             android:fontFamily="@font/roboto_light"
             android:text="@string/explanation_home_page"

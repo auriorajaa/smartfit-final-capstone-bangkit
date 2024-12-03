@@ -3,6 +3,9 @@
     <style name="Base.Theme.SmartFit" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@color/white3</item>
+        <item name="android:windowLightStatusBar">true</item> <!-- Ikon status bar gelap -->
     </style>
 
     <style name="Theme.SmartFit" parent="Base.Theme.SmartFit" />
