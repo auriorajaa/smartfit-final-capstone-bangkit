@@ -2,6 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="semitransparentwhite">#80FFFFFF</color>
     
     <color name="salmonpink">#E97777</color>
     <color name="lightcoral">#FF9F9F</color>
