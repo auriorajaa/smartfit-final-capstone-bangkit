@@ -59,6 +59,7 @@ dependencies {
     implementation(libs.okhttp)
     implementation(libs.glide)
     kapt(libs.glide.compiler)
+    implementation(libs.threetenbp)
 
     // Dependency Firebase
     implementation(libs.firebase.auth)

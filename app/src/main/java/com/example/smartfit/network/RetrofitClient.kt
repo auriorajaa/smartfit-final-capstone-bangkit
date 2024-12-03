@@ -10,9 +10,9 @@ object RetrofitClient {
     private val BASE_URL = BuildConfig.API_BASE_URL
 
     private val okHttpClient = OkHttpClient.Builder()
-        .connectTimeout(60, TimeUnit.SECONDS)  // Sesuaikan nilai ini sesuai kebutuhan Anda
-        .readTimeout(60, TimeUnit.SECONDS)     // Sesuaikan nilai ini sesuai kebutuhan Anda
-        .writeTimeout(60, TimeUnit.SECONDS)    // Sesuaikan nilai ini sesuai kebutuhan Anda
+        .connectTimeout(60, TimeUnit.SECONDS)
+        .readTimeout(60, TimeUnit.SECONDS)
+        .writeTimeout(60, TimeUnit.SECONDS)
         .build()
 
     val instance: ApiService by lazy {

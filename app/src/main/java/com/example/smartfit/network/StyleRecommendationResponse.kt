@@ -34,3 +34,24 @@ data class AmazonProduct(
     val sales_volume: String,
     val title: String
 )
+
+data class ColorPalette(
+    val dark_colors: List<String>,
+    val light_colors: List<String>
+)
+
+data class PredictionHistory(
+    val prediction_key: String,
+    val amazon_products: List<AmazonProduct>,
+    val clothing_type: String,
+    val color_palette: ColorPalette,
+    val outfit_recommendations: List<OutfitRecommendation>,
+    val seasonal_color_label: String,
+    val seasonal_description: String,
+    val seasonal_probability: Double,
+    val skin_tone_hex: String,
+    val skin_tone_label: String,
+    val skin_tone_probability: Double,
+    val timestamp: String,
+    val user_uid: String
+)
