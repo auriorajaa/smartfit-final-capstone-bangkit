@@ -9,7 +9,7 @@ Welcome to the **Cloud Computing** branch of the **SmartFit** project! This part
 
 ## Cloud Architecture 🏗️
 Below is a diagram showing how we deploy the ML model and handle the backend services for SmartFit.
-![arsitektur](cloud-architecture-diagram/arsiitektur.png)
+![arsitektur](cloud-architecture-diagram/outfit_recommendation_system.png)
 
 ## Steps We Took 📝
 - **Deploying the ML Model**: The trained model is deployed using **Google Cloud Storage**.
