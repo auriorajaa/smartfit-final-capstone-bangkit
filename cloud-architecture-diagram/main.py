@@ -1,30 +1,31 @@
-from diagrams import Cluster, Diagram
-from diagrams.gcp.compute import AppEngine
-from diagrams.gcp.database import Firebase
-from diagrams.gcp.devtools import ContainerRegistry
+from diagrams import Diagram, Cluster
 from diagrams.gcp.ml import AIPlatform
-from diagrams.gcp.storage import GCS
+from diagrams.gcp.devtools import ContainerRegistry
+from diagrams.firebase.develop import RealtimeDatabase
+from diagrams.gcp.compute import AppEngine
+from diagrams.gcp.storage import Storage
+from diagrams.onprem.client import Users
 
-with Diagram("ML Model Deployment Architecture", show=False, direction="LR"):
-    # ML Team's Model
-    with Cluster("Machine Learning Team"):
-        ml_model = AIPlatform("ML Model", fontweight="normal")
+# Membuat diagram
+with Diagram(
+    "Outfit Recommendation System",
+    show=True,
+    direction="LR"
+):
+    # User interaction
+    user = Users("User")
 
-    # Storage and Registry
-    with Cluster("Storage & Registry"):
-        storage = GCS("Cloud Storage\n(Public Model)", fontweight="normal")
-        registry = ContainerRegistry("Artifact Registry", fontweight="normal")
+    # Google Cloud services cluster
+    with Cluster("Google Cloud Platform"):
+        backend = AppEngine("Backend Service")
+        storage = Storage("Cloud Storage")
+        model_registry = ContainerRegistry("Artifact Registry")
+        ml_model = AIPlatform("ML Model")
+        firebase_db = RealtimeDatabase("Firebase Database")
 
-    # Backend Service
-    with Cluster("Backend Service"):
-        app_engine = AppEngine("App Engine", fontweight="normal")
-
-    # Database
-    with Cluster("Database"):
-        firebase = Firebase("Firebase\n(User History)", fontweight="normal")
-
-    # Flow
-    ml_model >> storage
-    storage >> app_engine
-    registry >> app_engine
-    app_engine >> firebase
+    # Data flow
+    user >> backend
+    backend >> storage
+    backend >> model_registry >> ml_model
+    ml_model >> backend >> firebase_db
+    backend >> user
