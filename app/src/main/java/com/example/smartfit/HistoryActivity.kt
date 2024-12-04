@@ -85,6 +85,9 @@ class HistoryActivity : AppCompatActivity() {
                             )
                             predictionHistoryList.add(predictionHistory)
                         }
+
+                        predictionHistoryList.reverse()
+
                         if (predictionHistoryList.isNotEmpty()) {
                             adapter = PredictionHistoryAdapter(predictionHistoryList)
                             binding.historyRecyclerView.adapter = adapter
@@ -98,13 +101,11 @@ class HistoryActivity : AppCompatActivity() {
                         Toast.makeText(this@HistoryActivity, "No history found", Toast.LENGTH_SHORT).show()
                     }
                 } else {
-                    // Handle unsuccessful response
                     Toast.makeText(this@HistoryActivity, "Failed to fetch history", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onFailure(call: Call<JsonObject>, t: Throwable) {
-                // Handle failure
                 Toast.makeText(this@HistoryActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
             }
         })

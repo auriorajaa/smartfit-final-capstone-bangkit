@@ -1,5 +1,7 @@
 package com.example.smartfit
 
+import android.app.AlertDialog
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,9 +41,31 @@ class PredictionHistoryAdapter(private val predictionHistoryList: MutableList<Pr
                 binding.productImageView.visibility = View.GONE
             }
 
-            binding.deleteButton.setOnClickListener {
-                deletePredictionHistory(predictionHistory.prediction_key, adapterPosition)
+            // Set up item click listener to open DetailActivity
+            binding.root.setOnClickListener {
+                val context = binding.root.context
+                val intent = Intent(context, DetailActivity::class.java).apply {
+                    putExtra("PREDICTION_KEY", predictionHistory.prediction_key)
+                    putExtra("USER_ID", predictionHistory.user_uid)
+                }
+                context.startActivity(intent)
             }
+
+            binding.deleteButton.setOnClickListener {
+                showDeleteConfirmationDialog(predictionHistory.prediction_key, adapterPosition)
+            }
+        }
+
+        private fun showDeleteConfirmationDialog(predictionKey: String, position: Int) {
+            val context = binding.root.context
+            AlertDialog.Builder(context).apply {
+                setTitle("Delete Confirmation")
+                setMessage("Are you sure you want to delete this prediction history?")
+                setPositiveButton("Yes") { _, _ ->
+                    deletePredictionHistory(predictionKey, position)
+                }
+                setNegativeButton("No", null)
+            }.create().show()
         }
 
         private fun deletePredictionHistory(predictionKey: String, position: Int) {

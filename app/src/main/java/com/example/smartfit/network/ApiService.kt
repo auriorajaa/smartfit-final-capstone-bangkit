@@ -30,4 +30,10 @@ interface ApiService {
         @Part("uid") uid: RequestBody,
         @Part("prediction_key") predictionKey: RequestBody
     ): Call<JsonObject>
+
+    @GET("get_prediction_history_detail")
+    fun getPredictionHistoryDetail(
+        @Query("uid") uid: String,
+        @Query("prediction_key") predictionKey: String
+    ): Call<JsonObject>
 }
