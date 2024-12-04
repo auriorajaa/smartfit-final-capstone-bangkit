@@ -34,7 +34,6 @@ class ProfileActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance()
 
-        // Konfigurasi GoogleSignInClient
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
@@ -75,7 +74,6 @@ class ProfileActivity : AppCompatActivity() {
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    // Handle possible errors
                     binding.loadingProgressBar.visibility = View.GONE
                 }
             })
@@ -122,16 +120,13 @@ class ProfileActivity : AppCompatActivity() {
         currentUser?.let {
             val providers = it.providerData.map { provider -> provider.providerId }
             if (providers.contains(GoogleAuthProvider.PROVIDER_ID)) {
-                // Mendapatkan ID token dari Google SignIn Client
                 val signInAccount = GoogleSignIn.getLastSignedInAccount(this)
                 if (signInAccount != null) {
                     val idToken = signInAccount.idToken
                     if (idToken != null) {
-                        // Re-autentikasi menggunakan Google provider
                         val credential = GoogleAuthProvider.getCredential(idToken, null)
                         it.reauthenticate(credential).addOnCompleteListener { reauthTask ->
                             if (reauthTask.isSuccessful) {
-                                // Lanjutkan dengan penghapusan akun
                                 deleteUserAccount()
                             } else {
                                 showAlertDialog("Re-authentication Failed", "Please sign in again and try deleting your account.", false)
@@ -144,7 +139,6 @@ class ProfileActivity : AppCompatActivity() {
                     showAlertDialog("No Google Sign-In Account Found", "Please sign in with Google again.", false)
                 }
             } else if (providers.contains(EmailAuthProvider.PROVIDER_ID)) {
-                // Re-autentikasi menggunakan email provider
                 val email = it.email
                 if (email != null) {
                     showEmailPasswordReauthDialog(email)
@@ -152,7 +146,6 @@ class ProfileActivity : AppCompatActivity() {
                     showAlertDialog("Re-authentication Failed", "Email not found for re-authentication.", false)
                 }
             } else {
-                // Unsupported provider, show error
                 showAlertDialog("Re-authentication Failed", "Unsupported authentication provider.", false)
             }
         }
@@ -163,7 +156,7 @@ class ProfileActivity : AppCompatActivity() {
         val bindingDialog = DialogReauthenticateBinding.inflate(layoutInflater)
         builder.setView(bindingDialog.root)
 
-        bindingDialog.emailEditText.setText(email) // Prasetel email pengguna
+        bindingDialog.emailEditText.setText(email)
 
         builder.setPositiveButton("Authenticate") { dialog, _ ->
             val password = bindingDialog.passwordEditText.text.toString()
@@ -171,7 +164,6 @@ class ProfileActivity : AppCompatActivity() {
 
             auth.currentUser?.reauthenticate(credential)?.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    // Lanjutkan dengan penghapusan akun setelah autentikasi ulang berhasil
                     deleteUserAccount()
                 } else {
                     showAlertDialog("Authentication Failed", "Re-authentication failed. Please try again.", false)
@@ -189,24 +181,30 @@ class ProfileActivity : AppCompatActivity() {
         currentUser?.let {
             val uid = it.uid
             val userRef = database.reference.child("users").child(uid)
+            val historyRef = database.reference.child("prediction_history").child(uid)
 
-            // Delete user data from Realtime Database
-            userRef.removeValue().addOnCompleteListener { dbTask ->
-                if (dbTask.isSuccessful) {
-                    // Delete user from Firebase Authentication
+            userRef.removeValue().continueWithTask { userTask ->
+                if (userTask.isSuccessful) {
+                    historyRef.removeValue()
+                } else {
+                    throw userTask.exception ?: Exception("Failed to delete user data")
+                }
+            }.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
                     currentUser.delete().addOnCompleteListener { authTask ->
                         if (authTask.isSuccessful) {
-                            showAlertDialog("Account Deleted", "Your account has been successfully deleted.", true)
+                            showAlertDialog("Account Deleted", "Your account and history have been successfully deleted.", true)
                         } else {
                             showAlertDialog("Deletion Failed", authTask.exception?.message ?: "Unknown error occurred.", false)
                         }
                     }
                 } else {
-                    showAlertDialog("Deletion Failed", dbTask.exception?.message ?: "Unknown error occurred.", false)
+                    showAlertDialog("Deletion Failed", task.exception?.message ?: "Unknown error occurred.", false)
                 }
             }
         }
     }
+
 
     private fun showAlertDialog(title: String, message: String, isSuccess: Boolean) {
         val builder = AlertDialog.Builder(this)

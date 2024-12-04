@@ -1,10 +1,11 @@
 package com.example.smartfit
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.smartfit.databinding.ActivityResultBinding
@@ -33,7 +34,6 @@ class ResultActivity : AppCompatActivity() {
         val imagePath = intent.getStringExtra("IMAGE_PATH")
         val uid = intent.getStringExtra("UID") ?: "unknown_user"
         val clothingType = intent.getStringExtra("CLOTHING_TYPE") ?: "streetwear"
-        Log.d("ResultActivity", "Received clothingType: $clothingType")
 
         binding.outfitRecommendations.layoutManager = LinearLayoutManager(this)
         binding.amazonProducts.layoutManager = LinearLayoutManager(this)
@@ -49,32 +49,26 @@ class ResultActivity : AppCompatActivity() {
     }
 
     private fun sendRequest(image: MultipartBody.Part, uid: String, clothingType: String) {
-        Log.d("ResultActivity", "Sending request with UID: $uid, ClothingType: $clothingType, Image: ${image.body.contentLength()} bytes")
-
         val uidPart = MultipartBody.Part.createFormData("uid", uid)
         val clothingTypePart = MultipartBody.Part.createFormData("clothing_type", clothingType)
 
         CoroutineScope(Dispatchers.IO).launch {
             val call = RetrofitClient.instance.getStyleRecommendation(image, uidPart, clothingTypePart)
-            Log.d("ResultActivity", "Sending request with UID: $uid, ClothingType: $clothingType, Image: ${image.body.contentLength()} bytes")
             call.enqueue(object : Callback<StyleRecommendationResponse> {
                 override fun onResponse(call: Call<StyleRecommendationResponse>, response: Response<StyleRecommendationResponse>) {
-                    Log.d("ResultActivity", "Response: ${response.raw()}")
                     if (response.isSuccessful) {
                         response.body()?.let {
-                            Log.d("ResultActivity", "Response body: $it")
                             CoroutineScope(Dispatchers.Main).launch {
                                 displayResult(it)
                             }
                         }
                     } else {
-                        Log.e("ResultActivity", "Request failed with code: ${response.code()} and message: ${response.message()}")
-                        Log.e("ResultActivity", "Response: ${response.errorBody()?.string()}")
+                        showRetryDialog()
                     }
                 }
 
                 override fun onFailure(call: Call<StyleRecommendationResponse>, t: Throwable) {
-                    Log.e("ResultActivity", "Request failed", t)
+                    showRetryDialog()
                 }
             })
         }
@@ -85,17 +79,12 @@ class ResultActivity : AppCompatActivity() {
         binding.skinToneLabel.text = result.skin_tone_label
         binding.seasonalDescription.text = result.seasonal_description
 
-        // Menangani color_palette yang bisa berupa string atau array
-        when {
-            result.color_palette.isJsonObject -> {
-                val paletteObject = result.color_palette.asJsonObject
-
-                val darkColors = paletteObject["dark_colors"].asJsonArray.map { it.asString }
-                val lightColors = paletteObject["light_colors"].asJsonArray.map { it.asString }
-
-                displayColorBoxes(binding.darkColorsLayout, darkColors)
-                displayColorBoxes(binding.lightColorsLayout, lightColors)
-            }
+        if (result.color_palette.isJsonObject) {
+            val paletteObject = result.color_palette.asJsonObject
+            val darkColors = paletteObject["dark_colors"].asJsonArray.map { it.asString }
+            val lightColors = paletteObject["light_colors"].asJsonArray.map { it.asString }
+            displayColorBoxes(binding.darkColorsLayout, darkColors)
+            displayColorBoxes(binding.lightColorsLayout, lightColors)
         }
 
         val outfitAdapter = OutfitRecommendationAdapter(result.outfit_recommendations)
@@ -121,5 +110,20 @@ class ResultActivity : AppCompatActivity() {
             }
             layout.addView(colorBox)
         }
+    }
+
+    private fun showRetryDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("Prediction Failed")
+            .setMessage("The prediction process failed. Please try scanning with a different image.")
+            .setPositiveButton("Retry") { _, _ ->
+                val intent = Intent(this, ChooseActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+            .setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 }

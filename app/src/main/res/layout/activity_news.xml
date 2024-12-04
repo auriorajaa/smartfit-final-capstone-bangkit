@@ -6,23 +6,9 @@
     android:padding="16dp">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/historyRecyclerView"
+        android:id="@+id/newsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-    <TextView
-        android:id="@+id/emptyView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="You have no history records yet. Scan to get started!"
-        android:textSize="18sp"
-        android:textColor="@android:color/darker_gray"
-        android:gravity="center"
-        android:visibility="gone"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

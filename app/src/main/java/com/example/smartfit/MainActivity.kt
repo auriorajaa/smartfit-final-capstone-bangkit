@@ -28,6 +28,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.newsButton.setOnClickListener {
+            val intent = Intent(this, NewsActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.fab.setOnClickListener {
             val intent = Intent(this, ChooseActivity::class.java)
             startActivity(intent)

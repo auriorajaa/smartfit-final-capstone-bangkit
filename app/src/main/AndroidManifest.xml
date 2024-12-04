@@ -29,6 +29,9 @@
         android:theme="@style/Theme.SmartFit"
         tools:targetApi="31">
         <activity
+            android:name=".NewsActivity"
+            android:exported="false" />
+        <activity
             android:name=".DetailActivity"
             android:exported="false" />
         <activity

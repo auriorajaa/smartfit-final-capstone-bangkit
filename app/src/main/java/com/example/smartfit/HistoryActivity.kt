@@ -86,6 +86,7 @@ class HistoryActivity : AppCompatActivity() {
                             predictionHistoryList.add(predictionHistory)
                         }
 
+                        // Balik urutan data agar data terbaru ada di atas
                         predictionHistoryList.reverse()
 
                         if (predictionHistoryList.isNotEmpty()) {
@@ -98,14 +99,20 @@ class HistoryActivity : AppCompatActivity() {
                             binding.emptyView.visibility = View.VISIBLE
                         }
                     } else {
+                        binding.historyRecyclerView.visibility = View.GONE
+                        binding.emptyView.visibility = View.VISIBLE
                         Toast.makeText(this@HistoryActivity, "No history found", Toast.LENGTH_SHORT).show()
                     }
                 } else {
+                    binding.historyRecyclerView.visibility = View.GONE
+                    binding.emptyView.visibility = View.VISIBLE
                     Toast.makeText(this@HistoryActivity, "Failed to fetch history", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                binding.historyRecyclerView.visibility = View.GONE
+                binding.emptyView.visibility = View.VISIBLE
                 Toast.makeText(this@HistoryActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
             }
         })

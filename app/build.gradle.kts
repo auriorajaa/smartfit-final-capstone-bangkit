@@ -18,6 +18,8 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField ("String", "API_BASE_URL", "\"https://ancient-wave-440505-q8.et.r.appspot.com/\"")
+        buildConfigField("String", "NEWS_API_BASE_URL", "\"https://newsapi.org/v2/\"")
+        buildConfigField("String", "NEWS_API_KEY", "\"a762ffb537f64369b471844153fef586\"")
     }
 
     buildTypes {
@@ -60,6 +62,7 @@ dependencies {
     implementation(libs.glide)
     kapt(libs.glide.compiler)
     implementation(libs.threetenbp)
+    implementation(libs.logging.interceptor)
 
     // Dependency Firebase
     implementation(libs.firebase.auth)
