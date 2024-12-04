@@ -12,10 +12,10 @@ class CameraActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_camera)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+
+        val backButton = findViewById<androidx.cardview.widget.CardView>(R.id.btn_back_camera)
+        backButton.setOnClickListener {
+            finish()
         }
     }
 }

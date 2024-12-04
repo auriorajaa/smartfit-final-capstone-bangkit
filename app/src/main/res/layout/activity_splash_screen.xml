@@ -4,19 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
+    android:fitsSystemWindows="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_smartfit"
+    android:background="@drawable/bg_new3"
     tools:context=".view.splashscreen.SplashScreenActivity">
 
   <ImageView
-      android:id="@+id/imageView"
+      android:id="@+id/iv_logo_smartfit"
       android:layout_width="wrap_content"
       android:layout_height="300dp"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
-      tools:srcCompat="@drawable/logo_smartfit"
-      tools:ignore="ContentDescription" />
+      app:srcCompat="@drawable/logo_smartfit" />
 </androidx.constraintlayout.widget.ConstraintLayout>

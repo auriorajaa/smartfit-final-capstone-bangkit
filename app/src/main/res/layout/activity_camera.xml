@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    android:fitsSystemWindows="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_new3"
@@ -15,6 +16,7 @@
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
         android:backgroundTint="@null"
+        android:textColor="@color/palecream"
         android:fontFamily="@font/roboto_black"
         android:text="@string/open_galery"
         android:textAllCaps="false"
@@ -31,6 +33,7 @@
         android:layout_height="50dp"
         android:layout_marginTop="50dp"
         android:backgroundTint="@null"
+        android:textColor="@color/palecream"
         android:fontFamily="@font/roboto_black"
         android:text="@string/open_camera"
         android:textAllCaps="false"
@@ -57,15 +60,14 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/iv_camera"
+                android:id="@+id/imageView8"
                 android:layout_width="300dp"
                 android:layout_height="300dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@drawable/ic_image"
-                tools:ignore="ContentDescription" />
+                app:srcCompat="@drawable/ic_image" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
@@ -74,7 +76,7 @@
         android:layout_width="330dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:fontFamily="@font/montserrat_bold"
+        android:fontFamily="@font/roboto_bold"
         android:text="@string/title_capture_camera"
         android:textAlignment="center"
         android:textColor="@color/white"
@@ -108,8 +110,8 @@
 
                 <ImageView
                     android:id="@+id/imageView10"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_marginEnd="3dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
