@@ -25,6 +25,16 @@ class AmazonProductAdapter(private val context: Context, private val products: L
                 }
             }
         }
+
+        fun bind(product: AmazonProduct) {
+            Glide.with(context).load(product.pic).into(binding.productImage)
+            binding.productTitle.visibility = View.GONE
+            binding.productDescription.visibility = View.GONE
+            binding.productPrice.visibility = View.GONE
+            binding.productSalesVolume.visibility = View.GONE
+            binding.productDelivery.visibility = View.GONE
+            binding.productPrime.visibility = View.GONE
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -33,17 +43,7 @@ class AmazonProductAdapter(private val context: Context, private val products: L
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val product = products[position]
-        with(holder.binding) {
-            Glide.with(context).load(product.pic).into(productImage)
-            productTitle.text = product.title
-            productDescription.text = product.description
-            productPrice.text = product.price ?: "Price not available"
-            productSalesVolume.text = product.sales_volume
-            productDelivery.text = product.delivery
-            productPrime.visibility = if (product.is_prime) View.VISIBLE else View.GONE
-            productPrime.text = if (product.is_prime) "Prime" else ""
-        }
+        holder.bind(products[position])
     }
 
     override fun getItemCount(): Int = products.size
