@@ -10,7 +10,6 @@ import android.widget.LinearLayout
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.smartfit.databinding.ActivityResultBinding
 import com.example.smartfit.network.RetrofitClient
 import com.example.smartfit.network.StyleRecommendationResponse
@@ -29,11 +28,9 @@ import java.io.File
 class ResultActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityResultBinding
-    private lateinit var amazonProductAdapter: AmazonProductAdapter
-    private lateinit var outfitRecommendationAdapter: OutfitRecommendationAdapter
+    private lateinit var mixedAdapter: MixedAdapter
     private lateinit var handler: Handler
-    private var amazonScrollPosition = 0
-    private var outfitScrollPosition = 0
+    private var scrollPosition = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,9 +41,8 @@ class ResultActivity : AppCompatActivity() {
         val uid = intent.getStringExtra("UID") ?: "unknown_user"
         val clothingType = intent.getStringExtra("CLOTHING_TYPE") ?: "streetwear"
 
-        // Atur LinearLayoutManager horizontal untuk AmazonProducts
-        binding.amazonProducts.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        binding.outfitRecommendations.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.mixedRecyclerView.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
         imagePath?.let {
             val imageFile = File(it)
@@ -57,7 +53,6 @@ class ResultActivity : AppCompatActivity() {
             }
         }
 
-        // Inisialisasi Handler untuk menggerakkan RecyclerView
         handler = Handler(Looper.getMainLooper())
     }
 
@@ -66,9 +61,13 @@ class ResultActivity : AppCompatActivity() {
         val clothingTypePart = MultipartBody.Part.createFormData("clothing_type", clothingType)
 
         CoroutineScope(Dispatchers.IO).launch {
-            val call = RetrofitClient.instance.getStyleRecommendation(image, uidPart, clothingTypePart)
+            val call =
+                RetrofitClient.instance.getStyleRecommendation(image, uidPart, clothingTypePart)
             call.enqueue(object : Callback<StyleRecommendationResponse> {
-                override fun onResponse(call: Call<StyleRecommendationResponse>, response: Response<StyleRecommendationResponse>) {
+                override fun onResponse(
+                    call: Call<StyleRecommendationResponse>,
+                    response: Response<StyleRecommendationResponse>
+                ) {
                     if (response.isSuccessful) {
                         response.body()?.let {
                             CoroutineScope(Dispatchers.Main).launch {
@@ -100,26 +99,24 @@ class ResultActivity : AppCompatActivity() {
             displayColorBoxes(binding.lightColorsLayout, lightColors)
         }
 
-        outfitRecommendationAdapter = OutfitRecommendationAdapter(result.outfit_recommendations)
-        binding.outfitRecommendations.adapter = outfitRecommendationAdapter
-        startAutoScrollOutfits()
-
-        amazonProductAdapter = AmazonProductAdapter(this, result.amazon_products)
-        binding.amazonProducts.adapter = amazonProductAdapter
-        startAutoScrollAmazon()
+        mixedAdapter = MixedAdapter(this, result.amazon_products, result.outfit_recommendations)
+        binding.mixedRecyclerView.adapter = mixedAdapter
+        startAutoScroll()
 
         binding.seasonalProbabilityLabel.text = "Seasonal Probability: ${result.seasonal_probability}%"
         binding.skinToneHexLabel.text = "Skin Tone Hex: ${result.skin_tone_hex}"
         binding.skinToneProbabilityLabel.text = "Skin Tone Probability: ${result.skin_tone_probability}%"
         binding.timestampLabel.text = "Timestamp: ${result.timestamp}"
 
-        // Kirim notifikasi setelah hasil scan ditampilkan
+        displaySkinToneHexColorBox(result.skin_tone_hex)
+
         NotificationHelper.sendNotification(
             this,
             "Scan Result Ready!",
             "Hasil scan telah tersedia. Cek rekomendasi gaya terbaru Anda sekarang!"
         )
     }
+
 
     private fun displayColorBoxes(layout: LinearLayout, colors: List<String>) {
         layout.removeAllViews()
@@ -132,6 +129,11 @@ class ResultActivity : AppCompatActivity() {
             }
             layout.addView(colorBox)
         }
+    }
+
+    private fun displaySkinToneHexColorBox(hexColor: String) {
+        val colorBox = binding.skinToneHexColorBox
+        colorBox.setBackgroundColor(Color.parseColor(hexColor))
     }
 
     private fun showRetryDialog() {
@@ -149,29 +151,14 @@ class ResultActivity : AppCompatActivity() {
             .show()
     }
 
-    private fun startAutoScrollAmazon() {
+    private fun startAutoScroll() {
         handler.postDelayed(object : Runnable {
             override fun run() {
-                amazonScrollPosition++
-                if (amazonScrollPosition == amazonProductAdapter.itemCount) {
-                    amazonScrollPosition = 0
+                scrollPosition++
+                if (scrollPosition == mixedAdapter.itemCount) {
+                    scrollPosition = 0
                 }
-                binding.amazonProducts.smoothScrollToPosition(amazonScrollPosition)
-                handler.postDelayed(this, 2000)
-            }
-        }, 2000)
-    }
-
-    private fun startAutoScrollOutfits() {
-        handler.postDelayed(object : Runnable {
-            override fun run() {
-                if (::outfitRecommendationAdapter.isInitialized) {
-                    outfitScrollPosition++
-                    if (outfitScrollPosition == outfitRecommendationAdapter.itemCount) {
-                        outfitScrollPosition = 0
-                    }
-                    binding.outfitRecommendations.smoothScrollToPosition(outfitScrollPosition)
-                }
+                binding.mixedRecyclerView.smoothScrollToPosition(scrollPosition)
                 handler.postDelayed(this, 2000)
             }
         }, 2000)

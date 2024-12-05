@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.smartfit.databinding.ActivityDetailBinding
-import com.example.smartfit.network.PredictionHistory
 import com.example.smartfit.network.RetrofitClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -17,6 +16,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import android.view.View
 import android.graphics.Color
+import android.os.Handler
+import android.os.Looper
 import android.widget.LinearLayout
 import com.example.smartfit.network.AmazonProduct
 import com.example.smartfit.network.OutfitRecommendation
@@ -24,6 +25,9 @@ import com.example.smartfit.network.OutfitRecommendation
 class DetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailBinding
+    private lateinit var mixedAdapter: MixedAdapter
+    private lateinit var handler: Handler
+    private var scrollPosition = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,10 +37,12 @@ class DetailActivity : AppCompatActivity() {
         val predictionKey = intent.getStringExtra("PREDICTION_KEY")
         val userId = intent.getStringExtra("USER_ID")
 
-        binding.outfitRecommendations.layoutManager = LinearLayoutManager(this)
-        binding.amazonProducts.layoutManager = LinearLayoutManager(this)
+        binding.mixedRecyclerView.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
         fetchPredictionHistoryDetail(userId, predictionKey)
+
+        handler = Handler(Looper.getMainLooper())
     }
 
     private fun fetchPredictionHistoryDetail(userId: String?, predictionKey: String?) {
@@ -78,13 +84,6 @@ class DetailActivity : AppCompatActivity() {
             displayColorBoxes(binding.lightColorsLayout, colorPalette.getAsJsonArray("light_colors")?.map { it.asString } ?: emptyList())
         }
 
-        val outfitRecommendations = predictionData.getAsJsonArray("outfit_recommendations")?.map {
-            val item = it.asJsonObject
-            OutfitRecommendation(item.get("item")?.asString ?: "N/A", item.get("description")?.asString ?: "N/A")
-        } ?: emptyList()
-        val outfitAdapter = OutfitRecommendationAdapter(outfitRecommendations)
-        binding.outfitRecommendations.adapter = outfitAdapter
-
         val amazonProducts = predictionData.getAsJsonArray("amazon_products")?.map {
             val product = it.asJsonObject
             AmazonProduct(
@@ -99,13 +98,22 @@ class DetailActivity : AppCompatActivity() {
                 title = product.get("title")?.asString ?: "N/A"
             )
         } ?: emptyList()
-        val amazonProductAdapter = AmazonProductAdapter(this, amazonProducts)
-        binding.amazonProducts.adapter = amazonProductAdapter
+
+        val outfitRecommendations = predictionData.getAsJsonArray("outfit_recommendations")?.map {
+            val item = it.asJsonObject
+            OutfitRecommendation(item.get("item")?.asString ?: "N/A", item.get("description")?.asString ?: "N/A")
+        } ?: emptyList()
+
+        mixedAdapter = MixedAdapter(this, amazonProducts, outfitRecommendations)
+        binding.mixedRecyclerView.adapter = mixedAdapter
+        startAutoScroll()
 
         binding.seasonalProbabilityLabel.text = "Seasonal Probability: ${predictionData.get("seasonal_probability")?.asDouble ?: 0.0}%"
         binding.skinToneHexLabel.text = "Skin Tone Hex: ${predictionData.get("skin_tone_hex")?.asString ?: "N/A"}"
         binding.skinToneProbabilityLabel.text = "Skin Tone Probability: ${predictionData.get("skin_tone_probability")?.asDouble ?: 0.0}%"
         binding.timestampLabel.text = "Timestamp: ${predictionData.get("timestamp")?.asString ?: "N/A"}"
+
+        displaySkinToneHexColorBox(predictionData.get("skin_tone_hex")?.asString ?: "#FFFFFF")
     }
 
     private fun displayColorBoxes(layout: LinearLayout, colors: List<String>) {
@@ -119,5 +127,28 @@ class DetailActivity : AppCompatActivity() {
             }
             layout.addView(colorBox)
         }
+    }
+
+    private fun displaySkinToneHexColorBox(hexColor: String) {
+        val colorBox = binding.skinToneHexColorBox
+        colorBox.setBackgroundColor(Color.parseColor(hexColor))
+    }
+
+    private fun startAutoScroll() {
+        handler.postDelayed(object : Runnable {
+            override fun run() {
+                scrollPosition++
+                if (scrollPosition == mixedAdapter.itemCount) {
+                    scrollPosition = 0
+                }
+                binding.mixedRecyclerView.smoothScrollToPosition(scrollPosition)
+                handler.postDelayed(this, 2000)
+            }
+        }, 2000)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        handler.removeCallbacksAndMessages(null)
     }
 }
