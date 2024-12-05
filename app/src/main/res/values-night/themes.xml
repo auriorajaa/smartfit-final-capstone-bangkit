@@ -3,5 +3,39 @@
     <style name="Base.Theme.SmartFit" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@color/white3</item>
+        <item name="android:windowLightStatusBar">true</item> <!-- Ikon status bar gelap -->
+    </style>
+
+    <style name="Theme.SmartFit" parent="Base.Theme.SmartFit" />
+
+    <style name="MyCard" parent="Widget.MaterialComponents.CardView">
+        <item name="strokeColor">@color/greystroke</item>
+        <item name="strokeWidth">2dp</item>
+        <!--        <item name="rippleColor">@color/cream</item>-->
+        <!--        <item name="cardBackgroundColor">@color/semitransparentgrey</item>-->
+    </style>
+
+    <style name="CustomCardView" parent="Widget.MaterialComponents.CardView">
+        <item name="cardCornerRadius">11dp</item>
+        <item name="cardBackgroundColor">@color/lightcoral</item>
+        <item name="strokeColor">@color/palecream</item>
+        <item name="strokeWidth">2.5dp</item>
+        <!--        <item name="rippleColor">@color/cream</item>-->
+    </style>
+
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="buttonStyle">@style/CustomButtonDark</item>
+    </style>
+
+    <style name="CustomButtonDark" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/custom_button_dark</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="CustomButtonLight" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/custom_button_light</item>
+        <item name="android:textColor">@color/lightcoral</item>
     </style>
 </resources>
