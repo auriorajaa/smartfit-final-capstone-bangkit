@@ -61,5 +61,7 @@ dependencies {
     implementation(libs.glide)
     implementation(libs.retrofit)
     implementation(libs.androidx.datastore.preferences)
+    implementation(libs.androidx.viewpager2)
+
 
 }

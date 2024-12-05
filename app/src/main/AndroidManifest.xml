@@ -13,7 +13,7 @@
         android:theme="@style/Theme.SmartFit"
         tools:targetApi="31">
         <activity
-            android:name=".view.detection.outfittype.OutfitTypeActivity"
+            android:name=".view.welcome.WelcomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,8 +22,13 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".view.detection.outfittype.OutfitTypeActivity"
+            android:exported="false">
+
+        </activity>
+        <activity
             android:name=".view.detection.gender.GenderActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".view.detection.camera2.Camera2Activity"
             android:exported="false" />
@@ -44,10 +49,10 @@
             android:exported="false" />
         <activity
             android:name=".view.credentials.login.LoginActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".view.splashscreen.SplashScreenActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".view.MainActivity"
             android:exported="false" />
