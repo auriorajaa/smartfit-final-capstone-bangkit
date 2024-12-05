@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.smartfit.databinding.ActivityResultBinding
 import com.example.smartfit.network.RetrofitClient
 import com.example.smartfit.network.StyleRecommendationResponse
+import com.example.smartfit.utils.NotificationHelper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -97,6 +98,12 @@ class ResultActivity : AppCompatActivity() {
         binding.skinToneHexLabel.text = "Skin Tone Hex: ${result.skin_tone_hex}"
         binding.skinToneProbabilityLabel.text = "Skin Tone Probability: ${result.skin_tone_probability}%"
         binding.timestampLabel.text = "Timestamp: ${result.timestamp}"
+
+        NotificationHelper.sendNotification(
+            this,
+            "Scan Result Ready!",
+            "Hasil scan telah tersedia. Cek rekomendasi gaya terbaru Anda sekarang!"
+        )
     }
 
     private fun displayColorBoxes(layout: LinearLayout, colors: List<String>) {

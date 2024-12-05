@@ -63,6 +63,7 @@ dependencies {
     kapt(libs.glide.compiler)
     implementation(libs.threetenbp)
     implementation(libs.logging.interceptor)
+    implementation(libs.androidx.work.runtime.ktx)
 
     // Dependency Firebase
     implementation(libs.firebase.auth)
