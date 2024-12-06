@@ -1,11 +1,14 @@
 package com.example.smartfit.view.detection.camera2
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.smartfit.R
+import com.example.smartfit.view.detection.gender.GenderActivity
 
 class Camera2Activity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,5 +20,17 @@ class Camera2Activity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        val btnRetake = findViewById<Button>(R.id.btn_retake_camera2)
+        btnRetake.setOnClickListener {
+            finish()
+        }
+
+        val btnNext = findViewById<Button>(R.id.btn_next_camera2)
+        btnNext.setOnClickListener {
+            val intent = Intent(this, GenderActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 }

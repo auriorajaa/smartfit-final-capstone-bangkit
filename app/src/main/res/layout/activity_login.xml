@@ -9,6 +9,39 @@
     android:background="@drawable/bg_new3"
     tools:context=".view.credentials.login.LoginActivity">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="@+id/tv_forgot_password"
+        app:layout_constraintStart_toStartOf="@+id/tv_forgot_password"
+        app:layout_constraintTop_toBottomOf="@+id/tv_forgot_password">
+
+        <TextView
+            android:id="@+id/tv_signup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:fontFamily="@font/roboto_black"
+            android:text="Sign Up"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_dont_have_any_account"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_dont_have_any_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_regular"
+            android:text="Don’t have any account?"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toStartOf="@+id/tv_signup"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <Button
         android:id="@+id/btn_signIn_google"
         android:layout_width="0dp"
@@ -75,7 +108,7 @@
         app:backgroundTint="@null"
         app:layout_constraintEnd_toEndOf="@+id/materialCardView"
         app:layout_constraintStart_toStartOf="@+id/materialCardView"
-        app:layout_constraintTop_toBottomOf="@+id/tv_forgot_password" />
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
 
     <TextView
         android:id="@+id/tv_forgot_password"
@@ -84,7 +117,7 @@
         android:layout_marginTop="10dp"
         android:fontFamily="@font/roboto_bold"
         android:text="Forgot Password?"
-        android:textColor="@color/white2"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="@+id/materialCardView"
         app:layout_constraintStart_toStartOf="@+id/materialCardView"
         app:layout_constraintTop_toBottomOf="@+id/materialCardView" />

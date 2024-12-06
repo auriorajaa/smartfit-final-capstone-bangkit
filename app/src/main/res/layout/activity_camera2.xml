@@ -17,7 +17,7 @@
         android:layout_marginTop="20dp"
         android:backgroundTint="@null"
         android:fontFamily="@font/roboto_black"
-        android:text="Button"
+        android:text="Retake"
         android:textAllCaps="false"
         android:textColor="@color/palecream"
         android:textSize="16sp"
