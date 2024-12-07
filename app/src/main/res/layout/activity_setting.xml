@@ -6,7 +6,7 @@
     android:fitsSystemWindows="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_new3"
+    android:background="@drawable/gradient_list"
     tools:context=".view.setting.SettingActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout

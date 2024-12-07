@@ -1,11 +1,13 @@
 package com.example.smartfit.view
 
 import android.graphics.Color
+import android.graphics.drawable.AnimationDrawable
 import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.WindowInsetsController
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import com.example.smartfit.R
 import com.example.smartfit.view.bookmark.BookmarkFragment
@@ -67,6 +69,13 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
+
+        // Mengatur background bergerak
+        val constraintLayout: ConstraintLayout = findViewById(R.id.main)
+        val animationDrawable = constraintLayout.background as AnimationDrawable
+        animationDrawable.setEnterFadeDuration(2500)
+        animationDrawable.setExitFadeDuration(5000)
+        animationDrawable.start()
     }
 
     // Fungsi untuk mengganti fragment

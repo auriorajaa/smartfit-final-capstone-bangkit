@@ -7,7 +7,7 @@
     android:fitsSystemWindows="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_new3"
+    android:background="@color/white"
     tools:context=".view.splashscreen.SplashScreenActivity">
 
   <ImageView
@@ -18,5 +18,5 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
-      app:srcCompat="@drawable/logo_smartfit" />
+      app:srcCompat="@drawable/logo_polos" />
 </androidx.constraintlayout.widget.ConstraintLayout>
