@@ -16,4 +16,6 @@
     <color name="darkgrey">#A6A6A6</color>
     <color name="white2">#F6F6F6</color>
     <color name="white3">#F3F3F3</color>
+
+    <color name="red">#C50000</color>
 </resources>

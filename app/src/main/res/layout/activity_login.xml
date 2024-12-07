@@ -125,7 +125,7 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/materialCardView"
         android:layout_width="match_parent"
-        android:layout_height="240dp"
+        android:layout_height="230dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="20dp"
@@ -141,58 +141,39 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <EditText
-                android:id="@+id/et_password_login"
+            <com.example.smartfit.view.credentials.customview.EmailInputView
+                android:id="@+id/emailInput"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginStart="20dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:background="@drawable/custom_input"
-                android:drawableStart="@drawable/ic_lock"
-                android:drawablePadding="12dp"
-                android:ems="10"
-                android:fontFamily="@font/roboto_light"
-                android:hint="type your password"
-                android:inputType="textPassword"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView6" />
+                app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
             <TextView
                 android:id="@+id/textView6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="-3dp"
                 android:fontFamily="@font/roboto_bold"
                 android:text="Password"
-                android:textColor="@color/white2"
-                app:layout_constraintStart_toStartOf="@+id/et_email_login"
-                app:layout_constraintTop_toBottomOf="@+id/et_email_login" />
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/emailInput" />
 
-            <EditText
-                android:id="@+id/et_email_login"
+            <com.example.smartfit.view.credentials.customview.PasswordInputView
+                android:id="@+id/passwordInput"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginStart="20dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:background="@drawable/custom_input"
-                android:drawableStart="@drawable/ic_email"
-                android:drawablePadding="12dp"
-                android:ems="10"
-                android:fontFamily="@font/roboto_light"
-                android:hint="type your email"
-                android:inputType="textEmailAddress"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView5" />
+                app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
             <TextView
                 android:id="@+id/textView5"
@@ -202,7 +183,7 @@
                 android:layout_marginTop="30dp"
                 android:fontFamily="@font/roboto_bold"
                 android:text="Email"
-                android:textColor="@color/white2"
+                android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -219,6 +200,7 @@
         app:layout_constraintEnd_toEndOf="@+id/imageView2"
         app:layout_constraintStart_toStartOf="@+id/imageView2"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
 
     <ImageView
         android:id="@+id/imageView2"

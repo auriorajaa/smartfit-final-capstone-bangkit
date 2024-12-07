@@ -4,12 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.smartfit.R
 import com.example.smartfit.view.MainActivity
+import com.example.smartfit.view.credentials.customview.EmailInputView
 import com.example.smartfit.view.credentials.forgotpassword.ForgotPasswordActivity
 import com.example.smartfit.view.credentials.register.RegisterActivity
 
