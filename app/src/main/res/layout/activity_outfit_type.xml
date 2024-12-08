@@ -15,7 +15,7 @@
         android:layout_height="620dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="24dp"
         android:elevation="0dp"
         app:cardBackgroundColor="@color/semitransparentgrey"
         app:cardCornerRadius="33dp"
@@ -30,8 +30,8 @@
             android:layout_height="match_parent">
 
             <com.google.android.material.card.MaterialCardView
-                style="@style/CustomCardView"
                 android:id="@+id/cv_casual"
+                style="@style/CustomCardView"
                 android:layout_width="0dp"
                 android:layout_height="135dp"
                 android:layout_marginStart="7dp"
@@ -43,7 +43,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/cv_vintage"
-                app:layout_constraintTop_toBottomOf="@+id/cv_pajamas" >
+                app:layout_constraintTop_toBottomOf="@+id/cv_pajamas">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -75,8 +75,8 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
-                style="@style/CustomCardView"
                 android:id="@+id/cv_vintage"
+                style="@style/CustomCardView"
                 android:layout_width="0dp"
                 android:layout_height="135dp"
                 android:layout_marginStart="15dp"
@@ -88,7 +88,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/cv_casual"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cv_streetwear" >
+                app:layout_constraintTop_toBottomOf="@+id/cv_streetwear">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -120,8 +120,8 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
-                style="@style/CustomCardView"
                 android:id="@+id/cv_pajamas"
+                style="@style/CustomCardView"
                 android:layout_width="0dp"
                 android:layout_height="135dp"
                 android:layout_marginStart="7dp"
@@ -133,7 +133,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/cv_casual"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/cv_streetwear"
-                app:layout_constraintTop_toBottomOf="@+id/cv_wedding" >
+                app:layout_constraintTop_toBottomOf="@+id/cv_wedding">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -165,8 +165,8 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
-                style="@style/CustomCardView"
                 android:id="@+id/cv_streetwear"
+                style="@style/CustomCardView"
                 android:layout_width="0dp"
                 android:layout_height="135dp"
                 android:layout_marginStart="15dp"
@@ -178,7 +178,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/cv_vintage"
                 app:layout_constraintEnd_toStartOf="@+id/cv_pajamas"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cv_sportwear" >
+                app:layout_constraintTop_toBottomOf="@+id/cv_sportwear">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -210,8 +210,8 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
-                style="@style/CustomCardView"
                 android:id="@+id/cv_wedding"
+                style="@style/CustomCardView"
                 android:layout_width="0dp"
                 android:layout_height="135dp"
                 android:layout_marginStart="7dp"
@@ -224,7 +224,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/cv_pajamas"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/cv_sportwear"
-                app:layout_constraintTop_toBottomOf="@+id/cv_formal" >
+                app:layout_constraintTop_toBottomOf="@+id/cv_formal">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -256,8 +256,8 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
-                style="@style/CustomCardView"
                 android:id="@+id/cv_sportwear"
+                style="@style/CustomCardView"
                 android:layout_width="0dp"
                 android:layout_height="135dp"
                 android:layout_marginStart="15dp"
@@ -270,7 +270,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/cv_streetwear"
                 app:layout_constraintEnd_toStartOf="@+id/cv_wedding"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cv_formal" >
+                app:layout_constraintTop_toBottomOf="@+id/cv_formal">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -302,8 +302,8 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
-                style="@style/CustomCardView"
                 android:id="@+id/cv_formal"
+                style="@style/CustomCardView"
                 android:layout_width="0dp"
                 android:layout_height="135dp"
                 android:layout_marginStart="15dp"
@@ -314,7 +314,7 @@
                 app:cardElevation="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" >
+                app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -351,7 +351,6 @@
         android:id="@+id/tv_title_outifit_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:fontFamily="@font/roboto_black"
         android:text="Select Outfit Type"
         android:textColor="@color/white"

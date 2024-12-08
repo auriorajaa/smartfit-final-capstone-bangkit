@@ -204,7 +204,7 @@
             android:layout_marginBottom="3dp"
             android:fontFamily="@font/roboto_black"
             android:text="@string/title_setting_page"
-            android:textColor="@color/white2"
+            android:textColor="@color/white"
             android:textSize="26sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/btn_back_setting"

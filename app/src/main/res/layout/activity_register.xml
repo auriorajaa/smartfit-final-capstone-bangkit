@@ -87,7 +87,7 @@
                 android:layout_marginTop="25dp"
                 android:fontFamily="@font/roboto_bold"
                 android:text="@string/label_name_signup"
-                android:textColor="@color/white2"
+                android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -110,7 +110,7 @@
                 android:layout_marginTop="-3dp"
                 android:fontFamily="@font/roboto_bold"
                 android:text="@string/label_password_signup"
-                android:textColor="@color/white2"
+                android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/emailInputView" />
 
@@ -133,7 +133,7 @@
                 android:layout_marginTop="-3dp"
                 android:fontFamily="@font/roboto_bold"
                 android:text="@string/label_email_signup"
-                android:textColor="@color/white2"
+                android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/nameInput" />
 
@@ -155,7 +155,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_black"
         android:text="@string/title_signup_page"
-        android:textColor="@color/white2"
+        android:textColor="@color/white"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="@+id/imageView7"
         app:layout_constraintStart_toStartOf="@+id/imageView7"

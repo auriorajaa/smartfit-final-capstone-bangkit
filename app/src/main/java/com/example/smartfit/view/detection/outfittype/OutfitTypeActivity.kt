@@ -26,8 +26,8 @@ class OutfitTypeActivity : AppCompatActivity() {
         // Mengatur background bergerak
         val constraintLayout: ConstraintLayout = findViewById(R.id.main)
         val animationDrawable = constraintLayout.background as AnimationDrawable
-        animationDrawable.setEnterFadeDuration(2500)
-        animationDrawable.setExitFadeDuration(5000)
+        animationDrawable.setEnterFadeDuration(1500)
+        animationDrawable.setExitFadeDuration(3000)
         animationDrawable.start()
 
         val cvFormal = findViewById<CardView>(R.id.cv_formal)

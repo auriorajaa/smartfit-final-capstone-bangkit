@@ -26,8 +26,8 @@ class Camera2Activity : AppCompatActivity() {
         // Mengatur background bergerak
         val constraintLayout: ConstraintLayout = findViewById(R.id.main)
         val animationDrawable = constraintLayout.background as AnimationDrawable
-        animationDrawable.setEnterFadeDuration(2500)
-        animationDrawable.setExitFadeDuration(5000)
+        animationDrawable.setEnterFadeDuration(1500)
+        animationDrawable.setExitFadeDuration(3000)
         animationDrawable.start()
 
         val btnRetake = findViewById<Button>(R.id.btn_retake_camera2)

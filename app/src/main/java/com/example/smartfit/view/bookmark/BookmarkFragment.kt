@@ -18,13 +18,6 @@ class BookmarkFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_bookmark, container, false)
 
-        // Animasi background
-        val rootLayout = view.findViewById<View>(R.id.main) // Ganti dengan ID root layout di fragment_bookmark.xml
-        val animationDrawable = rootLayout.background as AnimationDrawable
-        animationDrawable.setEnterFadeDuration(2500)
-        animationDrawable.setExitFadeDuration(5000)
-        animationDrawable.start()
-
         return view
     }
 
