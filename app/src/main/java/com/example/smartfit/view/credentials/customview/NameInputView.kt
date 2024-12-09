@@ -16,7 +16,7 @@ class NameInputView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
-    private var binding: NameInputViewBinding
+    var binding: NameInputViewBinding
 
     init {
         orientation = VERTICAL

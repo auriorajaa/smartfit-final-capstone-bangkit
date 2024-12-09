@@ -16,7 +16,7 @@ class PasswordInputView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
-    private var binding: PasswordInputViewBinding
+    var binding: PasswordInputViewBinding
 
     init {
         orientation = VERTICAL
@@ -51,5 +51,9 @@ class PasswordInputView @JvmOverloads constructor(
     fun isPasswordValid(): Boolean {
         val password = binding.passwordEditText.text.toString()
         return password.length == 6
+    }
+
+    fun getText(): String {
+        return binding.passwordEditText.text.toString()
     }
 }

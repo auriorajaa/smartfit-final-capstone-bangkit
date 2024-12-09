@@ -138,6 +138,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/nameInput" />
 
             <com.example.smartfit.view.credentials.customview.PasswordInputView
+                android:id="@+id/passwordInputView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"

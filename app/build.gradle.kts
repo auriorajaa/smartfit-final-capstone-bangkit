@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("com.google.gms.google-services")
+    kotlin("kapt")
 }
 
 android {
@@ -15,6 +17,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField ("String", "API_BASE_URL", "\"https://ancient-wave-440505-q8.et.r.appspot.com/\"")
+        buildConfigField("String", "NEWS_API_BASE_URL", "\"https://newsapi.org/v2/\"")
+        buildConfigField("String", "NEWS_API_KEY", "\"a762ffb537f64369b471844153fef586\"")
     }
 
     buildTypes {
@@ -63,5 +68,16 @@ dependencies {
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.viewpager2)
 
+    implementation (libs.ucrop)
+    kapt(libs.glide.compiler)
+    implementation(libs.threetenbp)
+    implementation(libs.androidx.work.runtime.ktx)
 
+
+    // Dependency Firebase
+    implementation(libs.firebase.auth)
+    implementation(libs.play.services.auth)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.database)
 }

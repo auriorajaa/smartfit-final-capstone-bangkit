@@ -1,5 +1,7 @@
 package com.example.smartfit.view
 
+import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.AnimationDrawable
 import android.os.Build
@@ -11,17 +13,33 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import com.example.smartfit.R
 import com.example.smartfit.view.bookmark.BookmarkFragment
+import com.example.smartfit.view.credentials.login.LoginActivity
 import com.example.smartfit.view.home.HomeFragment
 import com.example.smartfit.view.news.NewsFragment
+import com.example.smartfit.view.welcome.WelcomeActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var bottomNavigationView: BottomNavigationView
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        auth = FirebaseAuth.getInstance()
+
+        // Check if user is signed in (non-null) and update UI accordingly.
+        val currentUser = auth.currentUser
+        if (currentUser == null) {
+            // User is not signed in, navigate to LoginActivity
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+            return
+        }
 
         window.apply {
             // Membuat status bar dan navigation bar transparan

@@ -1,7 +1,6 @@
 package com.example.smartfit.view.credentials.customview
 
 import android.content.Context
-import android.graphics.Color
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
@@ -9,8 +8,6 @@ import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
-import android.widget.TextView
-import androidx.core.widget.addTextChangedListener
 import com.example.smartfit.databinding.EmailInputViewBinding
 
 class EmailInputView @JvmOverloads constructor(
@@ -50,5 +47,9 @@ class EmailInputView @JvmOverloads constructor(
     fun isEmailValid(): Boolean {
         val email = binding.emailEditText.text.toString()
         return email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
+
+    fun getText(): String {
+        return binding.emailEditText.text.toString()
     }
 }

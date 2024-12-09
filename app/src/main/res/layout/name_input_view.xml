@@ -59,7 +59,7 @@
                 android:fontFamily="@font/roboto_light"
                 android:hint="type your name"
                 android:textColorHint="@color/semidarkgrey"
-                android:inputType="textPassword"
+                android:inputType="text"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/warningIcon"
