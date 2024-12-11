@@ -2,12 +2,14 @@ package com.example.smartfit.view.detection.gender
 
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.AnimationDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.WindowInsetsController
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.smartfit.databinding.ActivityGenderBinding
 import com.example.smartfit.view.detection.result.ResultActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -22,6 +24,13 @@ class GenderActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityGenderBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Mengatur background animasi
+        val constraintLayout: ConstraintLayout = binding.main
+        val animationDrawable = constraintLayout.background as AnimationDrawable
+        animationDrawable.setEnterFadeDuration(1500)
+        animationDrawable.setExitFadeDuration(3000)
+        animationDrawable.start()
 
         window.apply {
             // Membuat status bar dan navigation bar transparan

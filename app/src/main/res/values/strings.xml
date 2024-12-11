@@ -51,9 +51,9 @@
     <string name="tv_type_your_email_edt">type your email</string>
     <string name="tv_invalid_email_format_edt">Invalid email format</string>
     <string name="tv_type_your_name_edt">type your name</string>
-    <string name="tv_invalid_name_format_edt">Invalid name format</string>
+    <string name="tv_invalid_name_format_edt">Name must have at least 4 characters</string>
     <string name="tv_type_your_password_edt">type your password</string>
-    <string name="tv_invalid_password_format_edt">Invalid password format</string>
+    <string name="tv_invalid_password_format_edt">Password must have 6 characters</string>
     <string name="btn_let_s_start_home">Let\'s Start</string>
     <string name="desc_home2">Discover the ideal outfits tailored specifically to your skin tone, so you can always look and feel your best.</string>
     <string name="title_home">Find Your Perfect Outfit Based on Your Skin Tone</string>
@@ -86,5 +86,102 @@
     <string name="tv_clothing_type_history">Clothing Type</string>
     <string name="tv_timestamp_history">Timestamp</string>
     <string name="btn_delete_history">Delete</string>
+    <string name="title_logout">Logout</string>
+    <string name="logout_message">Are you sure you want to logout?</string>
+    <string name="logout_yes">Yes</string>
+    <string name="logout_no">No</string>
+
+    <string name="delete_account_title">Delete Account</string>
+    <string name="delete_account_message">Are you sure you want to delete your account? This action cannot be undone.</string>
+    <string name="delete_account_positive">Yes</string>
+    <string name="delete_account_negative">No</string>
+    <string name="reauth_failed_title">Re-authentication Failed</string>
+    <string name="reauth_failed_message">Please sign in again and try deleting your account.</string>
+    <string name="reauth_id_token_failed_title">Failed to get ID token</string>
+    <string name="reauth_id_token_failed_message">ID token is null.</string>
+    <string name="reauth_google_account_failed_title">No Google Sign-In Account Found</string>
+    <string name="reauth_google_account_failed_message">Please sign in with Google again.</string>
+    <string name="reauth_email_not_found_message">Email not found for re-authentication.</string>
+    <string name="reauth_unsupported_provider_message">Unsupported authentication provider.</string>
+    <string name="reauth_positive">Authenticate</string>
+    <string name="reauth_negative">Cancel</string>
+    <string name="delete_data_failed_message">Failed to delete user data.</string>
+    <string name="delete_success_title">Account Deleted</string>
+    <string name="delete_success_message">Your account and history have been successfully deleted.</string>
+    <string name="delete_failed_title">Deletion Failed</string>
+    <string name="unknown_error_message">Unknown error occurred.</string>
+    <string name="ok">OK</string>
+
+    <string name="success_logout">You have successfully logged out.</string>
+
+    <string name="email_exists_title">Email Already Registered</string>
+    <string name="email_exists_message">The email address %1$s is already registered. Please login or use a different email address.</string>
+    <string name="login_button">Login</string>
+    <string name="try_again_button">Try Again</string>
+    <string name="registration_failed_title">Registration Failed</string>
+    <string name="registration_failed_message">Unknown error occurred.</string>
+    <string name="verification_email_failed_title">Verification Email Failed</string>
+    <string name="verification_email_failed_message">Unknown error occurred.</string>
+    <string name="database_error_title">Database Error</string>
+    <string name="database_error_message">Unknown error occurred.</string>
+    <string name="registration_successful_title">Registration Successful</string>
+    <string name="registration_successful_message">A verification email has been sent to your email address. Please verify your email before logging in.</string>
+
+    <string name="login_failed_title">Login Failed</string>
+    <string name="login_failed_message">Unknown error occurred.</string>
+    <string name="input_error_title">Input Error</string>
+    <string name="invalid_email_message">Please enter a valid email address.</string>
+    <string name="invalid_password_message">Password must be 6 characters long.</string>
+    <string name="google_sign_in_failed_title">Google sign in failed</string>
+    <string name="google_sign_in_failed_message">Unknown error occurred.</string>
+    <string name="authentication_failed_title">Authentication Failed</string>
+    <string name="authentication_failed_message">Unknown error occurred.</string>
+    <string name="email_not_verified_title">Email Not Verified</string>
+    <string name="email_not_verified_message">Please verify your email before logging in.</string>
+    <string name="ok_button">OK</string>
+    <string name="sign_up_button">Sign Up</string>
+    <string name="forgot_password_button">Forgot Password</string>
+
+    <string name="email_empty_message">Please enter your email address.</string>
+    <string name="error_title">Error</string>
+    <string name="email_not_registered_message">Email address is not registered.</string>
+    <string name="database_access_error_message">Failed to access database. Please try again later.</string>
+    <string name="reset_password_title">Reset Password</string>
+    <string name="reset_password_success_message">A password reset link has been sent to your email.</string>
+    <string name="reset_password_failed_title">Reset Password Failed</string>
+
+    <string name="failed_to_capture_image_message">Failed to capture image.</string>
+    <string name="no_image_selected_message">No image selected from gallery.</string>
+    <string name="permission_denied_title">Permission Denied</string>
+    <string name="permission_denied_message">Please allow the necessary permissions.</string>
+    <string name="camera_error_message">Could not create file for photo: %1$s</string>
+    <string name="crop_error_title">Crop Error</string>
+    <string name="unknown_crop_error_message">Unknown error occurred.</string>
+
+    <string name="seasonal_color_label">Seasonal Color</string>
+    <string name="skin_tone_label">Skin Tone</string>
+    <string name="seasonal_description">Seasonal Description</string>
+    <string name="seasonal_probability_label">Seasonal Probability: %.2f%%</string>
+    <string name="skin_tone_probability_label">Skin Tone Probability: %.2f%%</string>
+    <string name="skin_tone_hex_label">Skin Tone Hex: %1$s</string>
+    <string name="timestamp_label">Timestamp: %1$s</string>
+    <string name="scan_result_ready">Scan Result Ready!</string>
+    <string name="scan_result_message">Hasil scan telah tersedia. Cek rekomendasi gaya terbaru Anda sekarang!</string>
+    <string name="prediction_failed_title">Prediction Failed</string>
+    <string name="prediction_failed_message">The prediction process failed. Please try scanning with a different image.</string>
+    <string name="retry">Retry</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="missing_user_or_prediction">Missing user ID or prediction key</string>
+    <string name="error_retrieving_data">Failed to retrieve data</string>
+    <string name="error_fetching_data">Error: %1$s</string>
+    <string name="no_data_available">N/A</string>
+
+    <string name="not_available">N/A</string>
+
+    <string name="login_success_message">Login successful! Welcome!</string>
+
+
+
 
 </resources>

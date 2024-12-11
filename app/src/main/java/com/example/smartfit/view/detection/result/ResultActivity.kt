@@ -2,6 +2,8 @@ package com.example.smartfit.view.detection.result
 
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.AnimationDrawable
+import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -9,16 +11,17 @@ import android.os.Looper
 import android.view.View
 import android.view.WindowInsetsController
 import android.widget.LinearLayout
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.smartfit.R
 import com.example.smartfit.adapter.MixedAdapter
 import com.example.smartfit.data.remote.response.StyleRecommendationResponse
 import com.example.smartfit.data.remote.retrofit.RetrofitClient
 import com.example.smartfit.databinding.ActivityResultBinding
 import com.example.smartfit.utils.NotificationHelper
+import com.example.smartfit.utils.showUniversalDialog
 import com.example.smartfit.view.MainActivity
-import com.example.smartfit.view.credentials.register.RegisterActivity
 import com.example.smartfit.view.detection.camera.CameraActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -42,6 +45,13 @@ class ResultActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityResultBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Mengatur background animasi
+        val constraintLayout: ConstraintLayout = binding.main
+        val animationDrawable = constraintLayout.background as AnimationDrawable
+        animationDrawable.setEnterFadeDuration(1500)
+        animationDrawable.setExitFadeDuration(3000)
+        animationDrawable.start()
 
         window.apply {
             // Membuat status bar dan navigation bar transparan
@@ -119,9 +129,9 @@ class ResultActivity : AppCompatActivity() {
     }
 
     private fun displayResult(result: StyleRecommendationResponse) {
-        binding.seasonalColorLabel.text = result.seasonal_color_label
-        binding.skinToneLabel.text = result.skin_tone_label
-        binding.seasonalDescription.text = result.seasonal_description
+        binding.seasonalColorLabel.text = getString(R.string.seasonal_color_label)
+        binding.skinToneLabel.text = getString(R.string.skin_tone_label)
+        binding.seasonalDescription.text = getString(R.string.seasonal_description)
 
         if (result.color_palette.isJsonObject) {
             val paletteObject = result.color_palette.asJsonObject
@@ -135,27 +145,32 @@ class ResultActivity : AppCompatActivity() {
         binding.mixedRecyclerView.adapter = mixedAdapter
         startAutoScroll()
 
-        binding.seasonalProbabilityLabel.text = "Seasonal Probability: ${result.seasonal_probability}%"
-        binding.skinToneHexLabel.text = "Skin Tone Hex: ${result.skin_tone_hex}"
-        binding.skinToneProbabilityLabel.text = "Skin Tone Probability: ${result.skin_tone_probability}%"
-        binding.timestampLabel.text = "Timestamp: ${result.timestamp}"
+        binding.seasonalProbabilityLabel.text = getString(R.string.seasonal_probability_label, result.seasonal_probability)
+        binding.skinToneHexLabel.text = getString(R.string.skin_tone_hex_label, result.skin_tone_hex)
+        binding.skinToneProbabilityLabel.text = getString(R.string.skin_tone_probability_label, result.skin_tone_probability)
+        binding.timestampLabel.text = getString(R.string.timestamp_label, result.timestamp)
 
         displaySkinToneHexColorBox(result.skin_tone_hex)
 
         NotificationHelper.sendNotification(
             this,
-            "Scan Result Ready!",
-            "Hasil scan telah tersedia. Cek rekomendasi gaya terbaru Anda sekarang!"
+            getString(R.string.scan_result_ready),
+            getString(R.string.scan_result_message)
         )
     }
-
 
     private fun displayColorBoxes(layout: LinearLayout, colors: List<String>) {
         layout.removeAllViews()
         for (color in colors) {
             val colorBox = View(this).apply {
-                setBackgroundColor(Color.parseColor(color))
-                layoutParams = LinearLayout.LayoutParams(150, 150).apply {
+                // Create a GradientDrawable with rounded corners
+                val drawable = GradientDrawable().apply {
+                    shape = GradientDrawable.RECTANGLE
+                    setColor(Color.parseColor(color))
+                    cornerRadius = 20f // Adjust the corner radius as needed
+                }
+                background = drawable
+                layoutParams = LinearLayout.LayoutParams(110, 110).apply {
                     setMargins(20, 20, 20, 20)
                 }
             }
@@ -169,18 +184,19 @@ class ResultActivity : AppCompatActivity() {
     }
 
     private fun showRetryDialog() {
-        AlertDialog.Builder(this)
-            .setTitle("Prediction Failed")
-            .setMessage("The prediction process failed. Please try scanning with a different image.")
-            .setPositiveButton("Retry") { _, _ ->
+        showUniversalDialog(
+            context = this,
+            title = getString(R.string.prediction_failed_title),
+            message = getString(R.string.prediction_failed_message),
+            positiveButtonText = getString(R.string.retry),
+            negativeButtonText = getString(R.string.cancel),
+            positiveAction = {
                 val intent = Intent(this, CameraActivity::class.java)
                 startActivity(intent)
                 finish()
-            }
-            .setNegativeButton("Cancel") { dialog, _ ->
-                dialog.dismiss()
-            }
-            .show()
+            },
+            negativeAction = null
+        )
     }
 
     private fun startAutoScroll() {

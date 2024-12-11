@@ -8,6 +8,7 @@ import android.widget.LinearLayout
 import android.view.LayoutInflater
 import android.view.View
 import androidx.core.widget.addTextChangedListener
+import com.example.smartfit.R
 import com.example.smartfit.databinding.NameInputViewBinding
 
 class NameInputView @JvmOverloads constructor(
@@ -38,7 +39,7 @@ class NameInputView @JvmOverloads constructor(
             binding.warningIcon.visibility = View.GONE // Sembunyikan ikon peringatan
         } else {
             binding.errorTextView.visibility = View.VISIBLE
-            binding.errorTextView.text = "Nama harus memiliki minimal 4 karakter"
+            binding.errorTextView.text = context.getString(R.string.tv_invalid_name_format_edt)
             binding.warningIcon.visibility = View.VISIBLE // Tampilkan ikon peringatan
         }
     }

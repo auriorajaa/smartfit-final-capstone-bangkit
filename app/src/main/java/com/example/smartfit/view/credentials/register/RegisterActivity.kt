@@ -4,11 +4,11 @@ import android.content.Intent
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.smartfit.R
 import com.example.smartfit.databinding.ActivityRegisterBinding
+import com.example.smartfit.utils.showUniversalDialog
 import com.example.smartfit.view.credentials.customview.EmailInputView
 import com.example.smartfit.view.credentials.customview.NameInputView
 import com.example.smartfit.view.credentials.customview.PasswordInputView
@@ -78,7 +78,15 @@ class RegisterActivity : AppCompatActivity() {
                         checkEmailInDatabase(email, password)
                     }
                 } else {
-                    showAlertDialog("Error", task.exception?.message ?: "Unknown error occurred while checking email.", false)
+                    showUniversalDialog(
+                        context = this,
+                        title = "Error",
+                        message = task.exception?.message ?: "Unknown error occurred while checking email.",
+                        positiveButtonText = getString(R.string.ok),
+                        negativeButtonText = null,
+                        positiveAction = null,
+                        negativeAction = null
+                    )
                 }
             }
     }
@@ -94,7 +102,15 @@ class RegisterActivity : AppCompatActivity() {
                         registerUser(email, password)
                     }
                 } else {
-                    showAlertDialog("Error", task.exception?.message ?: "Unknown error occurred while checking email.", false)
+                    showUniversalDialog(
+                        context = this,
+                        title = "Error",
+                        message = task.exception?.message ?: "Unknown error occurred while checking email.",
+                        positiveButtonText = getString(R.string.ok),
+                        negativeButtonText = null,
+                        positiveAction = null,
+                        negativeAction = null
+                    )
                 }
             }
     }
@@ -126,63 +142,76 @@ class RegisterActivity : AppCompatActivity() {
                                     user.sendEmailVerification()
                                         .addOnCompleteListener { verifyTask ->
                                             if (verifyTask.isSuccessful) {
-                                                showAlertDialog(
-                                                    "Registration Successful",
-                                                    "A verification email has been sent to your email address. Please verify your email before logging in.",
-                                                    true
+                                                showUniversalDialog(
+                                                    context = this,
+                                                    title = getString(R.string.registration_successful_title),
+                                                    message = getString(R.string.registration_successful_message),
+                                                    positiveButtonText = getString(R.string.ok),
+                                                    negativeButtonText = null,
+                                                    positiveAction = { navigateToLogin() },
+                                                    negativeAction = null
                                                 )
                                             } else {
-                                                showAlertDialog(
-                                                    "Verification Email Failed",
-                                                    verifyTask.exception?.message ?: "Unknown error occurred.",
-                                                    false
+                                                showUniversalDialog(
+                                                    context = this,
+                                                    title = getString(R.string.verification_email_failed_title),
+                                                    message = verifyTask.exception?.message ?: getString(R.string.verification_email_failed_message),
+                                                    positiveButtonText = getString(R.string.ok),
+                                                    negativeButtonText = null,
+                                                    positiveAction = null,
+                                                    negativeAction = null
                                                 )
                                             }
                                         }
                                 } else {
-                                    showAlertDialog(
-                                        "Database Error",
-                                        dbTask.exception?.message ?: "Unknown error occurred.",
-                                        false
+                                    showUniversalDialog(
+                                        context = this,
+                                        title = getString(R.string.database_error_title),
+                                        message = dbTask.exception?.message ?: getString(R.string.database_error_message),
+                                        positiveButtonText = getString(R.string.ok),
+                                        negativeButtonText = null,
+                                        positiveAction = null,
+                                        negativeAction = null
                                     )
                                 }
                             }
                     }
                 } else {
-                    showAlertDialog(
-                        "Registration Failed",
-                        task.exception?.message ?: "Unknown error occurred.",
-                        false
+                    showUniversalDialog(
+                        context = this,
+                        title = getString(R.string.registration_failed_title),
+                        message = task.exception?.message ?: getString(R.string.registration_failed_message),
+                        positiveButtonText = getString(R.string.ok),
+                        negativeButtonText = null,
+                        positiveAction = null,
+                        negativeAction = null
                     )
                 }
             }
     }
 
     private fun showEmailExistsDialog(email: String) {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Email Already Registered")
-        builder.setMessage("The email address $email is already registered. Please login or use a different email address.")
-        builder.setPositiveButton("Login") { dialog, _ ->
-            dialog.dismiss()
-            navigateToLogin()
-        }
-        builder.setNegativeButton("Try Again") { dialog, _ ->
-            dialog.dismiss()
-        }
-        builder.create().show()
+        showUniversalDialog(
+            context = this,
+            title = getString(R.string.email_exists_title),
+            message = getString(R.string.email_exists_message, email),
+            positiveButtonText = getString(R.string.login_button),
+            negativeButtonText = getString(R.string.try_again_button),
+            positiveAction = { navigateToLogin() },
+            negativeAction = null
+        )
     }
 
-    private fun showAlertDialog(title: String, message: String, isSuccess: Boolean) {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle(title)
-        builder.setMessage(message)
-        builder.setPositiveButton("OK") { dialog, _ ->
-            dialog.dismiss()
-            if (isSuccess) {
-                navigateToLogin()
-            }
-        }
-        builder.create().show()
+    private fun showUniversalDialog(title: String, message: String, isSuccess: Boolean) {
+        showUniversalDialog(
+            context = this,
+            title = title,
+            message = message,
+            positiveButtonText = getString(R.string.ok),
+            negativeButtonText = null,
+            positiveAction = { if (isSuccess) navigateToLogin() },
+            negativeAction = null
+        )
     }
 
     private fun navigateToLogin() {

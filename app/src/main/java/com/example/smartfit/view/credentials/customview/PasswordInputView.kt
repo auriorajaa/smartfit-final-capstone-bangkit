@@ -8,6 +8,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
+import com.example.smartfit.R
 import com.example.smartfit.databinding.PasswordInputViewBinding
 
 class PasswordInputView @JvmOverloads constructor(
@@ -43,7 +44,7 @@ class PasswordInputView @JvmOverloads constructor(
             binding.warningIcon.visibility = View.GONE // Sembunyikan ikon peringatan
         } else if (password.length < 6) {
             binding.errorTextView.visibility = View.VISIBLE
-            binding.errorTextView.text = "Password harus memiliki 6 karakter"
+            binding.errorTextView.text = context.getString(R.string.tv_invalid_password_format_edt)
             binding.warningIcon.visibility = View.VISIBLE // Tampilkan ikon peringatan
         }
     }

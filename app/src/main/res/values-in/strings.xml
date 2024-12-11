@@ -52,9 +52,9 @@
     <string name="tv_type_your_email_edt">ketik email Anda</string>
     <string name="tv_invalid_email_format_edt">Format email tidak valid</string>
     <string name="tv_type_your_name_edt">ketik nama Anda</string>
-    <string name="tv_invalid_name_format_edt">Format nama tidak valid</string>
+    <string name="tv_invalid_name_format_edt">Nama harus memiliki minimal 4 karakter</string>
     <string name="tv_type_your_password_edt">ketik kata sandi Anda</string>
-    <string name="tv_invalid_password_format_edt">Format kata sandi tidak valid</string>
+    <string name="tv_invalid_password_format_edt">Password harus memiliki 6 karakter</string>
     <string name="btn_let_s_start_home">Mulai</string>
     <string name="desc_home2">Temukan pakaian ideal yang disesuaikan dengan warna kulit Anda, sehingga Anda selalu terlihat dan merasa terbaik.</string>
     <string name="title_home">Temukan Pakaian Sempurna Berdasarkan Warna Kulit Anda</string>
@@ -87,4 +87,99 @@
     <string name="tv_clothing_type_history">Jenis Pakaian</string>
     <string name="tv_timestamp_history">Waktu</string>
     <string name="btn_delete_history">Hapus</string>
+    <string name="title_logout">Keluar</string>
+    <string name="logout_message">Apakah Anda yakin ingin keluar?</string>
+    <string name="logout_yes">Ya</string>
+    <string name="logout_no">Tidak</string>
+
+    <string name="delete_account_title">Hapus Akun</string>
+    <string name="delete_account_message">Apakah Anda yakin ingin menghapus akun Anda? Tindakan ini tidak dapat dibatalkan.</string>
+    <string name="delete_account_positive">Ya</string>
+    <string name="delete_account_negative">Tidak</string>
+    <string name="reauth_failed_title">Gagal Otentikasi Ulang</string>
+    <string name="reauth_failed_message">Silakan masuk kembali dan coba hapus akun Anda.</string>
+    <string name="reauth_id_token_failed_title">Gagal Mendapatkan ID Token</string>
+    <string name="reauth_id_token_failed_message">ID token adalah null.</string>
+    <string name="reauth_google_account_failed_title">Tidak Ditemukan Akun Google Sign-In</string>
+    <string name="reauth_google_account_failed_message">Silakan masuk kembali dengan Google.</string>
+    <string name="reauth_email_not_found_message">Email tidak ditemukan untuk otentikasi ulang.</string>
+    <string name="reauth_unsupported_provider_message">Penyedia otentikasi tidak didukung.</string>
+    <string name="reauth_positive">Otentikasi</string>
+    <string name="reauth_negative">Batal</string>
+    <string name="delete_data_failed_message">Gagal menghapus data pengguna.</string>
+    <string name="delete_success_title">Akun Dihapus</string>
+    <string name="delete_success_message">Akun dan riwayat Anda telah berhasil dihapus.</string>
+    <string name="delete_failed_title">Gagal Penghapusan</string>
+    <string name="unknown_error_message">Terjadi kesalahan yang tidak diketahui.</string>
+    <string name="ok">OK</string>
+
+    <string name="success_logout">Anda telah berhasil keluar.</string>
+
+    <string name="email_exists_title">Email Sudah Terdaftar</string>
+    <string name="email_exists_message">Alamat email %1$s sudah terdaftar. Silakan masuk atau gunakan alamat email yang berbeda.</string>
+    <string name="login_button">Masuk</string>
+    <string name="try_again_button">Coba Lagi</string>
+    <string name="registration_failed_title">Gagal Registrasi</string>
+    <string name="registration_failed_message">Terjadi kesalahan yang tidak diketahui.</string>
+    <string name="verification_email_failed_title">Gagal Mengirim Email Verifikasi</string>
+    <string name="verification_email_failed_message">Terjadi kesalahan yang tidak diketahui.</string>
+    <string name="database_error_title">Kesalahan Database</string>
+    <string name="database_error_message">Terjadi kesalahan yang tidak diketahui.</string>
+    <string name="registration_successful_title">Registrasi Berhasil</string>
+    <string name="registration_successful_message">Email verifikasi telah dikirim ke alamat email Anda. Silakan verifikasi email Anda sebelum masuk.</string>
+
+    <string name="login_failed_title">Gagal Masuk</string>
+    <string name="login_failed_message">Terjadi kesalahan yang tidak diketahui.</string>
+    <string name="input_error_title">Kesalahan Input</string>
+    <string name="invalid_email_message">Masukkan alamat email yang valid.</string>
+    <string name="invalid_password_message">Kata sandi harus terdiri dari 6 karakter.</string>
+    <string name="google_sign_in_failed_title">Gagal Masuk dengan Google</string>
+    <string name="google_sign_in_failed_message">Terjadi kesalahan yang tidak diketahui.</string>
+    <string name="authentication_failed_title">Gagal Otentikasi</string>
+    <string name="authentication_failed_message">Terjadi kesalahan yang tidak diketahui.</string>
+    <string name="email_not_verified_title">Email Belum Diverifikasi</string>
+    <string name="email_not_verified_message">Silakan verifikasi email Anda sebelum masuk.</string>
+    <string name="ok_button">OK</string>
+    <string name="sign_up_button">Daftar</string>
+    <string name="forgot_password_button">Lupa Kata Sandi</string>
+
+    <string name="email_empty_message">Masukkan alamat email Anda.</string>
+    <string name="error_title">Kesalahan</string>
+    <string name="email_not_registered_message">Alamat email tidak terdaftar.</string>
+    <string name="database_access_error_message">Gagal mengakses database. Silakan coba lagi nanti.</string>
+    <string name="reset_password_title">Reset Kata Sandi</string>
+    <string name="reset_password_success_message">Link reset kata sandi telah dikirim ke email Anda.</string>
+    <string name="reset_password_failed_title">Gagal Reset Kata Sandi</string>
+
+    <string name="failed_to_capture_image_message">Gagal mengambil gambar.</string>
+    <string name="no_image_selected_message">Tidak ada gambar yang dipilih dari galeri.</string>
+    <string name="permission_denied_title">Izin Ditolak</string>
+    <string name="permission_denied_message">Silakan izinkan izin yang diperlukan.</string>
+    <string name="camera_error_message">Tidak dapat membuat file untuk foto: %1$s</string>
+    <string name="crop_error_title">Kesalahan Pemotongan</string>
+    <string name="unknown_crop_error_message">Terjadi kesalahan yang tidak diketahui.</string>
+
+    <string name="seasonal_color_label">Warna Musim</string>
+    <string name="skin_tone_label">Tonal Kulit</string>
+    <string name="seasonal_description">Deskripsi Musim</string>
+    <string name="seasonal_probability_label">Probabilitas Musim: %.2f%%</string>
+    <string name="skin_tone_hex_label">Hex Tonal Kulit: %1$s</string>
+    <string name="skin_tone_probability_label">Probabilitas Tonal Kulit: %.2f%%</string>
+    <string name="timestamp_label">Cap Waktu: %1$s</string>
+    <string name="scan_result_ready">Hasil Scan Siap!</string>
+    <string name="scan_result_message">Hasil pemindaian telah tersedia. Periksa rekomendasi gaya terbaru Anda sekarang!</string>
+    <string name="prediction_failed_title">Prediksi Gagal</string>
+    <string name="prediction_failed_message">Proses prediksi gagal. Silakan coba pindai dengan gambar yang berbeda.</string>
+    <string name="retry">Coba Ulang</string>
+    <string name="cancel">Batal</string>
+
+    <string name="missing_user_or_prediction">ID pengguna atau kunci prediksi tidak ditemukan</string>
+    <string name="error_retrieving_data">Gagal mengambil data</string>
+    <string name="error_fetching_data">Kesalahan: %1$s</string>
+    <string name="no_data_available">N/A</string>
+
+    <string name="not_available">N/A</string>
+
+    <string name="login_success_message">Login berhasil! Selamat datang!</string>
+
 </resources>

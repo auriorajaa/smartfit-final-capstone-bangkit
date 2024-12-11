@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.provider.Settings
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
@@ -13,6 +14,7 @@ import com.example.smartfit.R
 import com.example.smartfit.databinding.ActivitySettingBinding
 import com.example.smartfit.view.credentials.login.LoginActivity
 import com.example.smartfit.view.setting.account.AccountActivity
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.google.firebase.auth.FirebaseAuth
 
@@ -62,26 +64,34 @@ class SettingActivity : AppCompatActivity() {
     }
 
     private fun showLogoutConfirmationDialog() {
+        val dialogView = layoutInflater.inflate(R.layout.custom_dialog_layout, null)
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("Logout")
-        builder.setMessage("Are you sure you want to logout?")
-        builder.setPositiveButton("Yes") { dialog, _ ->
-            dialog.dismiss()
-            auth.signOut()
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-        builder.setNegativeButton("No") { dialog, _ ->
-            dialog.dismiss()
-        }
+        builder.setView(dialogView)
+
         val dialog = builder.create()
+
+        dialogView.findViewById<TextView>(R.id.dialog_title).text = getString(R.string.title_logout)
+        dialogView.findViewById<TextView>(R.id.dialog_message).text = getString(R.string.logout_message)
+
+        val positiveButton = dialogView.findViewById<MaterialButton>(R.id.dialog_positive_button)
+        val negativeButton = dialogView.findViewById<MaterialButton>(R.id.dialog_negative_button)
+
+        positiveButton.setOnClickListener {
+            dialog.dismiss()
+            performLogout()
+        }
+
+        negativeButton.setOnClickListener {
+            dialog.dismiss()
+        }
+
         dialog.show()
     }
 
+
     private fun performLogout() {
         auth.signOut() // Logout dari Firebase Authentication
-        Toast.makeText(this, "You have successfully logged out.", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, getString(R.string.success_logout), Toast.LENGTH_SHORT).show()
 
         // Arahkan pengguna kembali ke LoginActivity
         val intent = Intent(this, LoginActivity::class.java)

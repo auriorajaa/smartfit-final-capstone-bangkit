@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.graphics.drawable.AnimationDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -12,11 +13,13 @@ import android.view.View
 import android.view.WindowInsetsController
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import com.example.smartfit.R
 import com.example.smartfit.databinding.ActivityCameraBinding
+import com.example.smartfit.utils.showUniversalDialog
 import com.example.smartfit.view.detection.camera2.Camera2Activity
 import com.yalantis.ucrop.UCrop
 import java.io.File
@@ -35,7 +38,15 @@ class CameraActivity : AppCompatActivity() {
         if (isSuccess) {
             currentImageUri?.let { startCropActivity(it) }
         } else {
-            showAlertDialog("Error", "Failed to capture image.")
+            showUniversalDialog(
+                context = this,
+                title = getString(R.string.error_title),
+                message = getString(R.string.failed_to_capture_image_message),
+                positiveButtonText = getString(R.string.ok_button),
+                negativeButtonText = null,
+                positiveAction = null,
+                negativeAction = null
+            )
         }
     }
 
@@ -43,7 +54,15 @@ class CameraActivity : AppCompatActivity() {
         if (uri != null) {
             startCropActivity(uri)
         } else {
-            showAlertDialog("Error", "No image selected from gallery.")
+            showUniversalDialog(
+                context = this,
+                title = getString(R.string.error_title),
+                message = getString(R.string.no_image_selected_message),
+                positiveButtonText = getString(R.string.ok_button),
+                negativeButtonText = null,
+                positiveAction = null,
+                negativeAction = null
+            )
         }
     }
 
@@ -55,7 +74,15 @@ class CameraActivity : AppCompatActivity() {
             pendingPermissionAction?.invoke()
             pendingPermissionAction = null
         } else {
-            showAlertDialog("Permission Denied", "Please allow the necessary permissions.")
+            showUniversalDialog(
+                context = this,
+                title = getString(R.string.permission_denied_title),
+                message = getString(R.string.permission_denied_message),
+                positiveButtonText = getString(R.string.ok_button),
+                negativeButtonText = null,
+                positiveAction = null,
+                negativeAction = null
+            )
         }
     }
 
@@ -63,6 +90,13 @@ class CameraActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCameraBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Mengatur background animasi
+        val constraintLayout: ConstraintLayout = binding.main
+        val animationDrawable = constraintLayout.background as AnimationDrawable
+        animationDrawable.setEnterFadeDuration(1500)
+        animationDrawable.setExitFadeDuration(3000)
+        animationDrawable.start()
 
         window.apply {
             // Membuat status bar dan navigation bar transparan
@@ -118,18 +152,17 @@ class CameraActivity : AppCompatActivity() {
         }
     }
 
-    private fun showAlertDialog(title: String, message: String) {
-        AlertDialog.Builder(this).apply {
-            setTitle(title)
-            setMessage(message)
-            setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
-            create().show()
-        }
-    }
-
     private fun dispatchTakePictureIntent() {
         val photoFile = try { createImageFile() } catch (ex: IOException) {
-            showAlertDialog("Error", "Could not create file for photo: ${ex.message}")
+            showUniversalDialog(
+                context = this,
+                title = getString(R.string.error_title),
+                message = getString(R.string.camera_error_message, ex.message),
+                positiveButtonText = getString(R.string.ok_button),
+                negativeButtonText = null,
+                positiveAction = null,
+                negativeAction = null
+            )
             null
         }
 
@@ -169,7 +202,17 @@ class CameraActivity : AppCompatActivity() {
                     }
                 }
                 UCrop.RESULT_ERROR -> {
-                    UCrop.getError(data!!)?.let { showAlertDialog("Crop Error", it.message ?: "Unknown error occurred.") }
+                    UCrop.getError(data!!)?.let {
+                        showUniversalDialog(
+                            context = this,
+                            title = getString(R.string.crop_error_title),
+                            message = it.message ?: getString(R.string.unknown_crop_error_message),
+                            positiveButtonText = getString(R.string.ok_button),
+                            negativeButtonText = null,
+                            positiveAction = null,
+                            negativeAction = null
+                        )
+                    }
                 }
             }
         }

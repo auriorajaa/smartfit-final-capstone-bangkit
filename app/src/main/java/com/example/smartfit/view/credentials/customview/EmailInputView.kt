@@ -1,6 +1,7 @@
 package com.example.smartfit.view.credentials.customview
 
 import android.content.Context
+import android.provider.Settings.Global.getString
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
@@ -8,6 +9,7 @@ import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
+import com.example.smartfit.R
 import com.example.smartfit.databinding.EmailInputViewBinding
 
 class EmailInputView @JvmOverloads constructor(
@@ -39,7 +41,7 @@ class EmailInputView @JvmOverloads constructor(
             binding.warningIcon.visibility = View.GONE // Sembunyikan ikon peringatan
         } else {
             binding.errorTextView.visibility = View.VISIBLE
-            binding.errorTextView.text = "Format email tidak valid"
+            binding.errorTextView.text = context.getString(R.string.tv_invalid_email_format_edt)
             binding.warningIcon.visibility = View.VISIBLE // Tampilkan ikon peringatan
         }
     }

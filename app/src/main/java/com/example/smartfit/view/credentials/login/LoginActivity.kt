@@ -3,12 +3,13 @@ package com.example.smartfit.view.credentials.login
 import android.content.Intent
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.smartfit.R
 import com.example.smartfit.databinding.ActivityLoginBinding
+import com.example.smartfit.utils.showUniversalDialog
 import com.example.smartfit.view.MainActivity
 import com.example.smartfit.view.credentials.forgotpassword.ForgotPasswordActivity
 import com.example.smartfit.view.credentials.register.RegisterActivity
@@ -84,9 +85,25 @@ class LoginActivity : AppCompatActivity() {
         val isPasswordValid = binding.passwordInput.isPasswordValid()
 
         if (!isEmailValid) {
-            showAlertDialog("Input Error", "Please enter a valid email address.", false)
+            showUniversalDialog(
+                context = this,
+                title = getString(R.string.input_error_title),
+                message = getString(R.string.invalid_email_message),
+                positiveButtonText = getString(R.string.ok_button),
+                negativeButtonText = null,
+                positiveAction = null,
+                negativeAction = null
+            )
         } else if (!isPasswordValid) {
-            showAlertDialog("Input Error", "Password must be 6 characters long.", false)
+            showUniversalDialog(
+                context = this,
+                title = getString(R.string.input_error_title),
+                message = getString(R.string.invalid_password_message),
+                positiveButtonText = getString(R.string.ok_button),
+                negativeButtonText = null,
+                positiveAction = null,
+                negativeAction = null
+            )
         }
 
         return isEmailValid && isPasswordValid
@@ -106,7 +123,15 @@ class LoginActivity : AppCompatActivity() {
                 val account = task.getResult(ApiException::class.java)!!
                 firebaseAuthWithGoogle(account)
             } catch (e: ApiException) {
-                showAlertDialog("Google sign in failed", e.message ?: "Unknown error occurred.", false)
+                showUniversalDialog(
+                    context = this,
+                    title = getString(R.string.google_sign_in_failed_title),
+                    message = e.message ?: getString(R.string.google_sign_in_failed_message),
+                    positiveButtonText = getString(R.string.ok_button),
+                    negativeButtonText = null,
+                    positiveAction = null,
+                    negativeAction = null
+                )
             }
         }
     }
@@ -131,12 +156,28 @@ class LoginActivity : AppCompatActivity() {
                                 if (dbTask.isSuccessful) {
                                     navigateToMain()
                                 } else {
-                                    showAlertDialog("Database Error", dbTask.exception?.message ?: "Unknown error.", false)
+                                    showUniversalDialog(
+                                        context = this,
+                                        title = getString(R.string.database_error_title),
+                                        message = dbTask.exception?.message ?: getString(R.string.database_error_message),
+                                        positiveButtonText = getString(R.string.ok_button),
+                                        negativeButtonText = null,
+                                        positiveAction = null,
+                                        negativeAction = null
+                                    )
                                 }
                             }
                     }
                 } else {
-                    showAlertDialog("Authentication Failed", task.exception?.message ?: "Unknown error.", false)
+                    showUniversalDialog(
+                        context = this,
+                        title = getString(R.string.authentication_failed_title),
+                        message = task.exception?.message ?: getString(R.string.authentication_failed_message),
+                        positiveButtonText = getString(R.string.ok_button),
+                        negativeButtonText = null,
+                        positiveAction = null,
+                        negativeAction = null
+                    )
                 }
             }
     }
@@ -149,31 +190,49 @@ class LoginActivity : AppCompatActivity() {
                     if (user != null && user.isEmailVerified) {
                         navigateToMain()
                     } else {
-                        showAlertDialog("Email Not Verified", "Please verify your email before logging in.", false)
+                        showUniversalDialog(
+                            context = this,
+                            title = getString(R.string.email_not_verified_title),
+                            message = getString(R.string.email_not_verified_message),
+                            positiveButtonText = getString(R.string.ok_button),
+                            negativeButtonText = null,
+                            positiveAction = null,
+                            negativeAction = null
+                        )
                         auth.signOut()
                     }
                 } else {
                     val message = when (task.exception) {
-                        is FirebaseAuthInvalidUserException, is FirebaseAuthInvalidCredentialsException -> "Invalid email or password."
-                        else -> task.exception?.message ?: "Unknown error."
+                        is FirebaseAuthInvalidUserException, is FirebaseAuthInvalidCredentialsException -> getString(R.string.invalid_email_message)
+                        else -> task.exception?.message ?: getString(R.string.login_failed_message)
                     }
-                    showAlertDialog("Login Failed", message, false)
+                    showUniversalDialog(
+                        context = this,
+                        title = getString(R.string.login_failed_title),
+                        message = message,
+                        positiveButtonText = getString(R.string.ok_button),
+                        negativeButtonText = null,
+                        positiveAction = null,
+                        negativeAction = null
+                    )
                 }
             }
     }
 
-    private fun showAlertDialog(title: String, message: String, isSuccess: Boolean) {
-        AlertDialog.Builder(this)
-            .setTitle(title)
-            .setMessage(message)
-            .setPositiveButton("OK") { dialog, _ ->
-                dialog.dismiss()
-                if (isSuccess) navigateToMain()
-            }
-            .show()
+    private fun showUniversalDialog(title: String, message: String, isSuccess: Boolean) {
+        showUniversalDialog(
+            context = this,
+            title = title,
+            message = message,
+            positiveButtonText = getString(R.string.ok_button),
+            negativeButtonText = null,
+            positiveAction = { if (isSuccess) navigateToMain() },
+            negativeAction = null
+        )
     }
 
     private fun navigateToMain() {
+        Toast.makeText(this, getString(R.string.login_success_message), Toast.LENGTH_SHORT).show()
         startActivity(Intent(this, MainActivity::class.java))
         finish()
     }

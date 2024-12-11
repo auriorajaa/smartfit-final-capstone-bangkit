@@ -2,13 +2,16 @@ package com.example.smartfit.view.credentials.forgotpassword
 
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.AnimationDrawable
 import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.WindowInsetsController
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
+import com.example.smartfit.R
 import com.example.smartfit.databinding.ActivityForgotPasswordBinding
+import com.example.smartfit.utils.showUniversalDialog
 import com.example.smartfit.view.credentials.login.LoginActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
@@ -24,6 +27,13 @@ class ForgotPasswordActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityForgotPasswordBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Mengatur background bergerak
+        val constraintLayout: ConstraintLayout = findViewById(R.id.main)
+        val animationDrawable = constraintLayout.background as AnimationDrawable
+        animationDrawable.setEnterFadeDuration(1500)
+        animationDrawable.setExitFadeDuration(3000)
+        animationDrawable.start()
 
         window.apply {
             // Membuat status bar dan navigation bar transparan
@@ -51,7 +61,15 @@ class ForgotPasswordActivity : AppCompatActivity() {
         binding.btnResetPassword.setOnClickListener {
             val email = binding.etForgotPassword.text.toString().trim()
             if (email.isEmpty()) {
-                showAlertDialog("Input Error", "Please enter your email address.", false)
+                showUniversalDialog(
+                    context = this,
+                    title = getString(R.string.input_error_title),
+                    message = getString(R.string.email_empty_message),
+                    positiveButtonText = getString(R.string.ok_button),
+                    negativeButtonText = null,
+                    positiveAction = null,
+                    negativeAction = null
+                )
             } else {
                 checkEmailAndSendReset(email)
             }
@@ -64,14 +82,26 @@ class ForgotPasswordActivity : AppCompatActivity() {
                 if (dataSnapshot.exists()) {
                     sendPasswordResetEmail(email)
                 } else {
-                    showAlertDialog("Error", "Email address is not registered.", false)
+                    showUniversalDialog(
+                        context = this,
+                        title = getString(R.string.error_title),
+                        message = getString(R.string.email_not_registered_message),
+                        positiveButtonText = getString(R.string.ok_button),
+                        negativeButtonText = null,
+                        positiveAction = null,
+                        negativeAction = null
+                    )
                 }
             }
             .addOnFailureListener {
-                showAlertDialog(
-                    "Error",
-                    "Failed to access database. Please try again later.",
-                    false
+                showUniversalDialog(
+                    context = this,
+                    title = getString(R.string.error_title),
+                    message = getString(R.string.database_access_error_message),
+                    positiveButtonText = getString(R.string.ok_button),
+                    negativeButtonText = null,
+                    positiveAction = null,
+                    negativeAction = null
                 )
             }
     }
@@ -80,33 +110,31 @@ class ForgotPasswordActivity : AppCompatActivity() {
         auth.sendPasswordResetEmail(email)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    showAlertDialog(
-                        "Reset Password",
-                        "A password reset link has been sent to your email.",
-                        true
+                    showUniversalDialog(
+                        context = this,
+                        title = getString(R.string.reset_password_title),
+                        message = getString(R.string.reset_password_success_message),
+                        positiveButtonText = getString(R.string.ok_button),
+                        negativeButtonText = null,
+                        positiveAction = { navigateToLogin() },
+                        negativeAction = null
                     )
                 } else {
                     val message = when (task.exception) {
-                        is FirebaseAuthInvalidUserException -> "Email address is not registered."
-                        else -> task.exception?.message ?: "Unknown error occurred."
+                        is FirebaseAuthInvalidUserException -> getString(R.string.email_not_registered_message)
+                        else -> task.exception?.message ?: getString(R.string.unknown_error_message)
                     }
-                    showAlertDialog("Reset Password Failed", message, false)
+                    showUniversalDialog(
+                        context = this,
+                        title = getString(R.string.reset_password_failed_title),
+                        message = message,
+                        positiveButtonText = getString(R.string.ok_button),
+                        negativeButtonText = null,
+                        positiveAction = null,
+                        negativeAction = null
+                    )
                 }
             }
-    }
-
-    private fun showAlertDialog(title: String, message: String, isSuccess: Boolean) {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle(title)
-        builder.setMessage(message)
-        builder.setPositiveButton("OK") { dialog, _ ->
-            dialog.dismiss()
-            if (isSuccess) {
-                navigateToLogin()
-            }
-        }
-        val dialog = builder.create()
-        dialog.show()
     }
 
     private fun navigateToLogin() {

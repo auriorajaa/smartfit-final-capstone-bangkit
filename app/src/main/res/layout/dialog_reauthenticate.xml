@@ -17,6 +17,9 @@
         android:id="@+id/emailEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/salmonpink"
+        android:fontFamily="@font/poppins_regular"
+        android:textSize="16sp"
         android:hint="Email"
         android:inputType="textEmailAddress"
         android:paddingBottom="16dp" />
@@ -25,6 +28,9 @@
         android:id="@+id/passwordEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/salmonpink"
+        android:fontFamily="@font/poppins_regular"
+        android:textSize="16sp"
         android:hint="Password"
         android:inputType="textPassword" />
 </LinearLayout>

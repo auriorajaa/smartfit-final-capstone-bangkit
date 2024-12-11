@@ -5,11 +5,11 @@ import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.smartfit.R
 import com.example.smartfit.databinding.DialogReauthenticateBinding
+import com.example.smartfit.utils.showUniversalDialog
 import com.example.smartfit.view.credentials.login.LoginActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.firebase.auth.*
@@ -79,18 +79,15 @@ class AccountActivity : AppCompatActivity() {
     }
 
     private fun showDeleteAccountDialog() {
-        val builder = MaterialAlertDialogBuilder(this)
-        builder.setTitle("Delete Account")
-        builder.setMessage("Are you sure you want to delete your account? This action cannot be undone.")
-        builder.setPositiveButton("Yes") { dialog, _ ->
-            dialog.dismiss()
-            reauthenticateAndDeleteAccount()
-        }
-        builder.setNegativeButton("No") { dialog, _ ->
-            dialog.dismiss()
-        }
-        val dialog = builder.create()
-        dialog.show()
+        showUniversalDialog(
+            context = this,
+            title = getString(R.string.delete_account_title),
+            message = getString(R.string.delete_account_message),
+            positiveButtonText = getString(R.string.delete_account_positive),
+            negativeButtonText = getString(R.string.delete_account_negative),
+            positiveAction = { reauthenticateAndDeleteAccount() },
+            negativeAction = { /* Do nothing */ }
+        )
     }
 
     private fun reauthenticateAndDeleteAccount() {
@@ -107,24 +104,64 @@ class AccountActivity : AppCompatActivity() {
                             if (reauthTask.isSuccessful) {
                                 deleteUserAccount()
                             } else {
-                                showAlertDialog("Re-authentication Failed", "Please sign in again and try deleting your account.", false)
+                                showUniversalDialog(
+                                    context = this,
+                                    title = getString(R.string.reauth_failed_title),
+                                    message = getString(R.string.reauth_failed_message),
+                                    positiveButtonText = getString(R.string.ok),
+                                    negativeButtonText = null,
+                                    positiveAction = null,
+                                    negativeAction = null
+                                )
                             }
                         }
                     } else {
-                        showAlertDialog("Failed to get ID token", "ID token is null.", false)
+                        showUniversalDialog(
+                            context = this,
+                            title = getString(R.string.reauth_id_token_failed_title),
+                            message = getString(R.string.reauth_id_token_failed_message),
+                            positiveButtonText = getString(R.string.ok),
+                            negativeButtonText = null,
+                            positiveAction = null,
+                            negativeAction = null
+                        )
                     }
                 } else {
-                    showAlertDialog("No Google Sign-In Account Found", "Please sign in with Google again.", false)
+                    showUniversalDialog(
+                        context = this,
+                        title = getString(R.string.reauth_google_account_failed_title),
+                        message = getString(R.string.reauth_google_account_failed_message),
+                        positiveButtonText = getString(R.string.ok),
+                        negativeButtonText = null,
+                        positiveAction = null,
+                        negativeAction = null
+                    )
                 }
             } else if (providers.contains(EmailAuthProvider.PROVIDER_ID)) {
                 val email = it.email
                 if (email != null) {
                     showEmailPasswordReauthDialog(email)
                 } else {
-                    showAlertDialog("Re-authentication Failed", "Email not found for re-authentication.", false)
+                    showUniversalDialog(
+                        context = this,
+                        title = getString(R.string.reauth_failed_title),
+                        message = getString(R.string.reauth_email_not_found_message),
+                        positiveButtonText = getString(R.string.ok),
+                        negativeButtonText = null,
+                        positiveAction = null,
+                        negativeAction = null
+                    )
                 }
             } else {
-                showAlertDialog("Re-authentication Failed", "Unsupported authentication provider.", false)
+                showUniversalDialog(
+                    context = this,
+                    title = getString(R.string.reauth_failed_title),
+                    message = getString(R.string.reauth_unsupported_provider_message),
+                    positiveButtonText = getString(R.string.ok),
+                    negativeButtonText = null,
+                    positiveAction = null,
+                    negativeAction = null
+                )
             }
         }
     }
@@ -136,7 +173,7 @@ class AccountActivity : AppCompatActivity() {
 
         bindingDialog.emailEditText.setText(email)
 
-        builder.setPositiveButton("Authenticate") { dialog, _ ->
+        builder.setPositiveButton(getString(R.string.reauth_positive)) { dialog, _ ->
             val password = bindingDialog.passwordEditText.text.toString()
             val credential = EmailAuthProvider.getCredential(email, password)
 
@@ -144,11 +181,19 @@ class AccountActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     deleteUserAccount()
                 } else {
-                    showAlertDialog("Authentication Failed", "Re-authentication failed. Please try again.", false)
+                    showUniversalDialog(
+                        context = this,
+                        title = getString(R.string.reauth_failed_title),
+                        message = getString(R.string.reauth_failed_message),
+                        positiveButtonText = getString(R.string.ok),
+                        negativeButtonText = null,
+                        positiveAction = null,
+                        negativeAction = null
+                    )
                 }
             }
         }
-        builder.setNegativeButton("Cancel") { dialog, _ ->
+        builder.setNegativeButton(getString(R.string.reauth_negative)) { dialog, _ ->
             dialog.dismiss()
         }
         builder.create().show()
@@ -165,37 +210,61 @@ class AccountActivity : AppCompatActivity() {
                 if (userTask.isSuccessful) {
                     historyRef.removeValue()
                 } else {
-                    throw userTask.exception ?: Exception("Failed to delete user data")
+                    throw userTask.exception ?: Exception(getString(R.string.delete_data_failed_message))
                 }
             }.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     currentUser.delete().addOnCompleteListener { authTask ->
                         if (authTask.isSuccessful) {
-                            showAlertDialog("Account Deleted", "Your account and history have been successfully deleted.", true) {
-                                val intent = Intent(this, LoginActivity::class.java)
-                                startActivity(intent)
-                                finish()
-                            }
+                            showUniversalDialog(
+                                context = this,
+                                title = getString(R.string.delete_success_title),
+                                message = getString(R.string.delete_success_message),
+                                positiveButtonText = getString(R.string.ok),
+                                negativeButtonText = null,
+                                positiveAction = {
+                                    val intent = Intent(this, LoginActivity::class.java)
+                                    startActivity(intent)
+                                    finish()
+                                },
+                                negativeAction = null
+                            )
                         } else {
-                            showAlertDialog("Deletion Failed", authTask.exception?.message ?: "Unknown error occurred.", false)
+                            showUniversalDialog(
+                                context = this,
+                                title = getString(R.string.delete_failed_title),
+                                message = authTask.exception?.message ?: getString(R.string.unknown_error_message),
+                                positiveButtonText = getString(R.string.ok),
+                                negativeButtonText = null,
+                                positiveAction = null,
+                                negativeAction = null
+                            )
                         }
                     }
                 } else {
-                    showAlertDialog("Deletion Failed", task.exception?.message ?: "Unknown error occurred.", false)
+                    showUniversalDialog(
+                        context = this,
+                        title = getString(R.string.delete_failed_title),
+                        message = task.exception?.message ?: getString(R.string.unknown_error_message),
+                        positiveButtonText = getString(R.string.ok),
+                        negativeButtonText = null,
+                        positiveAction = null,
+                        negativeAction = null
+                    )
                 }
             }
         }
     }
 
     private fun showAlertDialog(title: String, message: String, isSuccess: Boolean, onDismissAction: (() -> Unit)? = null) {
-        val builder = MaterialAlertDialogBuilder(this)
-        builder.setTitle(title)
-        builder.setMessage(message)
-        builder.setPositiveButton("OK") { dialog, _ ->
-            dialog.dismiss()
-            onDismissAction?.invoke()
-        }
-        val dialog = builder.create()
-        dialog.show()
+        showUniversalDialog(
+            context = this,
+            title = title,
+            message = message,
+            positiveButtonText = getString(R.string.ok),
+            negativeButtonText = null,
+            positiveAction = { onDismissAction?.invoke() },
+            negativeAction = null
+        )
     }
 }
