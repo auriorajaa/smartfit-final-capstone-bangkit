@@ -17,6 +17,8 @@ import com.example.smartfit.data.remote.response.StyleRecommendationResponse
 import com.example.smartfit.data.remote.retrofit.RetrofitClient
 import com.example.smartfit.databinding.ActivityResultBinding
 import com.example.smartfit.utils.NotificationHelper
+import com.example.smartfit.view.MainActivity
+import com.example.smartfit.view.credentials.register.RegisterActivity
 import com.example.smartfit.view.detection.camera.CameraActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -78,6 +80,12 @@ class ResultActivity : AppCompatActivity() {
         }
 
         handler = Handler(Looper.getMainLooper())
+
+        binding.btnFinishResult.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+            startActivity(intent)
+        }
     }
 
     private fun sendRequest(image: MultipartBody.Part, uid: String, clothingType: String) {

@@ -20,8 +20,10 @@
             android:layout_marginEnd="15dp"
             android:layout_marginBottom="15dp"
             android:elevation="1dp"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+            android:fontFamily="@font/poppins_regular"
+            android:text="@string/desc_news"
             android:textColor="@color/white2"
+            android:textSize="13sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

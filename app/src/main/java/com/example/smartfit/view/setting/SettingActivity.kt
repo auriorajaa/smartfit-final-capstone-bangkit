@@ -3,12 +3,14 @@ package com.example.smartfit.view.setting
 import android.content.Intent
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
+import android.provider.Settings
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.smartfit.R
+import com.example.smartfit.databinding.ActivitySettingBinding
 import com.example.smartfit.view.credentials.login.LoginActivity
 import com.example.smartfit.view.setting.account.AccountActivity
 import com.google.android.material.card.MaterialCardView
@@ -16,15 +18,23 @@ import com.google.firebase.auth.FirebaseAuth
 
 class SettingActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivitySettingBinding
     private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_setting)
+        // Inisialisasi binding dengan inflate layout
+        binding = ActivitySettingBinding.inflate(layoutInflater)
+        setContentView(binding.root) // Gunakan binding.root di sini
 
         // Inisialisasi FirebaseAuth
         auth = FirebaseAuth.getInstance()
+
+        // Open Locale Settings when the ImageView is clicked
+        binding.cvLanguage.setOnClickListener {
+            startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
+        }
 
         // Mengatur background bergerak
         val constraintLayout: ConstraintLayout = findViewById(R.id.main)

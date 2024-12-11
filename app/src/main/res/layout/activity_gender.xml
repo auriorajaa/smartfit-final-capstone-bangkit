@@ -23,10 +23,10 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto_bold"
-            android:text="Select Gender"
+            android:fontFamily="@font/poppins_bold"
+            android:text="@string/title_select_gender"
             android:textColor="@color/white"
-            android:textSize="26sp"
+            android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -74,6 +74,7 @@
                             android:id="@+id/iv_male"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:contentDescription="@string/todo"
                             app:layout_constraintBottom_toTopOf="@+id/tv_male"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -85,10 +86,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="20dp"
-                            android:fontFamily="@font/roboto_bold"
-                            android:text="Male"
+                            android:fontFamily="@font/poppins_bold"
+                            android:text="@string/tv_male_gender"
                             android:textColor="@color/palecream"
-                            android:textSize="23sp"
+                            android:textSize="20sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent" />
@@ -118,6 +119,7 @@
                         android:layout_height="match_parent">
 
                         <ImageView
+                            android:contentDescription="@string/todo"
                             android:id="@+id/iv_female"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -132,10 +134,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="20dp"
-                            android:fontFamily="@font/roboto_bold"
-                            android:text="Female"
+                            android:fontFamily="@font/poppins_bold"
+                            android:text="@string/tv_female_gender"
                             android:textColor="@color/palecream"
-                            android:textSize="23sp"
+                            android:textSize="20sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent" />
@@ -162,7 +164,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_bold"
-            android:text="Select Outfit Type"
+            android:text="@string/title_select_outfit_type_gender"
             android:textColor="@color/white"
             android:textSize="26sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -213,7 +215,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="13dp"
                             android:fontFamily="@font/roboto_bold"
-                            android:text="Casual"
+                            android:text="@string/tv_casual_gender"
                             android:textColor="@color/palecream"
                             android:textSize="18sp"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -221,6 +223,7 @@
                             app:layout_constraintStart_toStartOf="parent" />
 
                         <ImageView
+                            android:contentDescription="@string/todo"
                             android:id="@+id/imageView17"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -258,7 +261,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="13dp"
                             android:fontFamily="@font/roboto_bold"
-                            android:text="Vintage"
+                            android:text="@string/tv_vintage_gender"
                             android:textColor="@color/palecream"
                             android:textSize="18sp"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -266,6 +269,7 @@
                             app:layout_constraintStart_toStartOf="parent" />
 
                         <ImageView
+                            android:contentDescription="@string/todo"
                             android:id="@+id/imageView16"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -303,7 +307,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="13dp"
                             android:fontFamily="@font/roboto_bold"
-                            android:text="Pajamas"
+                            android:text="@string/tv_pajamas_gender"
                             android:textColor="@color/palecream"
                             android:textSize="18sp"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -311,6 +315,7 @@
                             app:layout_constraintStart_toStartOf="parent" />
 
                         <ImageView
+                            android:contentDescription="@string/todo"
                             android:id="@+id/imageView15"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -348,7 +353,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="13dp"
                             android:fontFamily="@font/roboto_bold"
-                            android:text="Streetwear"
+                            android:text="@string/tv_streetwear_gender"
                             android:textColor="@color/palecream"
                             android:textSize="18sp"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -356,6 +361,7 @@
                             app:layout_constraintStart_toStartOf="parent" />
 
                         <ImageView
+                            android:contentDescription="@string/todo"
                             android:id="@+id/imageView14"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -394,7 +400,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="13dp"
                             android:fontFamily="@font/roboto_bold"
-                            android:text="Wedding"
+                            android:text="@string/tv_wedding_gender"
                             android:textColor="@color/palecream"
                             android:textSize="18sp"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -402,6 +408,7 @@
                             app:layout_constraintStart_toStartOf="parent" />
 
                         <ImageView
+                            android:contentDescription="@string/todo"
                             android:id="@+id/imageView13"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -440,7 +447,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="13dp"
                             android:fontFamily="@font/roboto_bold"
-                            android:text="Sportwear"
+                            android:text="@string/tv_sportwear_gender"
                             android:textColor="@color/palecream"
                             android:textSize="18sp"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -448,6 +455,7 @@
                             app:layout_constraintStart_toStartOf="parent" />
 
                         <ImageView
+                            android:contentDescription="@string/todo"
                             android:id="@+id/imageView9"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -479,6 +487,7 @@
                         android:layout_height="match_parent">
 
                         <ImageView
+                            android:contentDescription="@string/todo"
                             android:id="@+id/imageView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -494,7 +503,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
                             android:fontFamily="@font/roboto_bold"
-                            android:text="Formal"
+                            android:text="@string/tv_formal_gender"
                             android:textColor="@color/palecream"
                             android:textSize="18sp"
                             app:layout_constraintBottom_toBottomOf="parent"

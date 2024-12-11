@@ -36,7 +36,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginStart="12dp"
-                android:contentDescription="Email Icon"
+                android:contentDescription="@string/todo"
                 android:src="@drawable/ic_email"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -56,11 +56,11 @@
                 android:enabled="true"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:fontFamily="@font/roboto_light"
-                android:hint="type your email"
-                android:textColorHint="@color/semidarkgrey"
+                android:fontFamily="@font/poppins_regular"
+                android:hint="@string/tv_type_your_email_edt"
                 android:inputType="textEmailAddress"
-                android:textSize="14sp"
+                android:textColorHint="@color/semidarkgrey"
+                android:textSize="13sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/warningIcon"
                 app:layout_constraintStart_toEndOf="@+id/emailIcon"
@@ -72,7 +72,7 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginEnd="12dp"
-                android:contentDescription="Warning Icon"
+                android:contentDescription="@string/todo"
                 android:src="@drawable/ic_info"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -95,7 +95,8 @@
             android:id="@+id/errorTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Format email tidak valid"
+            android:fontFamily="@font/poppins_regular"
+            android:text="@string/tv_invalid_email_format_edt"
             android:textAlignment="textEnd"
             android:textColor="@android:color/holo_red_dark"
             android:textSize="10sp"
@@ -103,7 +104,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="SmallSp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- TextView untuk Pesan Error -->

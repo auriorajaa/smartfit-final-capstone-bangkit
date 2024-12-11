@@ -16,8 +16,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import android.view.View
 import android.graphics.Color
+import android.os.Build
 import android.os.Handler
 import android.os.Looper
+import android.view.WindowInsetsController
 import android.widget.LinearLayout
 import com.example.smartfit.adapter.MixedAdapter
 import com.example.smartfit.data.remote.response.AmazonProduct
@@ -35,6 +37,26 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        window.apply {
+            // Membuat status bar dan navigation bar transparan
+            decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+                    View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+
+            // Pastikan warna mengikuti latar belakang Activity
+            statusBarColor = Color.TRANSPARENT
+
+            // Menyesuaikan ikon status bar dan navigation bar
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                insetsController?.setSystemBarsAppearance(
+                    WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS or
+                            WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
+                    WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS or
+                            WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
+                )
+            }
+        }
 
         val predictionKey = intent.getStringExtra("PREDICTION_KEY")
         val userId = intent.getStringExtra("USER_ID")

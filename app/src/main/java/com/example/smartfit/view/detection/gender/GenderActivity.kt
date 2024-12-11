@@ -49,6 +49,7 @@ class GenderActivity : AppCompatActivity() {
         binding.cvMaleGender.setOnClickListener {
             selectedGender = "men"
             binding.containerClothingType.visibility = View.VISIBLE
+            binding.genderContainer.visibility = View.GONE
             binding.cvMaleGender.visibility = View.GONE
             binding.cvFemaleGender.visibility = View.GONE
         }
@@ -56,6 +57,7 @@ class GenderActivity : AppCompatActivity() {
         binding.cvFemaleGender.setOnClickListener {
             selectedGender = "women"
             binding.containerClothingType.visibility = View.VISIBLE
+            binding.genderContainer.visibility = View.GONE
             binding.cvMaleGender.visibility = View.GONE
             binding.cvFemaleGender.visibility = View.GONE
         }
