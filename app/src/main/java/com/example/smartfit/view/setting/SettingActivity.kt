@@ -5,10 +5,9 @@ import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.smartfit.R
 import com.example.smartfit.view.credentials.login.LoginActivity
 import com.example.smartfit.view.setting.account.AccountActivity
@@ -24,7 +23,6 @@ class SettingActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_setting)
 
-
         // Inisialisasi FirebaseAuth
         auth = FirebaseAuth.getInstance()
 
@@ -35,7 +33,7 @@ class SettingActivity : AppCompatActivity() {
         animationDrawable.setExitFadeDuration(3000)
         animationDrawable.start()
 
-        val backButton = findViewById<androidx.cardview.widget.CardView>(R.id.btn_back_setting)
+        val backButton = findViewById<MaterialCardView>(R.id.btn_back_setting)
         backButton.setOnClickListener {
             finish()
         }
@@ -43,14 +41,32 @@ class SettingActivity : AppCompatActivity() {
         // Tombol logout
         val logoutButton = findViewById<MaterialCardView>(R.id.cv_logout)
         logoutButton.setOnClickListener {
-            performLogout()
+            showLogoutConfirmationDialog()
         }
 
-        val accountButton = findViewById<com.google.android.material.card.MaterialCardView>(R.id.cv_account)
+        val accountButton = findViewById<MaterialCardView>(R.id.cv_account)
         accountButton.setOnClickListener {
             val intent = Intent(this, AccountActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    private fun showLogoutConfirmationDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Logout")
+        builder.setMessage("Are you sure you want to logout?")
+        builder.setPositiveButton("Yes") { dialog, _ ->
+            dialog.dismiss()
+            auth.signOut()
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+        builder.setNegativeButton("No") { dialog, _ ->
+            dialog.dismiss()
+        }
+        val dialog = builder.create()
+        dialog.show()
     }
 
     private fun performLogout() {

@@ -1,60 +1,85 @@
 package com.example.smartfit.view.news
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.smartfit.R
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.smartfit.BuildConfig
+import com.example.smartfit.data.remote.response.Article
+import com.example.smartfit.data.remote.response.NewsResponse
+import com.example.smartfit.data.remote.retrofit.NewsApiService
+import com.example.smartfit.data.remote.retrofit.NewsRetrofitClient
+import com.example.smartfit.databinding.FragmentNewsBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [NewsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class NewsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private var _binding: FragmentNewsBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_news, container, false)
+        _binding = FragmentNewsBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment NewsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            NewsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.rvNews.layoutManager = LinearLayoutManager(requireContext())
+
+        fetchNews()
+    }
+
+    private fun fetchNews() {
+        val newsApiService = NewsRetrofitClient.instance.create(NewsApiService::class.java)
+        val call = newsApiService.getNews(
+            query = "fashion",
+            from = "2024-11-20",
+            to = "2024-12-10",
+            sortBy = "relevance",
+            apiKey = BuildConfig.NEWS_API_KEY
+        )
+
+        call.enqueue(object : Callback<NewsResponse> {
+            override fun onResponse(call: Call<NewsResponse>, response: Response<NewsResponse>) {
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        Log.d("NewsFragment", "News articles received: ${it.articles.size}")
+                        displayNews(it.articles)
+                    } ?: run {
+                        Log.e("NewsFragment", "Empty response body")
+                    }
+                } else {
+                    Log.e("NewsFragment", "Request failed with response code: ${response.code()}")
                 }
             }
+
+            override fun onFailure(call: Call<NewsResponse>, t: Throwable) {
+                Log.e("NewsFragment", "Request failed", t)
+            }
+        })
+    }
+
+    private fun displayNews(articles: List<Article>) {
+        val newsAdapter = NewsAdapter(articles) { article ->
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(article.url))
+            startActivity(intent)
+        }
+        binding.rvNews.adapter = newsAdapter
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

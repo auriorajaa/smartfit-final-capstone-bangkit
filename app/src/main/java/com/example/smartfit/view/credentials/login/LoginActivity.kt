@@ -10,8 +10,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.smartfit.R
 import com.example.smartfit.databinding.ActivityLoginBinding
 import com.example.smartfit.view.MainActivity
-import com.example.smartfit.view.credentials.customview.EmailInputView
-import com.example.smartfit.view.credentials.customview.PasswordInputView
 import com.example.smartfit.view.credentials.forgotpassword.ForgotPasswordActivity
 import com.example.smartfit.view.credentials.register.RegisterActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -20,8 +18,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.database.FirebaseDatabase
 
@@ -71,7 +69,9 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.tvSignup.setOnClickListener {
-            startActivity(Intent(this, RegisterActivity::class.java))
+            val intent = Intent(this, RegisterActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+            startActivity(intent)
         }
 
         binding.tvForgotPassword.setOnClickListener {

@@ -1,7 +1,6 @@
 package com.example.smartfit.view
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.AnimationDrawable
 import android.os.Build
@@ -12,11 +11,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import com.example.smartfit.R
-import com.example.smartfit.view.bookmark.BookmarkFragment
+import com.example.smartfit.view.history.HistoryFragment
 import com.example.smartfit.view.credentials.login.LoginActivity
 import com.example.smartfit.view.home.HomeFragment
 import com.example.smartfit.view.news.NewsFragment
-import com.example.smartfit.view.welcome.WelcomeActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 
@@ -81,7 +79,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.nav_bookmark -> {
-                    openFragment(BookmarkFragment())
+                    openFragment(HistoryFragment())
                     true
                 }
                 else -> false

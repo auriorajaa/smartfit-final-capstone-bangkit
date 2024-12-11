@@ -1,45 +1,61 @@
 package com.example.smartfit.view.detection.camera2
 
+
 import android.content.Intent
-import android.graphics.drawable.AnimationDrawable
+import android.graphics.Color
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
-import android.widget.Button
-import androidx.activity.enableEdgeToEdge
+import android.view.View
+import android.view.WindowInsetsController
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.smartfit.R
+import com.example.smartfit.databinding.ActivityCamera2Binding
+import com.example.smartfit.view.detection.camera.CameraActivity
 import com.example.smartfit.view.detection.gender.GenderActivity
 
 class Camera2Activity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityCamera2Binding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_camera2)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+        binding = ActivityCamera2Binding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        window.apply {
+            // Membuat status bar dan navigation bar transparan
+            decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+                    View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+
+            // Pastikan warna mengikuti latar belakang Activity
+            statusBarColor = Color.TRANSPARENT
+
+            // Menyesuaikan ikon status bar dan navigation bar
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                insetsController?.setSystemBarsAppearance(
+                    WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS or
+                            WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
+                    WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS or
+                            WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
+                )
+            }
         }
 
-        // Mengatur background bergerak
-        val constraintLayout: ConstraintLayout = findViewById(R.id.main)
-        val animationDrawable = constraintLayout.background as AnimationDrawable
-        animationDrawable.setEnterFadeDuration(1500)
-        animationDrawable.setExitFadeDuration(3000)
-        animationDrawable.start()
+        val croppedImageUriString = intent.getStringExtra("CROPPED_IMAGE_URI")
+        val croppedImageUri = Uri.parse(croppedImageUriString)
+        binding.ivPlaceHolderImage.setImageURI(croppedImageUri)
 
-        val btnRetake = findViewById<Button>(R.id.btn_retake_camera2)
-        btnRetake.setOnClickListener {
-            finish()
-        }
-
-        val btnNext = findViewById<Button>(R.id.btn_next_camera2)
-        btnNext.setOnClickListener {
-            val intent = Intent(this, GenderActivity::class.java)
+        binding.btnNextCamera2.setOnClickListener {
+            val intent = Intent(this, GenderActivity::class.java).apply {
+                putExtra("CROPPED_IMAGE_URI", croppedImageUri.toString())
+            }
             startActivity(intent)
         }
 
+        binding.btnRetakeCamera2.setOnClickListener {
+            val intent = Intent(this, CameraActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
