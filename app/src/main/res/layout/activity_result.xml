@@ -41,6 +41,18 @@
                     android:layout_height="match_parent"
                     android:layout_margin="15dp">
 
+                    <ProgressBar
+                        android:id="@+id/progressBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:elevation="10dp"
+                        android:indeterminateTint="@color/black"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
                     <TextView
                         android:id="@+id/mixedRecyclerViewLabel"
                         android:layout_width="0dp"
@@ -48,7 +60,7 @@
                         android:fontFamily="@font/poppins_extrabold"
                         android:text="@string/tv_products_and_recommendations_result"
                         android:textAlignment="center"
-                        android:textColor="@color/white"
+                        android:textColor="@color/salmonpink"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -73,7 +85,7 @@
                         android:fontFamily="@font/poppins_extrabold"
                         android:text="@string/tv_seasonal_color_result"
                         android:textAlignment="center"
-                        android:textColor="@color/white"
+                        android:textColor="@color/salmonpink"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"

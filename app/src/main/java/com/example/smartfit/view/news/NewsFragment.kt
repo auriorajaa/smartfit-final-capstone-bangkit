@@ -41,6 +41,10 @@ class NewsFragment : Fragment() {
     }
 
     private fun fetchNews() {
+        // Tampilkan ProgressBar dan sembunyikan RecyclerView saat mulai memuat
+        binding.progressBar2.visibility = View.VISIBLE
+        binding.rvNews.visibility = View.GONE
+
         val newsApiService = NewsRetrofitClient.instance.create(NewsApiService::class.java)
         val call = newsApiService.getNews(
             query = "fashion",
@@ -52,9 +56,13 @@ class NewsFragment : Fragment() {
 
         call.enqueue(object : Callback<NewsResponse> {
             override fun onResponse(call: Call<NewsResponse>, response: Response<NewsResponse>) {
+                // Sembunyikan ProgressBar setelah menerima data
+                binding.progressBar2.visibility = View.GONE
+
                 if (response.isSuccessful) {
                     response.body()?.let {
                         Log.d("NewsFragment", "News articles received: ${it.articles.size}")
+                        binding.rvNews.visibility = View.VISIBLE // Tampilkan RecyclerView
                         displayNews(it.articles)
                     } ?: run {
                         Log.e("NewsFragment", "Empty response body")
@@ -65,10 +73,13 @@ class NewsFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<NewsResponse>, t: Throwable) {
+                // Sembunyikan ProgressBar dan tampilkan pesan error
+                binding.progressBar2.visibility = View.GONE
                 Log.e("NewsFragment", "Request failed", t)
             }
         })
     }
+
 
     private fun displayNews(articles: List<Article>) {
         val newsAdapter = NewsAdapter(articles) { article ->

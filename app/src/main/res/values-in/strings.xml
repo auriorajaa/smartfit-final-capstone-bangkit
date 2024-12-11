@@ -182,4 +182,7 @@
 
     <string name="login_success_message">Login berhasil! Selamat datang!</string>
 
+    <string name="notification_title">Pengingat SmartFit</string>
+    <string name="notification_message">Jangan lupa untuk memeriksa tren fashion terbaru di SmartFit!</string>
+
 </resources>

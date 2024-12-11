@@ -181,7 +181,8 @@
 
     <string name="login_success_message">Login successful! Welcome!</string>
 
-
+    <string name="notification_title">SmartFit Reminder</string>
+    <string name="notification_message">Don\'t forget to check out the latest fashion trends on SmartFit!</string>
 
 
 </resources>

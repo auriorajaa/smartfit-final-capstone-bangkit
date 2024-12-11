@@ -14,6 +14,9 @@ import com.example.smartfit.R
 import com.example.smartfit.databinding.ActivitySettingBinding
 import com.example.smartfit.view.credentials.login.LoginActivity
 import com.example.smartfit.view.setting.account.AccountActivity
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.google.firebase.auth.FirebaseAuth
@@ -22,6 +25,7 @@ class SettingActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySettingBinding
     private lateinit var auth: FirebaseAuth
+    private lateinit var googleSignInClient: GoogleSignInClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +36,13 @@ class SettingActivity : AppCompatActivity() {
 
         // Inisialisasi FirebaseAuth
         auth = FirebaseAuth.getInstance()
+
+        // Konfigurasi Google Sign-In
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+        googleSignInClient = GoogleSignIn.getClient(this, gso)
 
         // Open Locale Settings when the ImageView is clicked
         binding.cvLanguage.setOnClickListener {
@@ -78,7 +89,7 @@ class SettingActivity : AppCompatActivity() {
 
         positiveButton.setOnClickListener {
             dialog.dismiss()
-            performLogout()
+            logoutUser()
         }
 
         negativeButton.setOnClickListener {
@@ -89,13 +100,23 @@ class SettingActivity : AppCompatActivity() {
     }
 
 
-    private fun performLogout() {
-        auth.signOut() // Logout dari Firebase Authentication
-        Toast.makeText(this, getString(R.string.success_logout), Toast.LENGTH_SHORT).show()
+//    private fun performLogout() {
+//        auth.signOut() // Logout dari Firebase Authentication
+//        Toast.makeText(this, getString(R.string.success_logout), Toast.LENGTH_SHORT).show()
+//
+//        // Arahkan pengguna kembali ke LoginActivity
+//        val intent = Intent(this, LoginActivity::class.java)
+//        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK // Membersihkan back stack
+//        startActivity(intent)
+//    }
 
-        // Arahkan pengguna kembali ke LoginActivity
-        val intent = Intent(this, LoginActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK // Membersihkan back stack
-        startActivity(intent)
+    private fun logoutUser() {
+        googleSignInClient.signOut().addOnCompleteListener {
+            auth.signOut()
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(intent)
+            finish()
+        }
     }
 }

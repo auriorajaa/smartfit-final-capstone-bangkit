@@ -99,6 +99,11 @@ class ResultActivity : AppCompatActivity() {
     }
 
     private fun sendRequest(image: MultipartBody.Part, uid: String, clothingType: String) {
+        // Tampilkan progress bar saat mulai memuat data
+        CoroutineScope(Dispatchers.Main).launch {
+            binding.progressBar.visibility = View.VISIBLE
+        }
+
         val uidPart = MultipartBody.Part.createFormData("uid", uid)
         val clothingTypePart = MultipartBody.Part.createFormData("clothing_type", clothingType)
 
@@ -110,23 +115,28 @@ class ResultActivity : AppCompatActivity() {
                     call: Call<StyleRecommendationResponse>,
                     response: Response<StyleRecommendationResponse>
                 ) {
-                    if (response.isSuccessful) {
-                        response.body()?.let {
-                            CoroutineScope(Dispatchers.Main).launch {
+                    CoroutineScope(Dispatchers.Main).launch {
+                        binding.progressBar.visibility = View.GONE // Sembunyikan progress bar
+                        if (response.isSuccessful) {
+                            response.body()?.let {
                                 displayResult(it)
                             }
+                        } else {
+                            showRetryDialog()
                         }
-                    } else {
-                        showRetryDialog()
                     }
                 }
 
                 override fun onFailure(call: Call<StyleRecommendationResponse>, t: Throwable) {
-                    showRetryDialog()
+                    CoroutineScope(Dispatchers.Main).launch {
+                        binding.progressBar.visibility = View.GONE // Sembunyikan progress bar
+                        showRetryDialog()
+                    }
                 }
             })
         }
     }
+
 
     private fun displayResult(result: StyleRecommendationResponse) {
         binding.seasonalColorLabel.text = getString(R.string.seasonal_color_label)

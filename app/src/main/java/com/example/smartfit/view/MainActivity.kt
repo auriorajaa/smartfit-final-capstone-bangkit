@@ -1,5 +1,6 @@
 package com.example.smartfit.view
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.AnimationDrawable
@@ -10,13 +11,19 @@ import android.view.WindowInsetsController
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.WorkRequest
 import com.example.smartfit.R
+import com.example.smartfit.utils.NotificationHelper
+import com.example.smartfit.utils.NotificationWorker
 import com.example.smartfit.view.history.HistoryFragment
 import com.example.smartfit.view.credentials.login.LoginActivity
 import com.example.smartfit.view.home.HomeFragment
 import com.example.smartfit.view.news.NewsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
+import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
 
@@ -92,6 +99,23 @@ class MainActivity : AppCompatActivity() {
         animationDrawable.setEnterFadeDuration(1500)
         animationDrawable.setExitFadeDuration(3000)
         animationDrawable.start()
+
+        // Panggil createNotificationChannel
+        NotificationHelper.createNotificationChannel(this)
+
+        // Cek waktu notifikasi terakhir
+        val sharedPreferences = getSharedPreferences("NotificationPrefs", Context.MODE_PRIVATE)
+        val lastNotificationTime = sharedPreferences.getLong("lastNotificationTime", 0L)
+        val currentTime = System.currentTimeMillis()
+        val timeDiff = currentTime - lastNotificationTime
+
+        // Jika lebih dari 12 jam sejak notifikasi terakhir, jadwalkan ulang
+        if (timeDiff >= TimeUnit.HOURS.toMillis(12)) {
+            val workRequest: WorkRequest = PeriodicWorkRequestBuilder<NotificationWorker>(12, TimeUnit.HOURS)
+                .build()
+            WorkManager.getInstance(this).enqueue(workRequest)
+        }
+
     }
 
     // Fungsi untuk mengganti fragment
