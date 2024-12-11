@@ -183,6 +183,23 @@
 
     <string name="notification_title">SmartFit Reminder</string>
     <string name="notification_message">Don\'t forget to check out the latest fashion trends on SmartFit!</string>
+    <string name="tv_already_have_an_account_register">Already have an account?</string>
+    <string name="tvsign_in_register">Sign In</string>
+    <string name="tv_empty_history">You have no history records yet. Scan to get started!</string>
+
+    <string name="no_history_found">No history found</string>
+    <string name="failed_to_fetch_history">Failed to fetch history</string>
+    <string name="error_message">Error: %1$s</string>
+
+    <string name="delete_confirmation_title">Delete Confirmation</string>
+    <string name="delete_confirmation_message">Are you sure you want to delete this prediction history?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="delete_success">Deleted successfully</string>
+    <string name="delete_failed">Failed to delete</string>
+
+
+
 
 
 </resources>

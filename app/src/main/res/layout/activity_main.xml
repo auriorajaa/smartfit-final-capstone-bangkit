@@ -12,11 +12,11 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardView"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="53dp"
         android:layout_marginHorizontal="15dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
         app:cardBackgroundColor="@color/semitransparentgrey"
-        app:cardCornerRadius="24dp"
+        app:cardCornerRadius="21dp"
         app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,7 +25,7 @@
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_nav"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="53dp"
             android:background="@android:color/transparent"
             android:elevation="0dp"
             app:elevation="0dp"

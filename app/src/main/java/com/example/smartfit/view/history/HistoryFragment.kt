@@ -10,12 +10,14 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.smartfit.R
 import com.example.smartfit.data.remote.response.AmazonProduct
 import com.example.smartfit.data.remote.response.ColorPalette
 import com.example.smartfit.data.remote.response.OutfitRecommendation
 import com.example.smartfit.data.remote.response.PredictionHistory
 import com.example.smartfit.data.remote.retrofit.RetrofitClient
 import com.example.smartfit.databinding.FragmentHistoryBinding
+import com.example.smartfit.utils.showUniversalDialog
 import com.google.firebase.auth.FirebaseAuth
 import retrofit2.Call
 import retrofit2.Callback
@@ -111,16 +113,41 @@ class HistoryFragment : Fragment() {
                         } else {
                             binding.historyRecyclerView.visibility = View.GONE
                             binding.emptyView.visibility = View.VISIBLE
+                            showUniversalDialog(
+                                context = requireContext(),
+                                title = getString(R.string.no_history_found),
+                                message = getString(R.string.no_history_found),
+                                positiveButtonText = getString(R.string.ok),
+                                negativeButtonText = null,
+                                positiveAction = null,
+                                negativeAction = null
+                            )
                         }
                     } else {
                         binding.historyRecyclerView.visibility = View.GONE
                         binding.emptyView.visibility = View.VISIBLE
-                        Toast.makeText(requireContext(), "No history found", Toast.LENGTH_SHORT).show()
+                        showUniversalDialog(
+                            context = requireContext(),
+                            title = getString(R.string.no_history_found),
+                            message = getString(R.string.no_history_found),
+                            positiveButtonText = getString(R.string.ok),
+                            negativeButtonText = null,
+                            positiveAction = null,
+                            negativeAction = null
+                        )
                     }
                 } else {
                     binding.historyRecyclerView.visibility = View.GONE
                     binding.emptyView.visibility = View.VISIBLE
-                    Toast.makeText(requireContext(), "Failed to fetch history", Toast.LENGTH_SHORT).show()
+                    showUniversalDialog(
+                        context = requireContext(),
+                        title = getString(R.string.failed_to_fetch_history),
+                        message = getString(R.string.failed_to_fetch_history),
+                        positiveButtonText = getString(R.string.ok),
+                        negativeButtonText = null,
+                        positiveAction = null,
+                        negativeAction = null
+                    )
                 }
             }
 
@@ -128,7 +155,15 @@ class HistoryFragment : Fragment() {
                 Log.e("HistoryFragment", "onFailure: ${t.message}", t)
                 binding.historyRecyclerView.visibility = View.GONE
                 binding.emptyView.visibility = View.VISIBLE
-                Toast.makeText(requireContext(), "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+                showUniversalDialog(
+                    context = requireContext(),
+                    title = getString(R.string.error_title),
+                    message = getString(R.string.error_message, t.message),
+                    positiveButtonText = getString(R.string.ok),
+                    negativeButtonText = null,
+                    positiveAction = null,
+                    negativeAction = null
+                )
             }
         })
     }

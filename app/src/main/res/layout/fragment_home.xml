@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="10dp"
         android:elevation="0dp"
@@ -27,16 +27,14 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:padding="15dp">
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/container2_home"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginStart="20dp"
                 android:layout_marginTop="15dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="30dp"
                 android:elevation="0dp"
                 app:cardBackgroundColor="@color/semitransparentwhite"
                 app:cardCornerRadius="27dp"
@@ -50,68 +48,78 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <ImageView
-                        android:id="@+id/iv_image_home"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:contentDescription="@string/todo"
-                        android:src="@drawable/image_home"
-                        app:layout_constraintBottom_toTopOf="@+id/tv_container2"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <Button
-                        android:id="@+id/btn_lets_start"
-                        style="@style/CustomButtonDark"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginEnd="15dp"
-                        android:layout_marginBottom="5dp"
-                        android:backgroundTint="@null"
-                        android:fontFamily="@font/roboto_bold"
-                        android:text="@string/btn_let_s_start_home"
-                        android:textAllCaps="false"
-                        android:textColor="@color/palecream"
-                        android:textSize="16sp"
-                        app:backgroundTint="@null"
+                    <ScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_container2" />
+                        app:layout_constraintTop_toTopOf="parent">
 
-                    <TextView
-                        android:id="@+id/tv_container2"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginTop="30dp"
-                        android:layout_marginEnd="15dp"
-                        android:layout_marginBottom="10dp"
-                        android:fontFamily="@font/poppins_regular"
-                        android:text="@string/desc_home2"
-                        android:textAlignment="center"
-                        android:textColor="@color/salmonpink"
-                        android:textSize="13sp"
-                        app:layout_constraintBottom_toTopOf="@+id/btn_lets_start"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/iv_image_home" />
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:padding="15dp">
 
+                            <ImageView
+                                android:id="@+id/iv_image_home"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginBottom="5dp"
+                                android:contentDescription="@string/todo"
+                                android:src="@drawable/image_home"
+                                app:layout_constraintBottom_toTopOf="@+id/tv_container2"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <Button
+                                android:id="@+id/btn_lets_start"
+                                style="@style/CustomButtonDark"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginBottom="10dp"
+                                android:backgroundTint="@null"
+                                android:fontFamily="@font/roboto_bold"
+                                android:text="@string/btn_let_s_start_home"
+                                android:textAllCaps="false"
+                                android:textColor="@color/palecream"
+                                android:textSize="16sp"
+                                app:backgroundTint="@null"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/tv_container2" />
+
+                            <TextView
+                                android:id="@+id/tv_container2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="30dp"
+                                android:layout_marginBottom="10dp"
+                                android:fontFamily="@font/poppins_regular"
+                                android:text="@string/desc_home2"
+                                android:textAlignment="center"
+                                android:textColor="@color/salmonpink"
+                                android:textSize="13sp"
+                                app:layout_constraintBottom_toTopOf="@+id/btn_lets_start"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/iv_image_home" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </ScrollView>
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/container1_home"
                 android:layout_width="match_parent"
                 android:layout_height="115dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginEnd="20dp"
                 android:elevation="0dp"
                 app:cardBackgroundColor="@color/semitransparentwhite"
                 app:cardCornerRadius="27dp"
@@ -149,7 +157,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="135dp"
+        android:layout_height="115dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -158,13 +166,14 @@
         <TextView
             android:id="@+id/tv_explanation_home"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_height="0dp"
             android:layout_marginEnd="15dp"
+            android:layout_marginBottom="6dp"
             android:fontFamily="@font/poppins_regular"
             android:text="@string/explanation_home_page"
             android:textColor="@color/white"
             android:textSize="13sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tv_username"
             app:layout_constraintTop_toBottomOf="@+id/tv_username" />
@@ -173,7 +182,7 @@
             android:id="@+id/cv_setting"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             android:layout_marginEnd="15dp"
             android:elevation="0dp"
             app:cardBackgroundColor="@color/semitransparentgrey"
@@ -204,11 +213,10 @@
             android:id="@+id/tv_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
             android:fontFamily="@font/poppins_bold"
             android:text="@string/example_email_home_page"
             android:textColor="@color/white"
-            android:textSize="18sp"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="@+id/tv_welcome_home"
             app:layout_constraintTop_toBottomOf="@+id/tv_welcome_home" />
 
@@ -217,7 +225,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:fontFamily="@font/poppins_regular"
             android:text="@string/title_welcome_home_page"
             android:textColor="@color/white"

@@ -185,4 +185,19 @@
     <string name="notification_title">Pengingat SmartFit</string>
     <string name="notification_message">Jangan lupa untuk memeriksa tren fashion terbaru di SmartFit!</string>
 
+    <string name="tv_already_have_an_account_register">Sudah memiliki akun?</string>
+    <string name="tvsign_in_register">Masuk</string>
+    <string name="tv_empty_history">Anda belum memiliki catatan riwayat. Pindai untuk memulai!</string>
+
+    <string name="no_history_found">Riwayat tidak ditemukan</string>
+    <string name="failed_to_fetch_history">Gagal mengambil riwayat</string>
+    <string name="error_message">Kesalahan: %1$s</string>
+
+    <string name="delete_confirmation_title">Konfirmasi Penghapusan</string>
+    <string name="delete_confirmation_message">Apakah Anda yakin ingin menghapus riwayat prediksi ini?</string>
+    <string name="yes">Ya</string>
+    <string name="no">Tidak</string>
+    <string name="delete_success">Dihapus berhasil</string>
+    <string name="delete_failed">Gagal menghapus</string>
+
 </resources>

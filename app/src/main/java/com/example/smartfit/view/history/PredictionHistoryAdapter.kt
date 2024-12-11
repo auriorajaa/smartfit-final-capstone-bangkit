@@ -1,6 +1,5 @@
 package com.example.smartfit.view.history
 
-import android.app.AlertDialog
 import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,9 +8,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.smartfit.R
 import com.example.smartfit.data.remote.response.PredictionHistory
 import com.example.smartfit.data.remote.retrofit.RetrofitClient
 import com.example.smartfit.databinding.ItemPredictionHistoryBinding
+import com.example.smartfit.utils.showUniversalDialog
 import com.example.smartfit.view.detection.result.DetailActivity
 import retrofit2.Call
 import retrofit2.Callback
@@ -59,14 +60,15 @@ class PredictionHistoryAdapter(private val predictionHistoryList: MutableList<Pr
 
         private fun showDeleteConfirmationDialog(predictionKey: String, position: Int) {
             val context = binding.root.context
-            AlertDialog.Builder(context).apply {
-                setTitle("Delete Confirmation")
-                setMessage("Are you sure you want to delete this prediction history?")
-                setPositiveButton("Yes") { _, _ ->
-                    deletePredictionHistory(predictionKey, position)
-                }
-                setNegativeButton("No", null)
-            }.create().show()
+            showUniversalDialog(
+                context = context,
+                title = context.getString(R.string.delete_confirmation_title),
+                message = context.getString(R.string.delete_confirmation_message),
+                positiveButtonText = context.getString(R.string.yes),
+                negativeButtonText = context.getString(R.string.no),
+                positiveAction = { deletePredictionHistory(predictionKey, position) },
+                negativeAction = null
+            )
         }
 
         private fun deletePredictionHistory(predictionKey: String, position: Int) {
@@ -81,19 +83,19 @@ class PredictionHistoryAdapter(private val predictionHistoryList: MutableList<Pr
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                     if (response.isSuccessful) {
                         Log.d("PredictionHistoryAdapter", "Delete successful: $response")
-                        Toast.makeText(binding.root.context, "Deleted successfully", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(binding.root.context, binding.root.context.getString(R.string.delete_success), Toast.LENGTH_SHORT).show()
                         predictionHistoryList.removeAt(position)
                         notifyItemRemoved(position)
                         notifyItemRangeChanged(position, predictionHistoryList.size)
                     } else {
                         Log.e("PredictionHistoryAdapter", "Delete failed: ${response.errorBody()?.string()}")
-                        Toast.makeText(binding.root.context, "Failed to delete", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(binding.root.context, binding.root.context.getString(R.string.delete_failed), Toast.LENGTH_SHORT).show()
                     }
                 }
 
                 override fun onFailure(call: Call<JsonObject>, t: Throwable) {
                     Log.e("PredictionHistoryAdapter", "Delete error: ${t.message}", t)
-                    Toast.makeText(binding.root.context, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(binding.root.context, binding.root.context.getString(R.string.error_message, t.message), Toast.LENGTH_SHORT).show()
                 }
             })
         }
