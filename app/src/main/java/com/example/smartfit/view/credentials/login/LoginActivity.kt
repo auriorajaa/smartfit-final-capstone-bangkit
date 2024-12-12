@@ -3,10 +3,15 @@ package com.example.smartfit.view.credentials.login
 import android.content.Intent
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import com.example.smartfit.R
 import com.example.smartfit.databinding.ActivityLoginBinding
 import com.example.smartfit.utils.showUniversalDialog
@@ -31,12 +36,24 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var database: FirebaseDatabase
     private lateinit var googleSignInClient: GoogleSignInClient
     private val RC_SIGN_IN = 9001
+    private val hideHandler = Handler(Looper.getMainLooper())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Menyembunyikan tombol navigasi saja
+        val controller = ViewCompat.getWindowInsetsController(window.decorView)
+        controller?.hide(WindowInsetsCompat.Type.navigationBars())
+        controller?.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
+
+        window.decorView.setOnSystemUiVisibilityChangeListener {
+            hideHandler.postDelayed({
+                controller?.hide(WindowInsetsCompat.Type.navigationBars())
+            }, 5000)
+        }
 
         // Konfigurasi Firebase Auth dan Realtime Database
         auth = FirebaseAuth.getInstance()

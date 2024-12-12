@@ -3,9 +3,14 @@ package com.example.smartfit.view.credentials.register
 import android.content.Intent
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import com.example.smartfit.R
 import com.example.smartfit.databinding.ActivityRegisterBinding
 import com.example.smartfit.utils.showUniversalDialog
@@ -21,12 +26,24 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
+    private val hideHandler = Handler(Looper.getMainLooper())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Menyembunyikan tombol navigasi saja
+        val controller = ViewCompat.getWindowInsetsController(window.decorView)
+        controller?.hide(WindowInsetsCompat.Type.navigationBars())
+        controller?.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
+
+        window.decorView.setOnSystemUiVisibilityChangeListener {
+            hideHandler.postDelayed({
+                controller?.hide(WindowInsetsCompat.Type.navigationBars())
+            }, 5000)
+        }
 
         // Mengatur background bergerak
         val constraintLayout: ConstraintLayout = findViewById(R.id.main)

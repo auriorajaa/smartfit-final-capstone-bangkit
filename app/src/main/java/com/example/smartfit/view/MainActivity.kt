@@ -6,10 +6,15 @@ import android.graphics.Color
 import android.graphics.drawable.AnimationDrawable
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.view.WindowInsetsController
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.Fragment
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
@@ -29,6 +34,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var bottomNavigationView: BottomNavigationView
     private lateinit var auth: FirebaseAuth
+    private val hideHandler = Handler(Looper.getMainLooper())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,10 +42,8 @@ class MainActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
-        // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
         if (currentUser == null) {
-            // User is not signed in, navigate to LoginActivity
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
@@ -47,15 +51,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         window.apply {
-            // Membuat status bar dan navigation bar transparan
             decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
                     View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
                     View.SYSTEM_UI_FLAG_LAYOUT_STABLE
 
-            // Pastikan warna mengikuti latar belakang Activity
             statusBarColor = Color.TRANSPARENT
 
-            // Menyesuaikan ikon status bar dan navigation bar
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                 insetsController?.setSystemBarsAppearance(
                     WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS or
@@ -64,6 +65,17 @@ class MainActivity : AppCompatActivity() {
                             WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
                 )
             }
+        }
+
+        // Menyembunyikan tombol navigasi saja
+        val controller = ViewCompat.getWindowInsetsController(window.decorView)
+        controller?.hide(WindowInsetsCompat.Type.navigationBars())
+        controller?.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
+
+        window.decorView.setOnSystemUiVisibilityChangeListener {
+            hideHandler.postDelayed({
+                controller?.hide(WindowInsetsCompat.Type.navigationBars())
+            }, 5000)
         }
 
         // Mengatur BottomNavigationView
@@ -81,14 +93,17 @@ class MainActivity : AppCompatActivity() {
                     openFragment(HomeFragment())
                     true
                 }
+
                 R.id.nav_news -> {
                     openFragment(NewsFragment())
                     true
                 }
+
                 R.id.nav_bookmark -> {
                     openFragment(HistoryFragment())
                     true
                 }
+
                 else -> false
             }
         }
@@ -111,8 +126,9 @@ class MainActivity : AppCompatActivity() {
 
         // Jika lebih dari 12 jam sejak notifikasi terakhir, jadwalkan ulang
         if (timeDiff >= TimeUnit.HOURS.toMillis(12)) {
-            val workRequest: WorkRequest = PeriodicWorkRequestBuilder<NotificationWorker>(12, TimeUnit.HOURS)
-                .build()
+            val workRequest: WorkRequest =
+                PeriodicWorkRequestBuilder<NotificationWorker>(12, TimeUnit.HOURS)
+                    .build()
             WorkManager.getInstance(this).enqueue(workRequest)
         }
 

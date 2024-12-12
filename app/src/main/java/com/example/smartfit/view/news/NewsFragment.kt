@@ -24,8 +24,6 @@ class NewsFragment : Fragment() {
     private var _binding: FragmentNewsBinding? = null
     private val binding get() = _binding!!
 
-    // tes commit
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -57,13 +55,13 @@ class NewsFragment : Fragment() {
 
         call.enqueue(object : Callback<NewsResponse> {
             override fun onResponse(call: Call<NewsResponse>, response: Response<NewsResponse>) {
-                binding?.let {
-                    it.progressBar2.visibility = View.GONE
+                if (_binding != null) {
+                    binding.progressBar2.visibility = View.GONE
 
                     if (response.isSuccessful) {
                         response.body()?.let { newsResponse ->
                             Log.d("NewsFragment", "News articles received: ${newsResponse.articles.size}")
-                            it.rvNews.visibility = View.VISIBLE
+                            binding.rvNews.visibility = View.VISIBLE
                             displayNews(newsResponse.articles)
                         } ?: run {
                             Log.e("NewsFragment", "Empty response body")
@@ -75,8 +73,8 @@ class NewsFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<NewsResponse>, t: Throwable) {
-                binding?.let {
-                    it.progressBar2.visibility = View.GONE
+                if (_binding != null) { // Pastikan binding tidak null sebelum mengakses
+                    binding.progressBar2.visibility = View.GONE
                 }
                 Log.e("NewsFragment", "Request failed", t)
             }
@@ -84,12 +82,12 @@ class NewsFragment : Fragment() {
     }
 
     private fun displayNews(articles: List<Article>) {
-        binding?.let {
+        if (_binding != null) {
             val newsAdapter = NewsAdapter(articles) { article ->
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(article.url))
                 startActivity(intent)
             }
-            it.rvNews.adapter = newsAdapter
+            binding.rvNews.adapter = newsAdapter
         }
     }
 

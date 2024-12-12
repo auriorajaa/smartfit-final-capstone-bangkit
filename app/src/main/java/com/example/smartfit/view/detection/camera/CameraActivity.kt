@@ -8,6 +8,8 @@ import android.graphics.drawable.AnimationDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.view.WindowInsetsController
@@ -17,9 +19,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import com.example.smartfit.R
 import com.example.smartfit.databinding.ActivityCameraBinding
 import com.example.smartfit.utils.showUniversalDialog
+import com.example.smartfit.view.MainActivity
 import com.example.smartfit.view.detection.camera2.Camera2Activity
 import com.yalantis.ucrop.UCrop
 import java.io.File
@@ -86,10 +92,23 @@ class CameraActivity : AppCompatActivity() {
         }
     }
 
+    private val hideHandler = Handler(Looper.getMainLooper())
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCameraBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Menyembunyikan tombol navigasi saja
+        val controller = ViewCompat.getWindowInsetsController(window.decorView)
+        controller?.hide(WindowInsetsCompat.Type.navigationBars())
+        controller?.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
+
+        window.decorView.setOnSystemUiVisibilityChangeListener {
+            hideHandler.postDelayed({
+                controller?.hide(WindowInsetsCompat.Type.navigationBars())
+            }, 5000)
+        }
 
         // Mengatur background animasi
         val constraintLayout: ConstraintLayout = binding.main
@@ -119,7 +138,9 @@ class CameraActivity : AppCompatActivity() {
         }
 
         binding.btnBackCamera.setOnClickListener {
-            onBackPressed()
+            val intent = Intent(this, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+            startActivity(intent)
         }
 
         binding.btnOpenCamera.setOnClickListener {

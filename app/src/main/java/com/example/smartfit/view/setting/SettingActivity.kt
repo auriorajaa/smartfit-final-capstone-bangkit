@@ -3,6 +3,8 @@ package com.example.smartfit.view.setting
 import android.content.Intent
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.provider.Settings
 import android.widget.TextView
 import android.widget.Toast
@@ -10,6 +12,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import com.example.smartfit.R
 import com.example.smartfit.databinding.ActivitySettingBinding
 import com.example.smartfit.view.credentials.login.LoginActivity
@@ -26,13 +31,25 @@ class SettingActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySettingBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
+    private val hideHandler = Handler(Looper.getMainLooper())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         // Inisialisasi binding dengan inflate layout
         binding = ActivitySettingBinding.inflate(layoutInflater)
-        setContentView(binding.root) // Gunakan binding.root di sini
+        setContentView(binding.root)
+
+        // Menyembunyikan tombol navigasi saja
+        val controller = ViewCompat.getWindowInsetsController(window.decorView)
+        controller?.hide(WindowInsetsCompat.Type.navigationBars())
+        controller?.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
+
+        window.decorView.setOnSystemUiVisibilityChangeListener {
+            hideHandler.postDelayed({
+                controller?.hide(WindowInsetsCompat.Type.navigationBars())
+            }, 5000)
+        }
 
         // Inisialisasi FirebaseAuth
         auth = FirebaseAuth.getInstance()
@@ -98,17 +115,6 @@ class SettingActivity : AppCompatActivity() {
 
         dialog.show()
     }
-
-
-//    private fun performLogout() {
-//        auth.signOut() // Logout dari Firebase Authentication
-//        Toast.makeText(this, getString(R.string.success_logout), Toast.LENGTH_SHORT).show()
-//
-//        // Arahkan pengguna kembali ke LoginActivity
-//        val intent = Intent(this, LoginActivity::class.java)
-//        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK // Membersihkan back stack
-//        startActivity(intent)
-//    }
 
     private fun logoutUser() {
         googleSignInClient.signOut().addOnCompleteListener {

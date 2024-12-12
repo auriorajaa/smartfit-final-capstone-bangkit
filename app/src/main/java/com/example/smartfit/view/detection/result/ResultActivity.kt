@@ -14,6 +14,9 @@ import android.view.WindowInsetsController
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.smartfit.R
 import com.example.smartfit.adapter.MixedAdapter
@@ -41,11 +44,23 @@ class ResultActivity : AppCompatActivity() {
     private lateinit var mixedAdapter: MixedAdapter
     private lateinit var handler: Handler
     private var scrollPosition = 0
+    private val hideHandler = Handler(Looper.getMainLooper())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityResultBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Menyembunyikan tombol navigasi saja
+        val controller = ViewCompat.getWindowInsetsController(window.decorView)
+        controller?.hide(WindowInsetsCompat.Type.navigationBars())
+        controller?.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
+
+        window.decorView.setOnSystemUiVisibilityChangeListener {
+            hideHandler.postDelayed({
+                controller?.hide(WindowInsetsCompat.Type.navigationBars())
+            }, 5000)
+        }
 
         // Mengatur background animasi
         val constraintLayout: ConstraintLayout = binding.main

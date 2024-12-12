@@ -7,6 +7,9 @@ import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import com.example.smartfit.R
 import com.example.smartfit.databinding.DialogReauthenticateBinding
 import com.example.smartfit.utils.showUniversalDialog
@@ -27,6 +30,14 @@ class AccountActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_account)
+
+        val controller = ViewCompat.getWindowInsetsController(window.decorView)
+        controller?.hide(WindowInsetsCompat.Type.navigationBars())
+        controller?.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
+
+        window.decorView.setOnSystemUiVisibilityChangeListener {
+            controller?.hide(WindowInsetsCompat.Type.navigationBars())
+        }
 
         // Initialize Firebase Auth and Database
         auth = FirebaseAuth.getInstance()
@@ -254,17 +265,5 @@ class AccountActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    private fun showAlertDialog(title: String, message: String, isSuccess: Boolean, onDismissAction: (() -> Unit)? = null) {
-        showUniversalDialog(
-            context = this,
-            title = title,
-            message = message,
-            positiveButtonText = getString(R.string.ok),
-            negativeButtonText = null,
-            positiveAction = { onDismissAction?.invoke() },
-            negativeAction = null
-        )
     }
 }

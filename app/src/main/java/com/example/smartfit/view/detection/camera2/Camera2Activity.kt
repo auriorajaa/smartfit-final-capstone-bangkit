@@ -7,10 +7,15 @@ import android.graphics.drawable.AnimationDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.view.WindowInsetsController
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import com.example.smartfit.databinding.ActivityCamera2Binding
 import com.example.smartfit.view.detection.camera.CameraActivity
 import com.example.smartfit.view.detection.gender.GenderActivity
@@ -18,11 +23,23 @@ import com.example.smartfit.view.detection.gender.GenderActivity
 class Camera2Activity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCamera2Binding
+    private val hideHandler = Handler(Looper.getMainLooper())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCamera2Binding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Menyembunyikan tombol navigasi saja
+        val controller = ViewCompat.getWindowInsetsController(window.decorView)
+        controller?.hide(WindowInsetsCompat.Type.navigationBars())
+        controller?.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
+
+        window.decorView.setOnSystemUiVisibilityChangeListener {
+            hideHandler.postDelayed({
+                controller?.hide(WindowInsetsCompat.Type.navigationBars())
+            }, 5000)
+        }
 
         // Mengatur background animasi
         val constraintLayout: ConstraintLayout = binding.main
