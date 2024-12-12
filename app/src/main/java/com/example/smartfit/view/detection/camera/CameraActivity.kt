@@ -118,6 +118,10 @@ class CameraActivity : AppCompatActivity() {
             }
         }
 
+        binding.btnBackCamera.setOnClickListener {
+            onBackPressed()
+        }
+
         binding.btnOpenCamera.setOnClickListener {
             if (checkAndRequestPermissions(arrayOf(Manifest.permission.CAMERA))) {
                 dispatchTakePictureIntent()

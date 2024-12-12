@@ -14,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="@drawable/custom_input"
+        android:backgroundTint="@color/white"
         android:elevation="0dp"
         app:cardBackgroundColor="@null"
         app:cardCornerRadius="13dp"
