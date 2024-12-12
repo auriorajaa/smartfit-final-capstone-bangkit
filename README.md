@@ -1,4 +1,4 @@
-# SmartFit Color Analysis API 🎨👗
+# SmartFit Color Analysis API by Cloud Computing Team 🎨👗
 
 ## Project Overview 📖
 SmartFit is an innovative machine learning-powered application designed to provide personalized color analysis and style recommendations. This API serves as the core backend service, leveraging advanced machine learning models to help users discover their ideal color palette and outfit recommendations.
@@ -23,8 +23,6 @@ SmartFit is an innovative machine learning-powered application designed to provi
     - Managing deployment pipelines
     - Optimizing cloud resources
     - Ensuring scalability and performance of cloud services
-  - GitHub Repository: [SmartFit Final Capstone Bangkit](https://github.com/auriorajaa/smartfit-final-capstone-bangkit)
-  - Active Branch: `cloud-computing-fachrio`
 
 - **Aurio Hendrianoko Rajaa**
   - Institution: Politeknik Negeri Jakarta
@@ -34,8 +32,6 @@ SmartFit is an innovative machine learning-powered application designed to provi
     - Integrating machine learning model predictions
     - Developing Firebase integration for user data management
     - Managing backend service logic for color analysis and style recommendations
-  - GitHub Repository: [SmartFit Final Capstone Bangkit](https://github.com/auriorajaa/smartfit-final-capstone-bangkit)
-  - Active Branch: `cloud-computing-aurio`
 
 ## API Endpoint Details 🌈
 
