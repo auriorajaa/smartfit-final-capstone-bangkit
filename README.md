@@ -35,10 +35,10 @@ SmartFit is an innovative machine learning-powered application designed to provi
 
 ## API Endpoint Details 🌈
 
-### 1. Color Palette Prediction
+### 1. Color Palette Prediction (Optional, You can choose to not use this endpoint for now, already completed by /style_recommendation endpoint)
 - **Endpoint**: `/predict_color_palette`
 - **HTTP Method**: POST
-- **Full URL**: `https://your-app-domain.com/predict_color_palette`
+- **Full URL**: `https://ancient-wave-440505-q8.et.r.appspot.com/predict_color_palette`
 
 #### Request Parameters
 - `image`: Image file for color analysis (required)
@@ -70,7 +70,7 @@ SmartFit is an innovative machine learning-powered application designed to provi
 ### 2. Style Recommendation
 - **Endpoint**: `/style_recommendation`
 - **HTTP Method**: POST
-- **Full URL**: `https://your-app-domain.com/style_recommendation`
+- **Full URL**: `https://ancient-wave-440505-q8.et.r.appspot.com/style_recommendation`
 
 #### Request Parameters
 - `image`: Image file for style analysis (required)
