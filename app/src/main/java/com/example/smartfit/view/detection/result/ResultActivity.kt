@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.view.WindowInsetsController
 import android.widget.LinearLayout
@@ -108,15 +109,14 @@ class ResultActivity : AppCompatActivity() {
         val clothingTypePart = MultipartBody.Part.createFormData("clothing_type", clothingType)
 
         CoroutineScope(Dispatchers.IO).launch {
-            val call =
-                RetrofitClient.instance.getStyleRecommendation(image, uidPart, clothingTypePart)
+            val call = RetrofitClient.instance.getStyleRecommendation(image, uidPart, clothingTypePart)
             call.enqueue(object : Callback<StyleRecommendationResponse> {
                 override fun onResponse(
                     call: Call<StyleRecommendationResponse>,
                     response: Response<StyleRecommendationResponse>
                 ) {
                     CoroutineScope(Dispatchers.Main).launch {
-                        binding.progressBar.visibility = View.GONE // Sembunyikan progress bar
+                        binding.progressBar.visibility = View.GONE
                         if (response.isSuccessful) {
                             response.body()?.let {
                                 displayResult(it)
@@ -129,7 +129,7 @@ class ResultActivity : AppCompatActivity() {
 
                 override fun onFailure(call: Call<StyleRecommendationResponse>, t: Throwable) {
                     CoroutineScope(Dispatchers.Main).launch {
-                        binding.progressBar.visibility = View.GONE // Sembunyikan progress bar
+                        binding.progressBar.visibility = View.GONE
                         showRetryDialog()
                     }
                 }
@@ -137,11 +137,10 @@ class ResultActivity : AppCompatActivity() {
         }
     }
 
-
     private fun displayResult(result: StyleRecommendationResponse) {
         binding.seasonalColorLabel.text = getString(R.string.seasonal_color_label)
-        binding.skinToneLabel.text = getString(R.string.skin_tone_label)
-        binding.seasonalDescription.text = getString(R.string.seasonal_description)
+        binding.skinToneLabel.text = result.skin_tone_label
+        binding.seasonalDescription.text = result.seasonal_description
 
         if (result.color_palette.isJsonObject) {
             val paletteObject = result.color_palette.asJsonObject

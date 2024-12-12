@@ -41,7 +41,6 @@ class NewsFragment : Fragment() {
     }
 
     private fun fetchNews() {
-        // Tampilkan ProgressBar dan sembunyikan RecyclerView saat mulai memuat
         binding.progressBar2.visibility = View.VISIBLE
         binding.rvNews.visibility = View.GONE
 
@@ -56,37 +55,40 @@ class NewsFragment : Fragment() {
 
         call.enqueue(object : Callback<NewsResponse> {
             override fun onResponse(call: Call<NewsResponse>, response: Response<NewsResponse>) {
-                // Sembunyikan ProgressBar setelah menerima data
-                binding.progressBar2.visibility = View.GONE
+                binding?.let {
+                    it.progressBar2.visibility = View.GONE
 
-                if (response.isSuccessful) {
-                    response.body()?.let {
-                        Log.d("NewsFragment", "News articles received: ${it.articles.size}")
-                        binding.rvNews.visibility = View.VISIBLE // Tampilkan RecyclerView
-                        displayNews(it.articles)
-                    } ?: run {
-                        Log.e("NewsFragment", "Empty response body")
+                    if (response.isSuccessful) {
+                        response.body()?.let { newsResponse ->
+                            Log.d("NewsFragment", "News articles received: ${newsResponse.articles.size}")
+                            it.rvNews.visibility = View.VISIBLE
+                            displayNews(newsResponse.articles)
+                        } ?: run {
+                            Log.e("NewsFragment", "Empty response body")
+                        }
+                    } else {
+                        Log.e("NewsFragment", "Request failed with response code: ${response.code()}")
                     }
-                } else {
-                    Log.e("NewsFragment", "Request failed with response code: ${response.code()}")
                 }
             }
 
             override fun onFailure(call: Call<NewsResponse>, t: Throwable) {
-                // Sembunyikan ProgressBar dan tampilkan pesan error
-                binding.progressBar2.visibility = View.GONE
+                binding?.let {
+                    it.progressBar2.visibility = View.GONE
+                }
                 Log.e("NewsFragment", "Request failed", t)
             }
         })
     }
 
-
     private fun displayNews(articles: List<Article>) {
-        val newsAdapter = NewsAdapter(articles) { article ->
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(article.url))
-            startActivity(intent)
+        binding?.let {
+            val newsAdapter = NewsAdapter(articles) { article ->
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(article.url))
+                startActivity(intent)
+            }
+            it.rvNews.adapter = newsAdapter
         }
-        binding.rvNews.adapter = newsAdapter
     }
 
     override fun onDestroyView() {

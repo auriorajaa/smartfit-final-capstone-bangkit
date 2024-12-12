@@ -16,7 +16,6 @@ class NewsAdapter(
     inner class NewsViewHolder(private val binding: ListItemNewsBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(article: Article) {
             binding.tvTitleNews.text = article.title
-//            binding.newsDescription.text = article.description?.take(100) + "..." // Truncate description
             Glide.with(binding.ivNews.context).load(article.urlToImage).into(binding.ivNews)
             binding.root.setOnClickListener { onItemClick(article) }
         }
