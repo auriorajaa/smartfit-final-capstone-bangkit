@@ -42,12 +42,15 @@ class MainActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
-        val currentUser = auth.currentUser
-        if (currentUser == null) {
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
-            return
+        // Menyembunyikan tombol navigasi saja
+        val controller = ViewCompat.getWindowInsetsController(window.decorView)
+        controller?.hide(WindowInsetsCompat.Type.navigationBars())
+        controller?.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
+
+        window.decorView.setOnSystemUiVisibilityChangeListener {
+            hideHandler.postDelayed({
+                controller?.hide(WindowInsetsCompat.Type.navigationBars())
+            }, 5000)
         }
 
         window.apply {
@@ -65,17 +68,6 @@ class MainActivity : AppCompatActivity() {
                             WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
                 )
             }
-        }
-
-        // Menyembunyikan tombol navigasi saja
-        val controller = ViewCompat.getWindowInsetsController(window.decorView)
-        controller?.hide(WindowInsetsCompat.Type.navigationBars())
-        controller?.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
-
-        window.decorView.setOnSystemUiVisibilityChangeListener {
-            hideHandler.postDelayed({
-                controller?.hide(WindowInsetsCompat.Type.navigationBars())
-            }, 5000)
         }
 
         // Mengatur BottomNavigationView
@@ -131,7 +123,17 @@ class MainActivity : AppCompatActivity() {
                     .build()
             WorkManager.getInstance(this).enqueue(workRequest)
         }
+    }
 
+    override fun onStart() {
+        super.onStart()
+
+        val currentUser = auth.currentUser
+        if (currentUser == null) {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 
     // Fungsi untuk mengganti fragment

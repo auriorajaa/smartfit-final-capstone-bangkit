@@ -35,6 +35,7 @@
             android:textColor="@color/salmonpink"
             android:textSize="16sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/itemDescription"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/productImage" />
@@ -44,16 +45,19 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="14dp"
-            android:layout_marginTop="7dp"
+            android:layout_marginTop="3dp"
             android:layout_marginEnd="14dp"
             android:layout_marginBottom="10dp"
+            android:ellipsize="end"
             android:fontFamily="@font/poppins_regular"
+            android:maxLines="2"
             android:textColor="@color/salmonpink"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/itemName" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

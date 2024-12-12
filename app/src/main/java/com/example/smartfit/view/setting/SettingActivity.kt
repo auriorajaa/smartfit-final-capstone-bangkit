@@ -120,8 +120,9 @@ class SettingActivity : AppCompatActivity() {
         googleSignInClient.signOut().addOnCompleteListener {
             auth.signOut()
             val intent = Intent(this, LoginActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
+            Toast.makeText(this, getString(R.string.success_logout), Toast.LENGTH_SHORT).show()
             finish()
         }
     }

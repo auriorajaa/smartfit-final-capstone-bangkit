@@ -236,21 +236,21 @@ class LoginActivity : AppCompatActivity() {
             }
     }
 
-    private fun showUniversalDialog(title: String, message: String, isSuccess: Boolean) {
-        showUniversalDialog(
-            context = this,
-            title = title,
-            message = message,
-            positiveButtonText = getString(R.string.ok_button),
-            negativeButtonText = null,
-            positiveAction = { if (isSuccess) navigateToMain() },
-            negativeAction = null
-        )
-    }
-
     private fun navigateToMain() {
         Toast.makeText(this, getString(R.string.login_success_message), Toast.LENGTH_SHORT).show()
         startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
+
+    override fun onBackPressed() {
+        if (isTaskRoot) {
+            super.onBackPressed()
+            finishAffinity()
+        } else {
+            super.onBackPressed()
+            finishAffinity()
+        }
+    }
+
 }
+

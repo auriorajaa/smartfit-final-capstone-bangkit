@@ -10,7 +10,9 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import com.bumptech.glide.Glide
 import com.example.smartfit.R
+import com.example.smartfit.databinding.ActivityAccountBinding
 import com.example.smartfit.databinding.DialogReauthenticateBinding
 import com.example.smartfit.utils.showUniversalDialog
 import com.example.smartfit.view.credentials.login.LoginActivity
@@ -22,6 +24,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class AccountActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityAccountBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
     private lateinit var userRef: DatabaseReference
@@ -29,7 +32,10 @@ class AccountActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_account)
+
+        // Inisialisasi View Binding
+        binding = ActivityAccountBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val controller = ViewCompat.getWindowInsetsController(window.decorView)
         controller?.hide(WindowInsetsCompat.Type.navigationBars())
@@ -44,22 +50,24 @@ class AccountActivity : AppCompatActivity() {
         database = FirebaseDatabase.getInstance()
         val currentUser = auth.currentUser
 
-        // Initialize TextViews
-        val tvUsername = findViewById<TextView>(R.id.tv_name_account)
-        val tvEmail = findViewById<TextView>(R.id.tv_email_format)
-
         if (currentUser != null) {
             userRef = database.reference.child("users").child(currentUser.uid)
             userRef.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val displayName = snapshot.child("displayName").getValue(String::class.java)
                     val email = currentUser.email
+                    val photoURL = snapshot.child("photoURL").getValue(String::class.java)
 
                     if (!displayName.isNullOrEmpty()) {
-                        tvUsername.text = displayName
+                        binding.tvNameAccount.text = displayName
                     }
                     if (!email.isNullOrEmpty()) {
-                        tvEmail.text = email
+                        binding.tvEmailFormat.text = email
+                    }
+                    if (!photoURL.isNullOrEmpty()) {
+                        Glide.with(this@AccountActivity)
+                            .load(photoURL)
+                            .into(binding.imageView4)
                     }
                 }
 
@@ -70,21 +78,18 @@ class AccountActivity : AppCompatActivity() {
         }
 
         // Mengatur background bergerak
-        val constraintLayout: ConstraintLayout = findViewById(R.id.main)
-        val animationDrawable = constraintLayout.background as AnimationDrawable
+        val animationDrawable = binding.main.background as AnimationDrawable
         animationDrawable.setEnterFadeDuration(1500)
         animationDrawable.setExitFadeDuration(3000)
         animationDrawable.start()
 
         // Set click listener for back button
-        val backButton = findViewById<MaterialCardView>(R.id.btn_back_account)
-        backButton.setOnClickListener {
+        binding.btnBackAccount.setOnClickListener {
             finish()
         }
 
         // Set click listener for delete account button
-        val deleteButton = findViewById<MaterialCardView>(R.id.cv_delete_account)
-        deleteButton.setOnClickListener {
+        binding.cvDeleteAccount.setOnClickListener {
             showDeleteAccountDialog()
         }
     }
@@ -115,92 +120,44 @@ class AccountActivity : AppCompatActivity() {
                             if (reauthTask.isSuccessful) {
                                 deleteUserAccount()
                             } else {
-                                showUniversalDialog(
-                                    context = this,
-                                    title = getString(R.string.reauth_failed_title),
-                                    message = getString(R.string.reauth_failed_message),
-                                    positiveButtonText = getString(R.string.ok),
-                                    negativeButtonText = null,
-                                    positiveAction = null,
-                                    negativeAction = null
-                                )
+                                showReauthFailedDialog()
                             }
                         }
                     } else {
-                        showUniversalDialog(
-                            context = this,
-                            title = getString(R.string.reauth_id_token_failed_title),
-                            message = getString(R.string.reauth_id_token_failed_message),
-                            positiveButtonText = getString(R.string.ok),
-                            negativeButtonText = null,
-                            positiveAction = null,
-                            negativeAction = null
-                        )
+                        showReauthFailedDialog()
                     }
                 } else {
-                    showUniversalDialog(
-                        context = this,
-                        title = getString(R.string.reauth_google_account_failed_title),
-                        message = getString(R.string.reauth_google_account_failed_message),
-                        positiveButtonText = getString(R.string.ok),
-                        negativeButtonText = null,
-                        positiveAction = null,
-                        negativeAction = null
-                    )
+                    showReauthFailedDialog()
                 }
             } else if (providers.contains(EmailAuthProvider.PROVIDER_ID)) {
                 val email = it.email
                 if (email != null) {
                     showEmailPasswordReauthDialog(email)
                 } else {
-                    showUniversalDialog(
-                        context = this,
-                        title = getString(R.string.reauth_failed_title),
-                        message = getString(R.string.reauth_email_not_found_message),
-                        positiveButtonText = getString(R.string.ok),
-                        negativeButtonText = null,
-                        positiveAction = null,
-                        negativeAction = null
-                    )
+                    showReauthFailedDialog()
                 }
             } else {
-                showUniversalDialog(
-                    context = this,
-                    title = getString(R.string.reauth_failed_title),
-                    message = getString(R.string.reauth_unsupported_provider_message),
-                    positiveButtonText = getString(R.string.ok),
-                    negativeButtonText = null,
-                    positiveAction = null,
-                    negativeAction = null
-                )
+                showReauthFailedDialog()
             }
         }
     }
 
     private fun showEmailPasswordReauthDialog(email: String) {
         val builder = MaterialAlertDialogBuilder(this)
-        val bindingDialog = DialogReauthenticateBinding.inflate(layoutInflater)
-        builder.setView(bindingDialog.root)
+        val dialogBinding = DialogReauthenticateBinding.inflate(layoutInflater)
+        builder.setView(dialogBinding.root)
 
-        bindingDialog.emailEditText.setText(email)
+        dialogBinding.emailEditText.setText(email)
 
         builder.setPositiveButton(getString(R.string.reauth_positive)) { dialog, _ ->
-            val password = bindingDialog.passwordEditText.text.toString()
+            val password = dialogBinding.passwordEditText.text.toString()
             val credential = EmailAuthProvider.getCredential(email, password)
 
             auth.currentUser?.reauthenticate(credential)?.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     deleteUserAccount()
                 } else {
-                    showUniversalDialog(
-                        context = this,
-                        title = getString(R.string.reauth_failed_title),
-                        message = getString(R.string.reauth_failed_message),
-                        positiveButtonText = getString(R.string.ok),
-                        negativeButtonText = null,
-                        positiveAction = null,
-                        negativeAction = null
-                    )
+                    showReauthFailedDialog()
                 }
             }
         }
@@ -227,43 +184,55 @@ class AccountActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     currentUser.delete().addOnCompleteListener { authTask ->
                         if (authTask.isSuccessful) {
-                            showUniversalDialog(
-                                context = this,
-                                title = getString(R.string.delete_success_title),
-                                message = getString(R.string.delete_success_message),
-                                positiveButtonText = getString(R.string.ok),
-                                negativeButtonText = null,
-                                positiveAction = {
-                                    val intent = Intent(this, LoginActivity::class.java)
-                                    startActivity(intent)
-                                    finish()
-                                },
-                                negativeAction = null
-                            )
+                            showDeleteSuccessDialog()
                         } else {
-                            showUniversalDialog(
-                                context = this,
-                                title = getString(R.string.delete_failed_title),
-                                message = authTask.exception?.message ?: getString(R.string.unknown_error_message),
-                                positiveButtonText = getString(R.string.ok),
-                                negativeButtonText = null,
-                                positiveAction = null,
-                                negativeAction = null
-                            )
+                            showDeleteFailedDialog(authTask.exception?.message)
                         }
                     }
                 } else {
-                    showUniversalDialog(
-                        context = this,
-                        title = getString(R.string.delete_failed_title),
-                        message = task.exception?.message ?: getString(R.string.unknown_error_message),
-                        positiveButtonText = getString(R.string.ok),
-                        negativeButtonText = null,
-                        positiveAction = null,
-                        negativeAction = null
-                    )
+                    showDeleteFailedDialog(task.exception?.message)
                 }
             }
         }
+    }
+
+    private fun showReauthFailedDialog() {
+        showUniversalDialog(
+            context = this,
+            title = getString(R.string.reauth_failed_title),
+            message = getString(R.string.reauth_failed_message),
+            positiveButtonText = getString(R.string.ok),
+            negativeButtonText = null,
+            positiveAction = null,
+            negativeAction = null
+        )
+    }
+
+    private fun showDeleteSuccessDialog() {
+        showUniversalDialog(
+            context = this,
+            title = getString(R.string.delete_success_title),
+            message = getString(R.string.delete_success_message),
+            positiveButtonText = getString(R.string.ok),
+            negativeButtonText = null,
+            positiveAction = {
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+                finish()
+            },
+            negativeAction = null
+        )
+    }
+
+    private fun showDeleteFailedDialog(errorMessage: String?) {
+        showUniversalDialog(
+            context = this,
+            title = getString(R.string.delete_failed_title),
+            message = errorMessage ?: getString(R.string.unknown_error_message),
+            positiveButtonText = getString(R.string.ok),
+            negativeButtonText = null,
+            positiveAction = null,
+            negativeAction = null
+        )
     }
 }

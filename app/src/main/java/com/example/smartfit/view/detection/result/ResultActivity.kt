@@ -153,7 +153,7 @@ class ResultActivity : AppCompatActivity() {
     }
 
     private fun displayResult(result: StyleRecommendationResponse) {
-        binding.seasonalColorLabel.text = getString(R.string.seasonal_color_label)
+        binding.seasonalColorLabel.text = result.seasonal_color_label
         binding.skinToneLabel.text = result.skin_tone_label
         binding.seasonalDescription.text = result.seasonal_description
 

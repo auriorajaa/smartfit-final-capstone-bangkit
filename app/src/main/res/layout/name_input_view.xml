@@ -61,6 +61,7 @@
                 android:hint="@string/tv_type_your_name_edt"
                 android:inputType="text"
                 android:textColorHint="@color/semidarkgrey"
+                android:textColor="@color/darkgrey"
                 android:textSize="13sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/warningIcon"

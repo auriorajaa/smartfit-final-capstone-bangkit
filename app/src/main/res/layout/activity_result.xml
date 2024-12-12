@@ -78,10 +78,10 @@
                         app:layout_constraintTop_toBottomOf="@+id/mixedRecyclerViewLabel" />
 
                     <TextView
-                        android:id="@+id/seasonalColorLabel"
+                        android:id="@+id/skinToneLabel"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="30dp"
                         android:fontFamily="@font/poppins_extrabold"
                         android:text="@string/tv_seasonal_color_result"
                         android:textAlignment="center"
@@ -90,7 +90,7 @@
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/mixedRecyclerView" />
+                        app:layout_constraintTop_toBottomOf="@+id/cardView4" />
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/cardView3"
@@ -103,7 +103,7 @@
                         app:cardElevation="0dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/seasonalColorLabel">
+                        app:layout_constraintTop_toBottomOf="@+id/skinToneLabel">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
@@ -161,14 +161,14 @@
                         android:id="@+id/cardView4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="30dp"
+                        android:layout_marginTop="15dp"
                         android:elevation="0dp"
                         app:cardBackgroundColor="@color/semitransparentwhite"
                         app:cardCornerRadius="20dp"
                         app:cardElevation="0dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/cardView3">
+                        app:layout_constraintTop_toBottomOf="@+id/mixedRecyclerView">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
@@ -176,7 +176,7 @@
                             android:padding="15dp">
 
                             <TextView
-                                android:id="@+id/skinToneLabel"
+                                android:id="@+id/seasonalColorLabel"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins_bold"
@@ -198,7 +198,7 @@
                                 android:textSize="14sp"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/skinToneLabel" />
+                                app:layout_constraintTop_toBottomOf="@+id/seasonalColorLabel" />
 
                             <TextView
                                 android:id="@+id/seasonalProbabilityLabel"
@@ -283,7 +283,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/cardView4" />
+                        app:layout_constraintTop_toBottomOf="@+id/cardView3" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
