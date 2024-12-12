@@ -1,35 +1,173 @@
-# SmartFit: Cloud Computing Architecture ☁️💻
+# SmartFit Color Analysis API 🎨👗
 
-## Description 📖
-Welcome to the **Cloud Computing** branch of the **SmartFit** project! This part focuses on deploying the ML model and managing the backend services that support the SmartFit app. Our goal is to provide a scalable, fast, and secure cloud solution. 🚀
+## Project Overview 📖
+SmartFit is an innovative machine learning-powered application designed to provide personalized color analysis and style recommendations. This API serves as the core backend service, leveraging advanced machine learning models to help users discover their ideal color palette and outfit recommendations.
 
-## Team Members 👥
-- **(CC) C511B4KY1310** – Fachrio Raditya – Institut Teknologi dan Bisnis Bina Sarana Global
-- **(CC) C128B4KY0737** – Aurio Hendrianoko Rajaa – Politeknik Negeri Jakarta
+## Cloud Computing Architecture 🏗️
+![image](https://github.com/user-attachments/assets/eab3d77f-9e97-4c10-84de-5815c295b7d4)
 
-## Cloud Architecture 🏗️
-Below is a diagram showing how we deploy the ML model and handle the backend services for SmartFit.
-![arsitektur](cloud-architecture-diagram/outfit_recommendation_system.png)
+### Architecture Components
+- **Google Cloud Platform**: Provides the core infrastructure
+- **Vertex AI**: Machine Learning model deployment
+- **App Engine**: Hosting and scaling backend services
+- **Firebase**: User authentication and data storage
+- **Container Registry**: Docker image management
 
-## Steps We Took 📝
-- **Deploying the ML Model**: The trained model is deployed using **Google Cloud Storage**.
-- **Backend Services**: All requests for clothing recommendations are processed through **APP Engine**.
-- **User Data**: User data is securely stored using **Firebase** and **Firebase Authentication** 🔒.
+## Team 👥
+### Cloud Computing Specialists
+- **Fachrio Raditya**
+  - Institution: Institut Teknologi dan Bisnis Bina Sarana Global
+  - Role: GCP Deployment Specialist
+  - Responsibilities: 
+    - Configuring Google Cloud Platform infrastructure
+    - Managing deployment pipelines
+    - Optimizing cloud resources
+    - Ensuring scalability and performance of cloud services
+  - GitHub Repository: [SmartFit Final Capstone Bangkit](https://github.com/auriorajaa/smartfit-final-capstone-bangkit)
+  - Active Branch: `cloud-computing-fachrio`
 
-## Technologies Used 🛠️
-- **Google Cloud Platform**: Vertex AI, App Engine, Firebase, Container Registry
-- **Firebase**: For user authentication and data storage
-- **Machine Learning**: **TensorFlow** for training and model deployment
-- **Version Control**: **Git**, **GitHub**
+- **Aurio Hendrianoko Rajaa**
+  - Institution: Politeknik Negeri Jakarta
+  - Role: Backend Services and API Development
+  - Responsibilities:
+    - Designing and implementing RESTful API endpoints
+    - Integrating machine learning model predictions
+    - Developing Firebase integration for user data management
+    - Managing backend service logic for color analysis and style recommendations
+  - GitHub Repository: [SmartFit Final Capstone Bangkit](https://github.com/auriorajaa/smartfit-final-capstone-bangkit)
+  - Active Branch: `cloud-computing-aurio`
 
-## Cloud Workflow 🌐
-1. **Step 1**: The ML model is deployed through **Google AI Platform**.
-2. **Step 2**: The model is stored in **Cloud Storage** and **Artifact Registry**.
-3. **Step 3**: **Cloud Run** handles backend requests, which interact with **Firebase** for user data.
+## API Endpoint Details 🌈
 
-## Challenges & Solutions ⚠️
-- **Model Deployment Issues**: We use **Cloud Run** to ensure scalable and serverless deployment.
-- **Data Privacy Concerns**: User data is securely stored using **Firebase** 🔐.
+### 1. Color Palette Prediction
+- **Endpoint**: `/predict_color_palette`
+- **HTTP Method**: POST
+- **Full URL**: `https://your-app-domain.com/predict_color_palette`
 
-## Conclusion 🌟
-We hope this **Cloud Computing** solution will enable SmartFit to deliver a faster and better experience for users. Feel free to ask questions or contribute to this branch! 💬
+#### Request Parameters
+- `image`: Image file for color analysis (required)
+  - **Type**: Multipart/form-data
+  - **Accepted Formats**: JPEG, PNG
+  - **Max Size**: Recommended < 5MB
+
+#### Response Structure
+```json
+{
+  "seasonal_color_label": "Summer",
+  "skin_tone_label": "Light Warm",
+  "color_palette": {
+    "primary_colors": ["#PASTEL_BLUE", "#LIGHT_GREEN"],
+    "accent_colors": ["#SOFT_PINK"]
+  }
+}
+```
+
+#### Possible Error Responses
+- **400 Bad Request**: 
+  - No image uploaded
+  - Invalid image format
+- **422 Unprocessable Entity**: 
+  - Image processing error
+- **500 Internal Server Error**: 
+  - Unexpected server-side issues
+
+### 2. Style Recommendation
+- **Endpoint**: `/style_recommendation`
+- **HTTP Method**: POST
+- **Full URL**: `https://your-app-domain.com/style_recommendation`
+
+#### Request Parameters
+- `image`: Image file for style analysis (required)
+- `uid`: Firebase User ID (required)
+- `clothing_type`: Optional (default: streetwear)
+
+#### Supported Clothing Types
+- `formal-men`
+- `formal-women`
+- `wedding-men`
+- `wedding-women`
+- `streetwear-men`
+- `streetwear-women`
+- `pajamas-men`
+- `pajamas-women`
+- `vintage-men`
+- `vintage-women`
+- `casual-men`
+- `casual-women`
+- `sportswear-men`
+- `sportswear-women`
+
+#### Response Structure
+```json
+{
+  "seasonal_color_label": "Autumn",
+  "skin_tone_label": "Medium Olive",
+  "color_palette": {
+    "primary_colors": ["#RUST_RED", "#OLIVE_GREEN"],
+    "accent_colors": ["#GOLDEN_YELLOW"]
+  },
+  "outfit_recommendations": [
+    {
+      "item": "Blazer",
+      "description": "Elegant rust-colored blazer perfect for autumn tones"
+    }
+  ],
+  "amazon_products": [
+    {
+      "product_name": "Classic Rust Blazer",
+      "price": "$129.99",
+      "url": "amazon-product-link"
+    }
+  ],
+  "firebase_key": "unique_prediction_id"
+}
+```
+
+### 3. Prediction History Management
+#### List Prediction History
+- **Endpoint**: `/get_prediction_history_list`
+- **HTTP Method**: GET
+- **Query Parameter**: `uid` (required)
+
+#### Get Prediction Details
+- **Endpoint**: `/get_prediction_history_detail`
+- **HTTP Method**: GET
+- **Query Parameters**: 
+  - `uid` (required)
+  - `prediction_key` (required)
+
+#### Delete Prediction History
+- **Endpoint**: `/delete_prediction_history`
+- **HTTP Method**: POST
+- **Form Parameters**:
+  - `uid` (required)
+  - `prediction_key` (required)
+
+## Seasonal Color Analysis 🌈
+
+### Summer Palette
+- **Primary Mood**: Soft, light, refreshing
+- **Color Characteristics**: Pastel blues, light greens, soft pinks
+- **Style Recommendation**: Light, airy fabrics
+
+### Winter Palette
+- **Primary Mood**: Bold, sophisticated, deep
+- **Color Characteristics**: Navy, black, deep grays
+- **Style Recommendation**: Structured, sharp designs
+
+### Spring Palette
+- **Primary Mood**: Vibrant, renewing, hopeful
+- **Color Characteristics**: Bright yellows, soft greens, light pinks
+- **Style Recommendation**: Layered, adaptable clothing
+
+### Autumn Palette
+- **Primary Mood**: Warm, rich, mature
+- **Color Characteristics**: Rust, olive green, golden tones
+- **Style Recommendation**: Textured, earthy designs
+
+## Technologies Stack 🛠️
+- **Backend**: Python, Flask
+- **Machine Learning**: TensorFlow
+- **Cloud**: Google Cloud Platform (GCP)
+- **Authentication**: Firebase
+- **Database**: Firebase Realtime Database
