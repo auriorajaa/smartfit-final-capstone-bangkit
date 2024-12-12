@@ -47,8 +47,8 @@ class NewsFragment : Fragment() {
         val newsApiService = NewsRetrofitClient.instance.create(NewsApiService::class.java)
         val call = newsApiService.getNews(
             query = "fashion",
-            from = "2024-11-20",
-            to = "2024-12-10",
+            from = "2024-11-25",
+            to = "2024-12-15",
             sortBy = "relevance",
             apiKey = BuildConfig.NEWS_API_KEY
         )
