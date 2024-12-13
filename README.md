@@ -4,6 +4,7 @@
 Welcome to the **SmartFit** project! The goal of this project is to help users choose clothes that match their skin tone using **Machine Learning (ML)** 🤖. With SmartFit, users can personalize their shopping experience with more accurate clothing recommendations.
 
 ## Team Members 👥
+C242-PS129
 - **(ML) M267B4KX1751** – Hawarizmi Ummul Adzkia – Universitas Muhammadiyah Sukabumi
 - **(ML) M180B4KX2134** – Kanaya Defitra Prasetyo Putri – Universitas Airlangga
 - **(ML) M200B4KY3731** – Regi Aprilian – Universitas Diponegoro
