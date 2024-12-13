@@ -28,7 +28,7 @@ The SmartFit app is designed to provide clothing recommendations that match the 
 
 ## Application Access 🔐
 You can download and try the SmartFit application using the link below:
-- Download SmartFit Application
+- [Download SmartFit Application](https://drive.google.com/file/d/1XMTcGijI3Kil_bXH6d0jUnfODPLS5bcM/view?usp=sharing)
 
 ## Contributing 🤝
 We hope SmartFit can bring positive changes in creating a smarter and more inclusive shopping experience. Feel free to contribute or reach out to us with any questions! 💬
