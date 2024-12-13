@@ -1,6 +1,8 @@
-![Gambar saya](image/logo_smartfit_radius.png)
+<div style="text-align:center;">
+    <img src="image/logo_smartfit_radius.png" alt="Gambar saya" width="200">
+</div>
 
-# SmartFit: Clothing Recommendation System Based on Skin Tone 👗🌟
+# SmartFit: Clothing Recommendation System Based on Skin Tone 👗✨
 
 ## Description 📖
 Welcome to the **SmartFit** project! The goal of this project is to help users choose clothes that match their skin tone using **Machine Learning (ML)** 🤖. With SmartFit, users can personalize their shopping experience with more accurate clothing recommendations.
@@ -34,3 +36,4 @@ You can download and try the SmartFit application using the link below:
 
 ## Contributing 🤝
 We hope SmartFit can bring positive changes in creating a smarter and more inclusive shopping experience. Feel free to contribute or reach out to us with any questions! 💬
+
