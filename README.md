@@ -26,5 +26,9 @@ The SmartFit app is designed to provide clothing recommendations that match the 
 - **Mobile App Development**: Android Studio, Kotlin
 - **Version Control**: Git, GitHub
 
+## Application Access 🔐
+You can download and try the SmartFit application using the link below:
+- Download SmartFit Application
+
 ## Contributing 🤝
 We hope SmartFit can bring positive changes in creating a smarter and more inclusive shopping experience. Feel free to contribute or reach out to us with any questions! 💬
