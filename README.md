@@ -1,5 +1,5 @@
-<div style="text-align:center;">
-    <img src="image/logo_smartfit_radius.png" alt="Gambar saya" width="200">
+<div align="center">
+    <img src="image/logo_smartfit_radius.png" alt="SmartFit Logo" width="200">
 </div>
 
 # SmartFit: Clothing Recommendation System Based on Skin Tone 👗✨
