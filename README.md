@@ -1,4 +1,4 @@
-![SmartFit](image/logo_smartfit_radius)
+![SmartFit](image/logo_smartfit_radius.png)
 
 # SmartFit: Clothing Recommendation System Based on Skin Tone 👗🌟
 
