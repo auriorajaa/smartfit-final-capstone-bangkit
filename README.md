@@ -46,7 +46,7 @@ You can download and try the SmartFit application using the link below:
 
 ## Screenshots 🖼️
 We plan to add application screenshots here to give users a preview of the SmartFit experience. Stay tuned for updates!
-![Preview_apps](smartfit_app.png)
+![Preview_apps](image/smartfit_app.png)
 
 ---
 
