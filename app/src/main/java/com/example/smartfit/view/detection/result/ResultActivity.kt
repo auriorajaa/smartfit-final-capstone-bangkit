@@ -1,6 +1,8 @@
 package com.example.smartfit.view.detection.result
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.AnimationDrawable
 import android.graphics.drawable.GradientDrawable
@@ -8,12 +10,14 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.View
 import android.view.WindowInsetsController
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -46,12 +50,13 @@ class ResultActivity : AppCompatActivity() {
     private var scrollPosition = 0
     private val hideHandler = Handler(Looper.getMainLooper())
 
+    private val REQUEST_NOTIFICATION_PERMISSION = 1001
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityResultBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Menyembunyikan tombol navigasi saja
         val controller = ViewCompat.getWindowInsetsController(window.decorView)
         controller?.hide(WindowInsetsCompat.Type.navigationBars())
         controller?.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
@@ -62,7 +67,6 @@ class ResultActivity : AppCompatActivity() {
             }, 5000)
         }
 
-        // Mengatur background animasi
         val constraintLayout: ConstraintLayout = binding.main
         val animationDrawable = constraintLayout.background as AnimationDrawable
         animationDrawable.setEnterFadeDuration(1500)
@@ -70,15 +74,12 @@ class ResultActivity : AppCompatActivity() {
         animationDrawable.start()
 
         window.apply {
-            // Membuat status bar dan navigation bar transparan
             decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
                     View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
                     View.SYSTEM_UI_FLAG_LAYOUT_STABLE
 
-            // Pastikan warna mengikuti latar belakang Activity
             statusBarColor = Color.TRANSPARENT
 
-            // Menyesuaikan ikon status bar dan navigation bar
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                 insetsController?.setSystemBarsAppearance(
                     WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS or
@@ -115,7 +116,6 @@ class ResultActivity : AppCompatActivity() {
     }
 
     private fun sendRequest(image: MultipartBody.Part, uid: String, clothingType: String) {
-        // Tampilkan progress bar saat mulai memuat data
         CoroutineScope(Dispatchers.Main).launch {
             binding.progressBar.visibility = View.VISIBLE
         }
@@ -176,22 +176,24 @@ class ResultActivity : AppCompatActivity() {
 
         displaySkinToneHexColorBox(result.skin_tone_hex)
 
-        NotificationHelper.sendNotification(
-            this,
-            getString(R.string.scan_result_ready),
-            getString(R.string.scan_result_message)
-        )
+        // Periksa izin notifikasi sebelum mengirim
+        checkNotificationPermission {
+            NotificationHelper.sendNotification(
+                this,
+                getString(R.string.scan_result_ready),
+                getString(R.string.scan_result_message)
+            )
+        }
     }
 
     private fun displayColorBoxes(layout: LinearLayout, colors: List<String>) {
         layout.removeAllViews()
         for (color in colors) {
             val colorBox = View(this).apply {
-                // Create a GradientDrawable with rounded corners
                 val drawable = GradientDrawable().apply {
                     shape = GradientDrawable.RECTANGLE
                     setColor(Color.parseColor(color))
-                    cornerRadius = 20f // Adjust the corner radius as needed
+                    cornerRadius = 20f
                 }
                 background = drawable
                 layoutParams = LinearLayout.LayoutParams(110, 110).apply {
@@ -240,4 +242,41 @@ class ResultActivity : AppCompatActivity() {
         super.onDestroy()
         handler.removeCallbacksAndMessages(null)
     }
+
+    private fun checkNotificationPermission(callback: () -> Unit) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+                != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                    REQUEST_NOTIFICATION_PERMISSION
+                )
+            } else {
+                // Izin sudah diberikan
+                callback()
+            }
+        } else {
+            // Izin tidak diperlukan untuk API 30 ke bawah
+            callback()
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_NOTIFICATION_PERMISSION) {
+            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                // Izin diberikan
+                Toast.makeText(this, "Notification permission granted", Toast.LENGTH_SHORT).show()
+            } else {
+                // Izin tidak diberikan
+                Toast.makeText(this, "Notification permission denied", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 }
+

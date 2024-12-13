@@ -29,8 +29,15 @@ import com.example.smartfit.view.news.NewsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import java.util.concurrent.TimeUnit
+import android.Manifest
+import android.content.pm.PackageManager
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 
 class MainActivity : AppCompatActivity() {
+
+    private val REQUEST_NOTIFICATION_PERMISSION = 1001
 
     private lateinit var bottomNavigationView: BottomNavigationView
     private lateinit var auth: FirebaseAuth
@@ -42,7 +49,9 @@ class MainActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
-        // Menyembunyikan tombol navigasi saja
+        // Tambahkan pemeriksaan izin notifikasi di sini
+        checkNotificationPermission()
+
         val controller = ViewCompat.getWindowInsetsController(window.decorView)
         controller?.hide(WindowInsetsCompat.Type.navigationBars())
         controller?.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
@@ -70,15 +79,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // Mengatur BottomNavigationView
         bottomNavigationView = findViewById(R.id.bottom_nav)
 
-        // Membuka fragment awal (HomeFragment)
         if (savedInstanceState == null) {
             openFragment(HomeFragment())
         }
 
-        // Menangani event klik item pada BottomNavigationView
         bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_home -> {
@@ -100,23 +106,19 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // Mengatur background bergerak
         val constraintLayout: ConstraintLayout = findViewById(R.id.main)
         val animationDrawable = constraintLayout.background as AnimationDrawable
         animationDrawable.setEnterFadeDuration(1500)
         animationDrawable.setExitFadeDuration(3000)
         animationDrawable.start()
 
-        // Panggil createNotificationChannel
         NotificationHelper.createNotificationChannel(this)
 
-        // Cek waktu notifikasi terakhir
         val sharedPreferences = getSharedPreferences("NotificationPrefs", Context.MODE_PRIVATE)
         val lastNotificationTime = sharedPreferences.getLong("lastNotificationTime", 0L)
         val currentTime = System.currentTimeMillis()
         val timeDiff = currentTime - lastNotificationTime
 
-        // Jika lebih dari 12 jam sejak notifikasi terakhir, jadwalkan ulang
         if (timeDiff >= TimeUnit.HOURS.toMillis(12)) {
             val workRequest: WorkRequest =
                 PeriodicWorkRequestBuilder<NotificationWorker>(12, TimeUnit.HOURS)
@@ -125,9 +127,43 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun checkNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+                != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                    REQUEST_NOTIFICATION_PERMISSION
+                )
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_NOTIFICATION_PERMISSION) {
+            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                // Izin diberikan
+                Toast.makeText(this, "Notification permission granted", Toast.LENGTH_SHORT).show()
+            } else {
+                // Izin tidak diberikan
+                Toast.makeText(this, "Notification permission denied", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
     override fun onStart() {
         super.onStart()
 
+        checkUserLoginStatus()  // Periksa status login pengguna
+    }
+
+    private fun checkUserLoginStatus() {
         val currentUser = auth.currentUser
         if (currentUser == null) {
             val intent = Intent(this, LoginActivity::class.java)
@@ -136,7 +172,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // Fungsi untuk mengganti fragment
     private fun openFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment)

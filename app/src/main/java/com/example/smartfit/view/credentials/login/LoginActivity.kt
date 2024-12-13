@@ -251,6 +251,6 @@ class LoginActivity : AppCompatActivity() {
             finishAffinity()
         }
     }
-
 }
+
 
